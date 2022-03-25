@@ -9,7 +9,7 @@
 
  - Aller dans `backend`
  - Mise en place de l'environnement : `python -m venv env`
- - Installation des dépendances : `pip -r requirements.txt`
+ - Installation des dépendances : `pip install -r requirements.txt`
  - Lancer le backend : `python ./app.py`
 
 ## Vue.JS :
