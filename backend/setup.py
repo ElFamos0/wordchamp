@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from os import environ
+from os import environ, path
 
 # configuration
 DEBUG = True
@@ -15,8 +15,13 @@ env = environ.get("ENVIRONMENT", "development")
 # instantiate secrets and env variables
 app.config['SECRET_KEY'] = 'c1155c6a351e49eba15c00ce577b259e'
 
+setup = False
+if not path.isfile("db.sqlite3"):
+    open("db.sqlite3", "w")
+    setup = True
+
 if env == "development":
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3' # Declares the database path
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite3" # Declares the database path
 else:
     # add production database
     username = environ.get("DB_USERNAME")

@@ -2,7 +2,7 @@ from setup import *
 from models.word import Word
 
 def do_it():
-    FILE = "dev_wordlist.txt"
+    FILE = "misc/dev_wordlist"
     file = open(FILE, "r")
 
     # We load the wordlist into the database
@@ -10,6 +10,6 @@ def do_it():
         word = line.strip()
         if len(word) > 0:
             w = Word(word)
-            db.session.add(w)
-    
+            db.session().add(w)
+    db.session().commit()
     file.close()

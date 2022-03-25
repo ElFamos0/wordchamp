@@ -1,9 +1,13 @@
 from setup import *
 from routes import *
-import misc.load_dev_wordlist as dbsetup
+import misc.dev_database_setup as dbsetup
+from models import *
+        
+db.create_all()
+
+
+if env == "development" and setup:
+    dbsetup.load_all()
 
 if __name__ == '__main__':
     app.run()
-
-if env == "development":
-    dbsetup.load_all()

@@ -32,7 +32,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     def __init__(self, username, email, admin=False):
-        self.id = uuid4().hex()
+        self.id = uuid4().hex
         self.username = username
         self.email = email
         self.admin = admin
