@@ -28,7 +28,7 @@ else:
     password = environ.get("DB_PASSWORD")
     host = environ.get("DB_HOST")
     database = environ.get("DB_DATABASE")
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{username}:{password}@{host}:5432/{database}" # Declares the database path
+    app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{username}:{password}@{host}:5432/{database}" # Declares the database path
 
 # instantiate the db   
 db = SQLAlchemy(app)
