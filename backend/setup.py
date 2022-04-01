@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from os import environ, path
+from models import Word
 
 # configuration
 DEBUG = True
@@ -20,7 +21,7 @@ if not path.isfile("db.sqlite3"):
     open("db.sqlite3", "w")
     setup = True
 
-if env != "development":
+if env == "development":
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite3" # Declares the database path
 else:
     # add production database
