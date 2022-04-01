@@ -5,8 +5,7 @@ from models import *
         
 db.create_all()
 
-
-if env == "development" and setup:
+if setup:
     dbsetup.load_all()
 
 if __name__ == '__main__':
