@@ -1,0 +1,12 @@
+version: '3'
+services:
+  backend:
+    image: wordchamp-back
+    build: backend
+    ports:
+      - "5000:5000"
+  frontend:
+    image: wordchamp-front
+    build: frontend
+    ports:
+      - "8080:8080"
