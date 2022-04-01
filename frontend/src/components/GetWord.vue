@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     getMessage() {
-      const path = 'http://localhost:5000/word';
+      const path = `http://${process.env.VUE_APP_BACKEND_URL}/word`;
       axios.get(path)
         .then((res) => {
           this.msg = res.data;
