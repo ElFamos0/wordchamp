@@ -5,7 +5,7 @@ from models import *
         
 db.create_all()
 
-listemot = Word.query.all()
+listemot = word.Word.query.all()
 if len(listemot) == 0:
     setup = True
 
