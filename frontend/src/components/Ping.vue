@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     getMessage() {
-      const path = `http://${process.env.VUE_APP_BACKEND_URL}/ping`;
+      const path = `${process.env.VUE_APP_BACKEND_URL}/ping`;
       axios.get(path)
         .then((res) => {
           this.msg = res.data;
