@@ -1,14 +1,14 @@
 # Charte projet
 
 - **Table des matières**
-    - [Cadrage](https://www.notion.so/Charte-projet-1af927a788d746068572d945d8c91447)
-        - [Contexte](https://www.notion.so/Charte-projet-1af927a788d746068572d945d8c91447)
-        - [Finalité](https://www.notion.so/Charte-projet-1af927a788d746068572d945d8c91447)
-        - [Objectifs de l'application](https://www.notion.so/Charte-projet-1af927a788d746068572d945d8c91447)
-    - [Déroulement du projet](https://www.notion.so/Charte-projet-1af927a788d746068572d945d8c91447)
-        - [Organisation/ressources](https://www.notion.so/Charte-projet-1af927a788d746068572d945d8c91447)
-        - [Jalons](https://www.notion.so/Charte-projet-1af927a788d746068572d945d8c91447)
-        - [Risques et opportunités](https://www.notion.so/Charte-projet-1af927a788d746068572d945d8c91447)
+    - [Cadrage] 
+        - [Contexte] 
+        - [Finalité] 
+        - [Objectifs de l'application] 
+    - [Déroulement du projet] 
+        - [Organisation/ressources] 
+        - [Jalons] 
+        - [Risques et opportunités] 
 
 ## Cadrage
 
