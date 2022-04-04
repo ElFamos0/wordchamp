@@ -10,7 +10,7 @@
 import SousTemplate from '@/components/SousTemplate.vue';
 
 export default {
-  name: 'Home',
+  name: 'home-page',
   components: {
     SousTemplate,
   },

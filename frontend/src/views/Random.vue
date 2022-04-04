@@ -1,17 +1,17 @@
 <template>
   <div class="random">
     <h1>Ceci est assez random</h1>
-    <Ping />
+    <PingComponent />
   </div>
 </template>
 
 <script>
-import Ping from '@/components/Ping.vue';
+import PingComponent from '@/components/PingComponent.vue';
 
 export default {
-  name: 'Random',
+  name: 'random-page',
   components: {
-    Ping,
+    PingComponent,
   },
 };
 </script>

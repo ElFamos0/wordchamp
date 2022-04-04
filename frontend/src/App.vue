@@ -1,4 +1,5 @@
 <!-- Template de la navigation seulement ! -->
+
 <template>
   <div id="app">
     <div id="nav">
@@ -10,8 +11,14 @@
   </div>
 </template>
 
-<style>
+<script>
+export default {
+  name: 'App',
+}
+</script>
 
+
+<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

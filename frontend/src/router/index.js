@@ -1,33 +1,29 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-
-Vue.use(VueRouter);
+import { createWebHistory, createRouter } from "vue-router";
+import Home from "@/views/Home.vue";
+import Random from "@/views/Random.vue";
+import Word from "@/views/Word.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: "/",
+    name: "Home",
     component: Home,
   },
   {
-    path: '/random',
-    name: 'Random',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Random.vue'),
+    path: "/random",
+    name: "About",
+    component: Random,
   },
   {
-    path: '/word',
-    name: 'Word',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Word.vue'),
+    path: "/word",
+    name: "Word",
+    component: Word,
   },
 ];
 
-const router = new VueRouter({
-  mode: 'hash',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  mode: "hash",
+  history: createWebHistory(),
   routes,
 });
 

@@ -10,7 +10,7 @@ import Keyboard from 'simple-keyboard';
 import 'simple-keyboard/build/css/index.css';
 
 export default {
-  name: 'Keyboard',
+  name: 'keyboard-component',
   props: {
     keyboardClass: {
       default: 'simple-keyboard',

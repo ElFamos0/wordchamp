@@ -2,20 +2,22 @@
   <div class="random">
     <h1>Venez jouer à WordChamp</h1>
     <GetWord />
-    <Keyboard />
+    <b-container>
+      <KeyBoard/>
+    </b-container>
   </div>
 </template>
 
 <script>
 
 import GetWord from '@/components/GetWord.vue';
-import Keyboard from '../components/Keyboard.vue';
+import KeyBoard from '@/components/KeyBoard.vue';
 
 export default {
-  name: 'Word',
+  name: 'word-page',
   components: {
     GetWord,
-    Keyboard,
+    KeyBoard,
   },
 };
 </script>
