@@ -1,10 +1,23 @@
 <script setup>
 import Keyboard from '@/components/KeyBoard.vue';
-import {onMounted} from "vue"
+import {onMounted, ref} from "vue"
 
 const displayinput = (keypressed) => {
   console.log(keypressed);
-};
+  if (isaLetter(keypressed)){
+      text.value += keypressed;
+      console.log(text.value);
+  }
+
+}
+
+const isaLetter = (keypressed) => {
+  return (keypressed.match(/[a-zA-Z]/) && keypressed.length == 1);
+}
+
+const text = ref("")
+
+
 
 onMounted(() => {
   window.addEventListener("keydown", (e) => {
@@ -21,6 +34,7 @@ onMounted(() => {
 <template>
   <div class="random">
     <h1>Venez jouer à WordChamp</h1>
+    <p>Voici la valeur : {{ text }}</p>
     <b-container>
       <Keyboard @onKeyPress="displayinput"></Keyboard>
     </b-container>
