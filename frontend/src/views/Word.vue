@@ -7,11 +7,11 @@ const displayinput = (keypressed) => {
 };
 
 onMounted(() => {
-  window.addEventListener("keypress", (e) => {
+  window.addEventListener("keydown", (e) => {
     e.preventDefault();
-    let key = e.keyCode == 13 ? '{enter}'
-      : e.keyCode == 8 ? '{bksp}'
-      : String.fromCharCode(e.keyCode).toUpperCase();
+    let key = e.keyCode == 13 ? '{enter}' 
+    : e.keyCode == 8 ? '{bksp}' 
+    : String.fromCharCode(e.keyCode).toUpperCase();
     displayinput(key);
   });
 });
