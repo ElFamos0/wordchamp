@@ -40,7 +40,7 @@
 
             2.2.1.2 Grille interactive
 
-            2.2.1.3 Clavier visuel
+            2.2.1.3 Clavier virtuel
 
             (2.2.1.4 Sons)
 
