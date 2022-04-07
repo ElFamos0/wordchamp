@@ -8,7 +8,11 @@ const displayinput = (keypressed) => {
 
 onMounted(() => {
   window.addEventListener("keypress", (e) => {
-    console.log(e.key);
+    e.preventDefault();
+    let key = e.keyCode == 13 ? '{enter}'
+      : e.keyCode == 8 ? '{bksp}'
+      : String.fromCharCode(e.keyCode).toUpperCase();
+    displayinput(key);
   });
 });
 
