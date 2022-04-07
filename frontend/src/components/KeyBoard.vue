@@ -1,52 +1,34 @@
-<template>
-<div style="margin-bottom:0;">
-<div :class="keyboardClass" >
-</div>
-</div>
-</template>
-<script>
-
+<script setup>
 import Keyboard from 'simple-keyboard';
 import 'simple-keyboard/build/css/index.css';
+import {onMounted, ref, defineEmits} from 'vue';
 
-export default {
-  name: 'keyboard-component',
-  props: {
-    keyboardClass: {
-      default: 'simple-keyboard',
-      type: String,
-    },
-    input: {
-      type: String,
-    },
-  },
-  data: () => ({
-    keyboard: null,
-  }),
-  mounted() {
-    this.keyboard = new Keyboard(this.keyboardClass, {
-      onChange: this.onChange,
-      onKeyPress: this.onKeyPress,
-      layout: {
-        default: [
-          'a z e r t y u i o p',
-          'q s d f g h j k l m',
-          '{enter} w x c v b n {bksp}',
+const emit = defineEmits(["onKeyPress"]);
+
+const keyboard = ref(null);
+
+const onKeyPress = (button) => {
+  emit("onKeyPress", button)
+}
+
+onMounted(() => {
+  keyboard.value = new Keyboard("simple-keyboard", {
+    layout: {
+      default: [
+        'A Z E R T Y U I O P',
+        'Q S D F G H J K L M',
+        '{enter} W X C V B N {bksp}',
         ],
       },
-    });
-  },
-  methods: {
-    onChange(input) {
-      this.$emit('input', input);
-    },
-    onKeyPress(button) {
-      this.$emit('keypress', button);
-    },
-  },
-};
-
+      onKeyPress: onKeyPress,
+  });
+});
+      
 </script>
+<template>
+<div class="simple-keyboard"></div>
+</template>
+
 
 <style scoped>
 ul {
