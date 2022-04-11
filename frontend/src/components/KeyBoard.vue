@@ -26,7 +26,7 @@ onMounted(() => {
       
 </script>
 <template>
-<div class="simple-keyboard"></div>
+<div class="simple-keyboard" style="max-width:500px; margin:auto; margin-top:10%"></div>
 </template>
 
 

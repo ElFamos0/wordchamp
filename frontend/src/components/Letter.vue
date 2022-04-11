@@ -1,10 +1,6 @@
 <template>
-<div class="col border border-dark" style="max-width:100px; max-height:100px; align-content:center">
-    <p>P</p>
-</div>
-
-
-
+<b-col class="border" style="max-width:75px; height:75px; background:#1e1e1e; color:#ffffff">
+</b-col>
 </template>
 
 
