@@ -5,6 +5,11 @@
 import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import {onMounted, reactive} from "vue"
+import axios from 'axios';
+
+// path vers le backend
+
+const path = `${process.env.VUE_APP_BACKEND_URL}/word`;
 
 // gestion des inputs
 
@@ -51,7 +56,17 @@ onMounted(() => {
     : e.keyCode == 8 ? '{bksp}' 
     : String.fromCharCode(e.keyCode).toUpperCase();
     displayinput(key);
+    
   });
+  // on récupère la solution depuis l'api
+    axios.get(path)
+        .then((res) => {
+          game.solution = res.data;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
 });
 
 </script>
@@ -60,7 +75,7 @@ onMounted(() => {
 <template>
   <div class="random">
     <h1>Venez jouer à WordChamp</h1>
-    <p>Voici la valeur : {{ text }}</p>
+    <p>Voici la solution (en mode maxi tricherie): {{ game.solution }}</p>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
     <word-row class="justify-center" v-for="(tryy,i) in game.tried" :key="i" :word="tryy" :submitted="i < game.currentTry"></word-row>
     <b-container>
