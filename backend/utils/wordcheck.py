@@ -17,3 +17,5 @@ def check_word(word,solution):
         elif word[i] in solution:
             #a modifier les conditions sont plus complexes que ça
             colortab.append(1)
+    return colortab
+

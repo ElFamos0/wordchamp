@@ -1,11 +1,10 @@
 from setup import *
 from flask import jsonify
-from utils.getword import getrandomword
+from utils.getword import getrandomword, getrandomwordbysize
 
-# sanity check route
 @app.route('/word', methods=['GET'])
 def play():
     # get the word from the database
-    word = getrandomword()
+    word = getrandomwordbysize(8)
     # return the word as a json object
     return jsonify(word)
