@@ -1,4 +1,5 @@
 __all__ = [
     "ping",
-    "play"
+    "word",
+    "wordguess"
 ]
