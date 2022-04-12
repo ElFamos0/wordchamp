@@ -9,7 +9,7 @@ import axios from 'axios';
 
 // path vers le backend
 
-const path = `${process.env.VUE_APP_BACKEND_URL}/word`;
+const wordpath = `${process.env.VUE_APP_BACKEND_URL}/word`;
 
 // gestion des inputs
 
@@ -20,6 +20,7 @@ const displayinput = (keypressed) => {
   const wordguess = game.tried[game.currentTry];
   if (keypressed == "{enter}" && wordguess.length == game.solutionlength) {
     game.currentTry++;
+    // handle de la coloration des touches du clavier
   }
   if (keypressed == "{bksp}") {
     game.tried[game.currentTry] = wordguess.slice(0, -1);
@@ -59,7 +60,7 @@ onMounted(() => {
     
   });
   // on récupère la solution depuis l'api
-    axios.get(path)
+    axios.get(wordpath)
         .then((res) => {
           game.solution = res.data;
         })
@@ -77,7 +78,7 @@ onMounted(() => {
     <h1>Venez jouer à WordChamp</h1>
     <p>Voici la solution (en mode maxi tricherie): {{ game.solution }}</p>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
-    <word-row class="justify-center" v-for="(tryy,i) in game.tried" :key="i" :word="tryy" :submitted="i < game.currentTry"></word-row>
+    <word-row class="justify-center" v-for="(tryy,i) in game.tried" :key="i" :word="tryy" :submitted="i < game.currentTry" :solution=game.solution></word-row>
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
       <Keyboard @onKeyPress="displayinput"></Keyboard>
