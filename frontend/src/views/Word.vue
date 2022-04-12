@@ -1,7 +1,12 @@
 <script setup>
+
+// import des composants dont on a besoin
+
 import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import {onMounted, reactive} from "vue"
+
+// gestion des inputs
 
 const displayinput = (keypressed) => {
   if (game.currentTry >= 6) {
@@ -20,6 +25,10 @@ const displayinput = (keypressed) => {
   console.log(game.tried[game.currentTry]);
   }
 
+/*
+Variables "réactive qui va nou permettre de gèrer les données du jeu
+*/
+
 const game = reactive({
   solution: "",
   tried: ["", "", "", "", "", ""],
@@ -27,10 +36,13 @@ const game = reactive({
   solutionlength: 8,
 })
 
+// fonction pour vérifier qu'une entrée est une lettre
 
 const isaLetter = (keypressed) => {
   return (keypressed.match(/[a-zA-Z]/) && keypressed.length == 1);
 }
+
+// fonction qui s'execute dès la création de la page 
 
 onMounted(() => {
   window.addEventListener("keydown", (e) => {
@@ -44,12 +56,15 @@ onMounted(() => {
 
 </script>
 
+
 <template>
   <div class="random">
     <h1>Venez jouer à WordChamp</h1>
     <p>Voici la valeur : {{ text }}</p>
+    <!-- On utilise le composant wordrow avec toutes les props en arguments -->
     <word-row class="justify-center" v-for="(tryy,i) in game.tried" :key="i" :word="tryy" :submitted="i < game.currentTry"></word-row>
     <b-container>
+      <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
       <Keyboard @onKeyPress="displayinput"></Keyboard>
     </b-container>
   </div>
