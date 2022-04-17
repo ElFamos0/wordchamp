@@ -5,15 +5,38 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/random">Random</router-link> |
-      <router-link to="/word">Play</router-link>
+      <tag v-if="isAuth">
+        <router-link to="/word">Play</router-link> |
+      </tag>
+      <tag v-if="!isAuth">
+        <router-link to="/login">Login</router-link> |
+      </tag>
+      <tag v-if="isAuth">
+        <router-link to="/logout"> Logout </router-link> |
+      </tag>
+      <router-link to="/register">Register</router-link>
     </div>
     <router-view/>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'App',
+  created() {
+    this.$store.dispatch('auth/autoLogin');
+  },
+  computed: {
+    ...mapGetters('auth', {
+      isAuth: 'isAuthenticated',
+    })
+  },
+  methods: {
+    onLogout() {
+      this.$store.dispatch('auth/logout');
+    }
+  }
 }
 </script>
 

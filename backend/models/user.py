@@ -8,7 +8,6 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.String(40), primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     admin = db.Column(db.Boolean, nullable=False)
 
@@ -31,10 +30,10 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def __init__(self, username, email, admin=False):
+    def __init__(self, username, password, admin=False):
         self.id = uuid4().hex
         self.username = username
-        self.email = email
+        self.set_password(password)
         self.admin = admin
 
     def __repr__(self):
