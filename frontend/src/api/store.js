@@ -10,16 +10,21 @@ const mutations = {
 	authUser(state, userData) {
 		state.username = userData.username;
 		state.token = userData.token;
+		state.id = userData.id;
 	},
 	clearAuthData(state) {
 		state.username = null;
 		state.token = null;
+		state.id = null;
 	},
 };
 
 const getters = {
 	isAuthenticated(state) {
 		return state.token !== null;
+	},
+	getID(state) {
+		return state.id;
 	},
 };
 
@@ -29,9 +34,10 @@ const actions = {
         console.log("pinging " + path);
 		axios.post(path, authData).then(response => {
             console.log("done pinging " + path);
-
-            commit('authUser', { username: authData.username, token: response.data.token });
+			console.log(response)
+            commit('authUser', { username: authData.username, id: response.data.id, token: response.data.token });
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('id', response.data.id);
             localStorage.setItem('username', authData.username);
             console.log(`Logged in as ${authData.username} with token ${response.data.token}`);
             router.replace('/');
@@ -43,12 +49,13 @@ const actions = {
 	autoLogin({commit}) {
 		let token = localStorage.getItem('token');
 		let username = localStorage.getItem('username');
+		let id = localStorage.getItem('id');
 
-		if (!token || !username) {
+		if (!token || !username || !id) {
 			return;
 		}
 
-		commit('authUser', { username: username, token: token });
+		commit('authUser', { username: username, id: id, token: token });
 	},
 	logout: ({commit}) => {
 		commit('clearAuthData');

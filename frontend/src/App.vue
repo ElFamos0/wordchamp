@@ -3,18 +3,25 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/random">Random</router-link> |
-      <tag v-if="isAuth">
-        <router-link to="/word">Play</router-link> |
-      </tag>
-      <tag v-if="!isAuth">
-        <router-link to="/login">Login</router-link> |
-      </tag>
-      <tag v-if="isAuth">
-        <router-link to="/logout"> Logout </router-link> |
-      </tag>
-      <router-link to="/register">Register</router-link>
+      <b-nav tabs>
+          <tag v-if="isAuth">
+            <b-nav-item><router-link to="/profile"> <img class="pp" v-bind:src="url + '/avatar/' + id" /> Profil </router-link></b-nav-item>
+          </tag>
+          <b-nav-item> <router-link to="/"> Maison </router-link></b-nav-item>
+          <b-nav-item> <router-link to="/random"> Aléatoire </router-link></b-nav-item>
+          <tag v-if="isAuth">
+            <b-nav-item> <router-link to="/word"> Joue </router-link></b-nav-item>
+          </tag>
+          <tag v-if="!isAuth">
+            <b-nav-item> <router-link to="/login"> Connectes-toi </router-link></b-nav-item>
+          </tag>
+          <tag v-if="isAuth">
+            <b-nav-item><router-link to="/logout"> Déconnectes-toi </router-link></b-nav-item>
+          </tag>
+          <tag v-if="!isAuth">
+            <b-nav-item><router-link to="/register"> Enregistres-toi </router-link></b-nav-item>
+          </tag>
+      </b-nav>
     </div>
     <router-view/>
   </div>
@@ -27,9 +34,15 @@ export default {
   created() {
     this.$store.dispatch('auth/autoLogin');
   },
+  data() {
+      return {
+          url:process.env.VUE_APP_BACKEND_URL,
+      }
+  },
   computed: {
     ...mapGetters('auth', {
       isAuth: 'isAuthenticated',
+      id: "getID"
     })
   },
   methods: {
@@ -61,5 +74,12 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.pp {
+  height:25px;
+  width:25px;
+  margin-right:5px;
+  border-radius:50%;
 }
 </style>

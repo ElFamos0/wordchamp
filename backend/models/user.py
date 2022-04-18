@@ -13,17 +13,17 @@ class User(db.Model, UserMixin):
 
     def is_admin(self):
         return self.admin
-
-    def avatar_url(self):
+    
+    def avatar_name(self):
         folder = f"static/avatar/{self.id}"
         if not os.path.exists(folder):
-            return f"/r/a/{self.id}/0"
+            return "0"
         L = os.listdir(folder)
         if len(L) == 0: 
-            return f"/r/a/{self.id}/0"
+            return "0"
         name = L[0].replace(".png", "")
-        return f"/r/a/{self.id}/{name}"
-    
+        return name
+        
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 

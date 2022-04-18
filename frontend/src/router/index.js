@@ -5,6 +5,7 @@ import Word from "@/views/Word.vue";
 import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
+import Profile from "@/views/Profile.vue";
 import axiosAuth from '@/api/axios-auth'
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
     path: "/logout",
     name: "Logout",
     component: Logout,
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
   },
 ];
 

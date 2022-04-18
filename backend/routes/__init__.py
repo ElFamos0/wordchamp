@@ -3,5 +3,6 @@ __all__ = [
     "word",
     "wordguess",
     "register",
-    "login"
+    "login",
+    "avatar"
 ]
