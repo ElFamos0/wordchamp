@@ -5,6 +5,6 @@ from utils.getword import getrandomword, getrandomwordbysize
 @app.route('/word', methods=['GET'])
 def play():
     # get the word from the database
-    word = getrandomwordbysize(8)
+    word = getrandomword()
     # return the word as a json object
     return jsonify(word)
