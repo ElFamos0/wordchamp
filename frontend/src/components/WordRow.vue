@@ -32,37 +32,34 @@ watch( () => rowprop.submitted, (newVal) => {
             // on vérifie si la lettre est bien placée
             if (guess[i] == solution[i]) {
                 colortab.value[i] = "#cc0808";
-                }
-            else{
+            } else {
                 // on met la lettre dans notre sac car elle peut être mal placée
                 letterbag.push(solution[i]);
                 // on initialise à gris la case
                 colortab.value[i] = "#1e1e1e";
                 }
             }
-        for (let i=0; i < solution.length; i++){
-            if (colortab.value[i] == "#1e1e1e"){
-                if (letterbag.includes(guess[i])){
+        for (let i=0; i < solution.length; i++) {
+            if (colortab.value[i] == "#1e1e1e") {
+                if (letterbag.includes(guess[i])) {
                     colortab.value[i] = "#bd8517";
                     letterbag.splice(letterbag.indexOf(guess[i]), 1);
                     }
                 }
             }
         }
-        });
+});
 
 
 
 </script>
 
 <template>
-<b-container>
-<b-row class="justify-content-md-center" style="font-size:50px;">
-    <letter v-for="i in rowprop.solution.length" :key="i" :letter=word[i-1] :color=colortab[i-1]></letter>
-</b-row>
-</b-container>
-
-
+    <b-container>
+        <b-row class="justify-content-md-center" style="font-size:50px;">
+            <letter v-for="i in rowprop.solution.length" :key="i" :letter=word[i-1] :color=colortab[i-1]></letter>
+        </b-row>
+    </b-container>
 </template>
 
 

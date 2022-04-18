@@ -6,11 +6,11 @@ def getrandomword():
     listemot = Word.query.all()
     n = len(listemot)
     i = randrange(0, n)
-    return listemot[i].word
+    return listemot[i]
 
 def getrandomwordbysize(size):
     listemot = Word.query.filter_by(size=size).all()
     n = len(listemot)
     i = randrange(0, n)
-    return listemot[i].word
+    return listemot[i]
 

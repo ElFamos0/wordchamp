@@ -28,7 +28,7 @@ const displayinput = (keypressed) => {
   if (isaLetter(keypressed) && wordguess.length < game.solutionlength) {
       game.tried[game.currentTry] += keypressed;
   }
-  }
+}
 
 /*
 Variables "réactive qui va nou permettre de gèrer les données du jeu

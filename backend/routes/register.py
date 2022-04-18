@@ -4,7 +4,7 @@ from models.user import User
 
 @app.route('/register', methods=['POST'])
 def register():
-    print(request.json)
+    #print(request.json)
     username = request.json["username"]
     password = request.json["password"]
     if password == "" or username == "":
