@@ -7,7 +7,4 @@ def play():
     # get the word from the database
     word = getrandomword()
     # return the word as a json object
-    return jsonify({
-        "id": word.id, 
-        "size": word.size
-    })
+    return(jsonify(word))
