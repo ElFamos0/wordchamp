@@ -1,7 +1,7 @@
 <template>
 <!-- Utilisation du v-bind afin de pouvoir choisir le background en fonction de l'état de la case -->
-<b-col class="border" v-bind:style="{background:color}" style="max-width:75px; height:75px; color:#ffffff">
-    {{letter}}
+<b-col class="border" v-bind:style="{background:letterprop.color}" style="max-width:75px; height:75px; color:#ffffff">
+    {{letterprop.letter}}
 </b-col>
 </template>
 
@@ -25,6 +25,5 @@ const letterprop = defineProps({
     })
 
 
-console.log(letterprop.letter); // to avoid unused variable warning
 
 </script>
