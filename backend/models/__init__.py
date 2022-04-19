@@ -1,4 +1,7 @@
 __all__ = [
     "user",
-    "word"
+    "word",
+    "games",
+    "games_normal",
+    "tries"
 ]
