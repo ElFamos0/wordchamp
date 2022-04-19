@@ -1,14 +1,18 @@
 from setup import *
 from uuid import uuid4
-from setup import db
+from models.game import Game
 
-class Games_normal(db.Model):
+class Game_normal(Game):
     __tablename__ = 'games_normal'
-    id = db.Column(db.String(40), primary_key=True)
+    id = db.Column(db.String(40), db.ForeignKey("games.id"), primary_key=True)
     id_user = db.Column(db.String(40), db.ForeignKey("users.id"),nullable=False)
     solution = db.Column(db.String(40), nullable=False)
     maxtry = db.Column(db.Integer, nullable=False)
     length = db.Column(db.Integer, nullable=False)
+
+    __mapper_args__ = {
+        'polymorphic_identity':'game_normal',
+    }
 
     def __init__(self, id_user,solution,maxtry,length):
         self.id = uuid4().hex

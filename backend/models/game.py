@@ -2,12 +2,17 @@ from setup import *
 from setup import db
 from uuid import uuid4
 
-class Games(db.Model):
+class Game(db.Model):
     __tablename__ = 'games'
     id = db.Column(db.String(40), primary_key=True)
-    game_type = db.Column(db.String(40), primary_key=True)
+    game_type = db.Column(db.String(40))
     state = db.Column(db.Boolean, nullable=False)
     date = db.Column(db.Integer, nullable=False)
+
+    __mapper_args__ = {
+        'polymorphic_identity':'game',
+        'polymorphic_on':game_type
+    }
 
     def __init__(self, game_type,date):
         self.id = uuid4().hex
