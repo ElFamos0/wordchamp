@@ -6,6 +6,8 @@ import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
 import Profile from "@/views/Profile.vue";
+
+import ProfileMain from "@/components/ProfileMain.vue";
 import axiosAuth from '@/api/axios-auth'
 
 const routes = [
@@ -44,6 +46,16 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
+    children: [
+      {
+        path: '',
+        component: ProfileMain,
+      },
+      {
+        path: 'historique',
+        component: ProfileMain,
+      },
+    ],
   },
 ];
 

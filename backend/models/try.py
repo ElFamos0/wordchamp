@@ -7,8 +7,8 @@ class Try(db.Model):
     id = db.Column(db.String(40), primary_key=True)
     try_number = db.Column(db.Integer,nullable=False)
     word = db.Column(db.String(40), nullable=False)
-    id_game = db.Column(db.String(40), db.ForeignKey("game.id"),nullable=False)
-    game_type = db.Column(db.String(40), db.ForeignKey("game.game_type"),nullable=False)
+    id_game = db.Column(db.String(40), db.ForeignKey("games.id"),nullable=False)
+    game_type = db.Column(db.String(40), db.ForeignKey("games.game_type"),nullable=False)
 
    
 

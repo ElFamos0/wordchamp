@@ -5,7 +5,7 @@
     <div id="nav">
       <b-nav tabs>
           <tag v-if="isAuth">
-            <b-nav-item><router-link to="/profile"> <img class="pp" v-bind:src="url + '/avatar/' + id" /> Profil </router-link></b-nav-item>
+            <b-nav-item><router-link to="/profile">     <b-avatar variant="primary" v-bind:src="url + '/avatar/' + id" size="25px"/> Profil </router-link></b-nav-item>
           </tag>
           <b-nav-item> <router-link to="/"> Maison </router-link></b-nav-item>
           <b-nav-item> <router-link to="/random"> Aléatoire </router-link></b-nav-item>
@@ -74,12 +74,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
-
-.pp {
-  height:25px;
-  width:25px;
-  margin-right:5px;
-  border-radius:50%;
 }
 </style>

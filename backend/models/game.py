@@ -10,7 +10,7 @@ class Game(db.Model):
     date = db.Column(db.Integer, nullable=False)
 
     __mapper_args__ = {
-        'polymorphic_identity':'game',
+        'polymorphic_identity':'games',
         'polymorphic_on':game_type
     }
 
