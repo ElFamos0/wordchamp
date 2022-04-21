@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <b-nav tabs>
-          <b-modal id="modal-profile" title="Profil">
+          <b-modal id="modal-profile" :title="'Profil de ' + username">
             <Profile />
           </b-modal>
           <tag v-if="isAuth">
@@ -51,7 +51,8 @@ export default {
   computed: {
     ...mapGetters('auth', {
       isAuth: 'isAuthenticated',
-      userid: "getID"
+      userid: "getID",
+      username: 'getUsername'
     })
   },
   methods: {

@@ -1,9 +1,13 @@
 <template>
   <div class="profil">
-    <b-avatar variant="primary" v-bind:src="url + '/avatar/' + id" size="100px"></b-avatar>
-
-    <p><b>{{ username }}</b></p>
-    <div class="mb-3" id="nav">
+    <b-row class="justify-content-md-center">
+      <b-col cols="4"></b-col>
+      <b-col cols="4">
+        <b-avatar variant="primary" v-bind:src="url + '/avatar/' + id" size="100px"></b-avatar>
+      </b-col>
+      <b-col cols="5"></b-col>
+    </b-row>
+    <div class="mb-4" id="nav">
       <b-nav tabs class="justify-content-md-center">
           <b-nav-item> <a href="#" :class="{ 'router-link-exact-active': edit }" @click="edit=true; histo=false"> Modifier Profil </a></b-nav-item>
           <b-nav-item> <a href="#" :class="{ 'router-link-exact-active': histo }" @click="edit=false; histo=true"> Historique </a></b-nav-item>

@@ -1,21 +1,24 @@
-import axios from 'axios'
-import router from '@/router'
+import axios from 'axios';
+import router from '@/router';
 
 const state = {
 	username: null,
 	id: null,
 	token: null,
+	refresh_token: null,
 };
 
 const mutations = {
 	authUser(state, userData) {
 		state.username = userData.username;
 		state.token = userData.token;
+		state.refresh_token = userData.refresh_token;
 		state.id = userData.id;
 	},
 	clearAuthData(state) {
 		state.username = null;
 		state.token = null;
+		state.refresh_token = null;
 		state.id = null;
 	},
 	changeUsername(state, username) {
@@ -39,31 +42,37 @@ const actions = {
 	login: ({commit}, authData) => {
         const path = `${process.env.VUE_APP_BACKEND_URL}/login`;
 		axios.post(path, authData).then(response => {
-            commit('authUser', { username: authData.username, id: response.data.id, token: response.data.token });
+            commit('authUser', { username: authData.username, id: response.data.id, token: response.data.token, refresh_token: response.data.refresh_token });
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('refresh_token', response.data.refresh_token);
             localStorage.setItem('id', response.data.id);
-            localStorage.setItem('username', authData.username);
+            localStorage.setItem('username', response.data.username);
             router.replace('/');
-		}).catch(error => {
-			console.log(error);
+		}).catch(() => {
+			if (authData.refresh_token) {
+				this.$store.di
+			}
 		})
 	},
 	autoLogin({commit}) {
 		console.log('autoLogin');
 		let token = localStorage.getItem('token');
+		let refresh_token = localStorage.getItem('refresh_token');
 		let username = localStorage.getItem('username');
 		let id = localStorage.getItem('id');
 
-		if (!token || !username || !id) {
+		if (!refresh_token || !token || !username || !id) {
 			return;
 		}
 
-		commit('authUser', { username: username, id: id, token: token });
+		commit('authUser', { username: username, id: id, token: token, refresh_token: refresh_token });
 	},
 	logout: ({commit}) => {
 		commit('clearAuthData');
+		localStorage.removeItem('id');
 		localStorage.removeItem('username');
 		localStorage.removeItem('token');
+		localStorage.removeItem('refresh_token');
 		router.replace('login');
 	},
 	changeUsername: ({commit}, username) => {

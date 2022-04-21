@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from os import environ, path
 from flask_jwt_extended import JWTManager
-from flask_sessionstore import Session
+from datetime import timedelta
 
 # configuration
 DEBUG = True
@@ -11,6 +11,9 @@ DEBUG = True
 # instantiate the app
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 
 env = environ.get("ENVIRONMENT", "development")
 

@@ -24,6 +24,9 @@ def avatar(id):
 @jwt_required()
 def set_avatar():
     user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user == None: return jsonify({"error": "user not found"}), 400
+    
     f = request.files['file']
     if f:
         folder = f"static/avatar/{user_id}"

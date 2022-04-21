@@ -3,7 +3,7 @@
     <b-container>
         <b-form-group>
             <b-alert v-model="errorMessage" variant="danger" dismissible>
-                {{errorMessage}}
+                {{ errorMessage }}
             </b-alert>
 
             <div class="large-12 medium-12 small-12 cell">
@@ -32,8 +32,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import axiosAuth from '@/api/axios-auth'
+import { mapGetters, useStore } from 'vuex';
+import axiosAuth from '@/api/axios-auth';
+import { useRoute } from 'vue-router';
+
 export default {
   name: 'profile-main',
   data(){
@@ -41,6 +43,8 @@ export default {
         file: null,
         new_username: null,
         errorMessage: null,
+        $router: useRoute(),
+        $store: useStore(),
       }
   },
   computed: {
@@ -49,29 +53,29 @@ export default {
     })
   },
   methods: {
-      envoiUsername(){
-        axiosAuth.post( '/profile_set/username', {"username":this.new_username}).then(response => {
-            this.$store.dispatch('auth/changeUsername', response.data.new_username)
-        }).catch((err) => {
-                this.errorMessage = err.response.data.error;
-        }).finally(() => {
-            this.$router.push('/profile');
+      envoiUsername: function(){
+        let that = this;
+        axiosAuth.post( '/profile_set/username', {"username":that.new_username}).then(function(response) {
+          that.$store.dispatch('auth/changeUsername', response.data.new_username)
+        }).catch(function(err) {
+          that.errorMessage = err.response.data.error;
+          console.log(that.errorMessage)
         });
       },
       envoiAvatar(){
-            let formData = new FormData();
-            formData.append('file', this.file);
-            axiosAuth.post( '/profile_set/avatar',
-                formData,
-                {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-              }
-            ).catch((err) => {
-                this.errorMessage = err.response.data.error;
-            }).finally(function(){
-          this.$router.push('/profile');
+        let formData = new FormData();
+        let that = this;
+        formData.append('file', this.file);
+        axiosAuth.post( '/profile_set/avatar',formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        ).catch(function(err) {
+          that.errorMessage = err.response.data.error;
+        }).then(function(){
+          that.$router.go();
         })
       },
       gereEnvoi(){

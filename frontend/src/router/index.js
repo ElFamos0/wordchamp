@@ -6,7 +6,8 @@ import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
 import Choice from "@/views/Choice.vue";
-import axiosAuth from '@/api/axios-auth'
+import axiosAuth from '@/api/axios-auth';
+import axiosRefresh from '@/api/axios-refresh';
 
 const routes = [
   {
@@ -83,9 +84,22 @@ const router = createRouter({
   routes,
 });
 
+function refresh_token() {
+  const path = `${process.env.VUE_APP_BACKEND_URL}/refresh`;
+  axiosRefresh.post(path).then(response => {
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('refresh_token', response.data.refresh_token);
+    localStorage.setItem('id', response.data.id);
+    localStorage.setItem('username', response.data.username);
+    return true
+  }).catch(() => {
+    return false
+  });
+}
+
 
 router.beforeEach((to, from, next) => {
-	let token = localStorage.getItem('token');
+  let token = localStorage.getItem('token');
 	let requireAuth = to.matched.some(record => record.meta.requiresAuth);
 
 	if (!requireAuth) {
@@ -104,6 +118,10 @@ router.beforeEach((to, from, next) => {
 				next('/word');
         return;
 			}).catch(() => {
+        if (refresh_token()) {
+          next('/word');
+          return;
+        }
 				next();
         return;
 			});
@@ -119,7 +137,11 @@ router.beforeEach((to, from, next) => {
 			next();
       return;
 		}).catch(() => {
-			next('/login');
+      if (refresh_token()) {
+        next();
+        return;
+      }
+      next('/login');
       return;
 		})
 	}
@@ -127,6 +149,11 @@ router.beforeEach((to, from, next) => {
     axiosAuth.post('/verify-token').then(() => {
 			next();
       return;
+		}).catch(() => {
+      if (refresh_token()) {
+        next();
+        return;
+      }
 		})
   }
 
