@@ -6,6 +6,10 @@ import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import {onMounted, reactive} from "vue"
 import axios from 'axios';
+import { useRoute } from 'vue-router'
+
+
+
 
 // path vers le backend
 
@@ -74,7 +78,11 @@ onMounted(() => {
     
   });
   // on récupère la solution depuis l'api
-    axios.get(wordpath)
+  const route = useRoute()
+  const id = route.params.i
+  const id2 = id.slice(1,2)
+  console.log(id2)
+    axios.get(wordpath+"/"+id2)
         .then((res) => {
           console.log(res.data)
           game.solution = res.data;
