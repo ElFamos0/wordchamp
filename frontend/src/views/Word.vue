@@ -67,7 +67,6 @@ const loosecase = () => {return (!wincase() && game.currentTry == 6)}
 
 onMounted(() => {
   window.addEventListener("keydown", (e) => {
-    e.preventDefault();
     let key = e.keyCode == 13 ? '{enter}' 
     : e.keyCode == 8 ? '{bksp}' 
     : String.fromCharCode(e.keyCode).toUpperCase();
@@ -93,7 +92,7 @@ onMounted(() => {
 
 <template>
   <div class="random">
-    <h1>Venez jouer à WordChamp</h1>
+    <h1 style="margin-bottom:1%">Venez jouer à WordChamp</h1>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
     <word-row class="justify-center" v-for="(tryy,i) in game.tried" :key="i" :word="tryy" :submitted="i < game.currentTry" :solution=game.solution></word-row>
     <p v-if="loosecase()" class="text-center">Vous avez perdu le mot est {{game.solution}}</p>

@@ -1,4 +1,4 @@
-<template>
+    <template>
   <div class="random">
     <b-container>
         <h1>Login</h1>

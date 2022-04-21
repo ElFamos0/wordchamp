@@ -6,6 +6,7 @@ import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
 import Profile from "@/views/Profile.vue";
+import Choice from "@/views/Choice.vue";
 
 import ProfileMain from "@/components/ProfileMain.vue";
 import axiosAuth from '@/api/axios-auth'
@@ -68,6 +69,14 @@ const routes = [
     component: Logout,
     meta: {
       title: 'Wordchamp - Déconnection',
+    }
+  },
+  {
+    path: "/choice",
+    name: "choice-page",
+    component: Choice,
+    meta: {
+      title: 'Blue or red pill ?',
     }
   },
   {

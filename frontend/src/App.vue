@@ -10,7 +10,7 @@
           <b-nav-item> <router-link to="/"> Maison </router-link></b-nav-item>
           <b-nav-item> <router-link to="/random"> Aléatoire </router-link></b-nav-item>
           <tag v-if="isAuth">
-            <b-nav-item> <router-link to="/word"> Joue </router-link></b-nav-item>
+            <b-nav-item> <router-link to="/choice"> Joue </router-link></b-nav-item>
           </tag>
           <tag v-if="!isAuth">
             <b-nav-item> <router-link to="/login"> Connectes-toi </router-link></b-nav-item>
