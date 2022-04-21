@@ -36,7 +36,7 @@ const routes = [
     }
   },
   {
-    path: "/word",
+    path: "/word/:i",
     name: "Word",
     component: Word,
 		meta: { 
@@ -72,7 +72,7 @@ const routes = [
     path: "/choice",
     name: "choice-page",
     component: Choice,
-    meta: {
+    meta: { 
       title: 'Blue or red pill ?',
     }
   },

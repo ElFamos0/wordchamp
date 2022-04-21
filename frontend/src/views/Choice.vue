@@ -3,8 +3,7 @@ export default {
     name: 'choice-page',
     methods: { 
         onClick : function(i) {
-            console.log(i)
-            this.$router.push('/word')
+            this.$router.push('/word/:'+(i+4))
         }       
     },
 }
