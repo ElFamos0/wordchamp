@@ -3,6 +3,7 @@ import router from '@/router'
 
 const state = {
 	username: null,
+	id: null,
 	token: null,
 };
 
@@ -48,6 +49,7 @@ const actions = {
 		})
 	},
 	autoLogin({commit}) {
+		console.log('autoLogin');
 		let token = localStorage.getItem('token');
 		let username = localStorage.getItem('username');
 		let id = localStorage.getItem('id');

@@ -5,10 +5,7 @@ import Word from "@/views/Word.vue";
 import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
-import Profile from "@/views/Profile.vue";
 import Choice from "@/views/Choice.vue";
-
-import ProfileMain from "@/components/ProfileMain.vue";
 import axiosAuth from '@/api/axios-auth'
 
 const routes = [
@@ -28,7 +25,7 @@ const routes = [
           content: 'Ceci est une description.'
         }
       ]
-    }
+    },
   },
   {
     path: "/random",
@@ -79,25 +76,6 @@ const routes = [
       title: 'Blue or red pill ?',
     }
   },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: Profile,
-    children: [
-      {
-        path: '',
-        component: ProfileMain,
-      },
-      {
-        path: 'historique',
-        component: ProfileMain,
-      },
-    ],
-    meta: {
-      requiresAuth: true,
-      title: 'Wordchamp - Le Profil',
-    }
-  },
 ];
 
 const router = createRouter({
@@ -112,35 +90,46 @@ router.beforeEach((to, from, next) => {
 
 	if (!requireAuth) {
 		next();
+    return;
 	}
 
 	if (requireAuth && !token) {
 		next('/login');
+    return;
 	}
 
 	if (to.path === '/login') {
 		if (token) {
 			axiosAuth.post('/verify-token').then(() => {
 				next('/word');
+        return;
 			}).catch(() => {
 				next();
+        return;
 			});
 		}
 		else {
 			next();
+      return;
 		}
 	}
 
 	if (requireAuth && token) {
 		axiosAuth.post('/verify-token').then(() => {
 			next();
+      return;
 		}).catch(() => {
 			next('/login');
+      return;
 		})
 	}
-});
+  if (token) {
+    axiosAuth.post('/verify-token').then(() => {
+			next();
+      return;
+		})
+  }
 
-router.beforeEach((to, from, next) => {
   // This goes through the matched routes from last to first, finding the closest route with a title.
   // e.g., if we have `/some/deep/nested/route` and `/some`, `/deep`, and `/nested` have titles,
   // `/nested`'s will be chosen.

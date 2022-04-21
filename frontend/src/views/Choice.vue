@@ -2,10 +2,10 @@
 export default {
     name: 'choice-page',
     methods: { 
-    onClick : (i) => {
-        console.log(i)
-        this.$router.push('/word')
-}       
+        onClick : function(i) {
+            console.log(i)
+            this.$router.push('/word')
+        }       
     },
 }
 </script>
