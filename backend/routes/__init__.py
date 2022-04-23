@@ -5,5 +5,6 @@ __all__ = [
     "register",
     "login",
     "avatar",
-    "profile"
+    "profile",
+    "history"
 ]

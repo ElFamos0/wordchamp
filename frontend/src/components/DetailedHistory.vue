@@ -2,7 +2,7 @@
     <div class="hcontainer">
         Historique détaillé de la partie {{entryId}}
         <div v-for='word in tries1' :key='word.id'>
-            <word-row :solution='solution1' :word='word.try' :submitted='false'/>
+            <word-row :solution='solution1' :word='word.try' :submitted='true'/>
         </div>
     </div>
 </template>
@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
 .hcontainer {
-  margin: 10px auto;
+  margin: 50px;
   overflow: auto;
   border: 2px solid rgb(91, 229, 16);
   padding: 10px;

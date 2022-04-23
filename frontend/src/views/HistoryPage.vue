@@ -8,6 +8,7 @@
 
 <script>
 import HistoryTable from '../components/HistoryTable.vue'
+import axios from 'axios';
 
 export default {
   name: 'HistoryPage',
@@ -18,14 +19,15 @@ export default {
   },
   emits: ['show-details'],
   data() {
-      return {
-          entries:[
-              {id:"1", motFinal:"Oulala", result:"Victoire"},
-              {id:"2", motFinal:"MaitreSauceur", result:"Défaite"},
-              {id:"3", motFinal:"sérieuxmec", result:"NULMDR"},
-              {id:"4", motFinal:"sheeeeeeeeeeeeeeeeeeesh", result:"Défiak"},
-          ]
+    return {
+      entries:[]
       }
+  },
+  created() {
+      const path = `${process.env.VUE_APP_BACKEND_URL}/history`
+      axios.get(path).then((res)=> {
+        this.entries = res.data.entries
+      })
   },
 }
 </script>
