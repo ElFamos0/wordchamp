@@ -12,7 +12,7 @@
 import WordRow from './WordRow.vue'
 
 export default {
-    name: 'DetailedHistory',
+    name: 'DetailedEntry',
     props: {
         entryId: String,
         solution: String,

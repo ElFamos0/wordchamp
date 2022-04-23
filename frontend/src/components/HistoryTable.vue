@@ -7,7 +7,7 @@
           />
         </div>
         <div>
-          <DetailedHistory v-if="detailsToggled[entry.id]" :entryId="entry.id"/>
+          <DetailedEntry v-if="detailsToggled[entry.id]" :entryId="entry.id"/>
           <br>
         </div>
     </div>
@@ -17,7 +17,7 @@
 
 <script>
 import HistoryEntry from './HistoryEntry.vue'
-import DetailedHistory from '../components/DetailedHistory.vue'
+import DetailedEntry from '../components/DetailedEntry.vue'
 
 export default {
   name: 'HistoryTable',
@@ -26,7 +26,7 @@ export default {
   },
   components: {
     HistoryEntry,
-    DetailedHistory,
+    DetailedEntry,
   },
   emits: ['show-details'],
   methods: {
