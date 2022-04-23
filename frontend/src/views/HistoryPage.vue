@@ -10,7 +10,7 @@
 import HistoryTable from '../components/HistoryTable.vue'
 
 export default {
-  name: 'History',
+  name: 'HistoryPage',
   props: {
   },
   components: {

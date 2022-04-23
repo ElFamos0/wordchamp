@@ -6,7 +6,7 @@ import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
 import Choice from "@/views/Choice.vue";
-import History from "@/views/History.vue";
+import HistoryPage from "@/views/HistoryPage.vue";
 import axiosAuth from '@/api/axios-auth';
 import axiosRefresh from '@/api/axios-refresh';
 
@@ -80,8 +80,8 @@ const routes = [
   },
   {
     path: "/history",
-    name: "history",
-    component: History,
+    name: "history-page",
+    component: HistoryPage,
     meta: {
       title: 'Wordchamp - Historique',
     }
