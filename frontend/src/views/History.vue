@@ -29,7 +29,7 @@ export default {
   },
   methods: {
       showDetails(entryId) {
-        console.log("vous avez cliqué sur l'entrée : ", entryId)
+        console.log("vous avez cliqué sur l'entrée ", entryId)
       }
   }
 }

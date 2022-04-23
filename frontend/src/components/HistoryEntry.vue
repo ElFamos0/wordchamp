@@ -18,7 +18,7 @@ export default {
   },
   components: {
   },
-  emits: [],
+  emits: ['show-details'],
 }
 </script>
 
