@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+    <!-- id inutile ? -->
+    <div @dblclick="$emit('show-details', entryId )" class="container">
         <div>Id : {{entryId}}</div>
         <div>Mot final : {{motFinal}}</div>
         <div>{{result}}</div>

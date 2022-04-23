@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Historique</h1>
-        <history-table :entries="entries"/>
+        <history-table @show-details="showDetails" :entries="entries"/>
     </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   components: {
     HistoryTable,
   },
-  emits: [],
+  emits: ['show-details'],
   data() {
       return {
           entries:[
@@ -25,6 +25,11 @@ export default {
               {id:"3", motFinal:"sérieuxmec", result:"NULMDR"},
               {id:"4", motFinal:"sheeeeeeeeeeeeeeeeeeesh", result:"Défiak"},
           ]
+      }
+  },
+  methods: {
+      showDetails(entryId) {
+        console.log("vous avez cliqué sur l'entrée : ", entryId)
       }
   }
 }

@@ -1,7 +1,9 @@
 <template>
   <div>
     <div v-for="entry in entries" :key="entry.id">
-        <HistoryEntry :entryId="entry.id" :motFinal="entry.motFinal" :result="entry.result"/>
+        <HistoryEntry @show-details="$emit('show-details', entry.id)" 
+        :entryId="entry.id" :motFinal="entry.motFinal" :result="entry.result"
+        />
     </div>
   </div>
 </template>
@@ -18,7 +20,7 @@ export default {
   components: {
     HistoryEntry,
   },
-  emits: [],
+  emits: ['show-details'],
 }
 </script>
 
