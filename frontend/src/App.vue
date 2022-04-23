@@ -13,6 +13,9 @@
           <tag v-if="isAuth">
             <b-nav-item> <router-link to="/choice"> Joue </router-link></b-nav-item>
           </tag>
+          <tag v-if="isAuth">
+            <b-nav-item> <router-link to="/history"> Historique </router-link></b-nav-item>
+          </tag>
           <tag v-if="!isAuth">
             <b-nav-item> <router-link to="/login"> Connectes-toi </router-link></b-nav-item>
           </tag>
