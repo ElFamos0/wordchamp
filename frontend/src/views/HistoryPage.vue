@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Historique</h1>
-        <history-table @show-details="showDetails" :entries="entries"/>
+        <history-table :entries="entries"/>
     </div>
 </template>
 
@@ -27,11 +27,6 @@ export default {
           ]
       }
   },
-  methods: {
-      showDetails(entryId) {
-        console.log("vous avez cliqué sur l'entrée ", entryId)
-      }
-  }
 }
 </script>
 
