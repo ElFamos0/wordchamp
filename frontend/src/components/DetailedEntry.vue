@@ -1,9 +1,13 @@
 <template>
     <div class="hcontainer">
-        Historique détaillé de la partie {{entryId}}
+        <h2>Historique détaillé de la partie {{entryId}}</h2>
         <div v-for='guess in guesses' :key='guess.id'>
             <word-row :solution='solution' :word='guess.word' :submitted='true'/>
         </div>
+        <div v-for='i in (maxtry-(guesses.length))' :key='i'>
+            <word-row :solution='solution' word='' :submitted='true'/>
+        </div>
+        <h3>La solution était : {{solution}}</h3>
     </div>
 </template>
 
