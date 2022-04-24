@@ -2,7 +2,7 @@
     <!-- id inutile ? -->
     <div @dblclick="$emit('show-details', entryId )" class="container">
         <div>Id : {{entryId}}</div>
-        <div>Mot final : {{motFinal}}</div>
+        <div>Mot final : {{solution}}</div>
         <div>{{result}}</div>
     </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   name: 'HistoryEntry',
   props: {
     entryId : String,
-    motFinal : String,
+    solution : String,
     result: String,
   },
   components: {

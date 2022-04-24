@@ -1,8 +1,8 @@
 <template>
     <div class="hcontainer">
         Historique détaillé de la partie {{entryId}}
-        <div v-for='word in tries1' :key='word.id'>
-            <word-row :solution='solution1' :word='word.try' :submitted='true'/>
+        <div v-for='guess in guesses' :key='guess.id'>
+            <word-row :solution='solution' :word='guess.word' :submitted='true'/>
         </div>
     </div>
 </template>
@@ -16,7 +16,7 @@ export default {
     props: {
         entryId: String,
         solution: String,
-        tries: Array,
+        guesses: Array,
     },
     components: {
         WordRow,

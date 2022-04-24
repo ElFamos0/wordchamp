@@ -3,11 +3,11 @@
     <div v-for="entry in entries" :key="entry.id">
         <div>
           <HistoryEntry @show-details="showDetails"
-          :entryId="entry.id" :motFinal="entry.motFinal" :result="entry.result"
+          :entryId="entry.id" :solution="entry.solution" :result="entry.result"
           />
         </div>
         <div>
-          <DetailedEntry v-if="detailsToggled[entry.id]" :entryId="entry.id"/>
+          <DetailedEntry v-if="detailsToggled[entry.id]" :entryId="entry.id" :solution="entry.solution" :result="entry.result" :guesses="entry.guesses"/>
           <br>
         </div>
     </div>
