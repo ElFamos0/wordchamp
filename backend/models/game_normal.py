@@ -14,8 +14,10 @@ class Game_normal(Game):
         'polymorphic_identity':'game_normal',
     }
 
-    def __init__(self, id_game,id_user,solution,maxtry,length):
-        self.id = id_game
+    def __init__(self,id_user,solution,maxtry,length,date):
+        id = uuid4().hex
+        self.id = id
+        super().__init__(id,"game_normal",date)
         self.id_user = id_user
         self.solution = solution
         self.maxtry = maxtry
