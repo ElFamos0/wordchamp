@@ -1,7 +1,7 @@
 from models.game_normal import Game_normal
 from setup import *
 from flask import request, jsonify
-# from utils import estGagnee
+from utils import estGagnee
 
 @app.route('/history', methods=['GET'])
 def history():
@@ -11,8 +11,10 @@ def history():
     for game in requete:
         temp={"id":"", "guesses":[], "solution":"", "result":""}
         guesses=[]
+        temp.id = game.id
+        temp.guesses = guesses
         temp.solution = game.solution
-        # temp.result = estGagnee(guesses, game.solution)
+        temp.result = estGagnee(guesses, game.solution)
         entries.append(temp)
     # return 'test'
     # à récup dans le DB plutôt que de l'écrire en dur
