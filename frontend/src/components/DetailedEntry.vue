@@ -16,20 +16,13 @@ export default {
     props: {
         entryId: String,
         solution: String,
+        result: String,
+        maxtry: String,
         guesses: Array,
     },
     components: {
         WordRow,
     },
-    data() {
-        return {
-            solution1:"test",
-            tries1:[
-                {id:'1', try:"sets"},
-                {id:'2', try:"test"},
-            ]
-        }
-    }
 }
 </script>
 

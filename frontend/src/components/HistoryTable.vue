@@ -7,7 +7,7 @@
           />
         </div>
         <div>
-          <DetailedEntry v-if="detailsToggled[entry.id]" :entryId="entry.id" :solution="entry.solution" :result="entry.result" :guesses="entry.guesses"/>
+          <DetailedEntry v-if="detailsToggled[entry.id]" :entryId="entry.id" :solution="entry.solution" :result="entry.result" :guesses="entry.guesses" :maxtry="entry.maxtry"/>
           <br>
         </div>
     </div>
