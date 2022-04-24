@@ -6,6 +6,7 @@ from flask_jwt_extended import JWTManager
 from datetime import timedelta
 
 
+
 # configuration
 DEBUG = True
 
@@ -43,6 +44,17 @@ jwt = JWTManager(app)
 
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
+
+
+from models import *
+
+db.create_all()
+
+
+
+
+
+
 
 ##### Comment add un user
 from models import *
