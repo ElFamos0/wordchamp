@@ -44,58 +44,63 @@ jwt = JWTManager(app)
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+##### Comment add un user
+from models import *
+
+usertest = user.User.query.all() 
+if len(usertest) == 0 :
+    newUser = user.User("pseudo","mdp",False)
+    db.session.add(newUser)
+    db.session.commit()
+##### 
 
 
-#WIP
+##### Comment add une game normale 
 
-# ##### Comment add un user
-# from models import *
+from sqlalchemy.orm import with_polymorphic
 
+all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal])
 
-# newUser = user.User("pseudo","mdp",False)
-# db.session.add(newUser)
+all_games = db.session.query(all_games_poly)
+if len(all_games.all()) == 0 :
 
-# ##### 
+    user = user.User.query.first()       # Juste pour récupérer un user, sinon remplacer par ce qu'il vous faut
 
+    newGameNormal = game_normal.Game_normal(user.id,"dentifrice",6,10,"21022021")       #(last attribut = date en timestamp)
+    db.session.add(newGameNormal)
+    db.session.commit()
 
-# ##### Comment add une game normale 
-
-# user = user.User.query.first()       # Juste pour récupérer un user, sinon remplacer par ce qu'il vous faut
-
-# newGameNormal = game_normal.Game_normal(user.id,"dentifrice",6,10,"21022021")       #(last attribut = date en timestamp)
-# db.session.add(newGameNormal)
- 
-# #####
+#####
 
 
-# db.session.commit()
 
 
-#WIP
-# ##### Comment récupérer toutes les games :
-
-# from sqlalchemy.orm import with_polymorphic
-
-# all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal])
-
-# all_games = db.session.query(all_games_poly).all()
-
-# first_game = all_games[0]
-
-# date = first_game.game_date              #Pour récup la date
-# state = first_game.game_state            #Pour récup le state
-# id = first_game.game_id                  #Pour récup l'id
-# game_type = first_game.game_game_type    #Pour récup le type de game
-
-# if game_type == "game_normal" :
-
-#     id_user = first_game.game_normal_id_user    #Pour récup le user_id
-#     solution = first_game.game_normal_solution  #Pour récup la solution
-#     maxtry = first_game.game_normal_maxtry      #Pour récup le nb de try
-#     length = first_game.game_normal_length      #Pour récup la longeur de la soluce
 
 
-# ########
+##### Comment récupérer toutes les games :
+
+
+all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal])
+
+all_games = db.session.query(all_games_poly)
+
+first_game = all_games[0]
+
+date = first_game.date              #Pour récup la date
+state = first_game.state            #Pour récup le state
+id = first_game.id                  #Pour récup l'id
+game_type = first_game.game_type    #Pour récup le type de game
+
+if game_type == "game_normal" :
+
+    id_user = first_game.id_user    #Pour récup le user_id
+    solution = first_game.solution  #Pour récup la solution
+    maxtry = first_game.maxtry      #Pour récup le nb de try
+    length = first_game.length      #Pour récup la longeur de la soluce
+
+#print(date,state,id,game_type,id_user,solution,maxtry,length)
+
+########
 
 
 
