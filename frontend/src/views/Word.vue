@@ -6,6 +6,7 @@ import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import {onMounted, reactive} from "vue"
 import axios from 'axios';
+import axiosAuth from '@/api/axios-auth';
 import { useRoute } from 'vue-router'
 
 
@@ -83,7 +84,7 @@ onMounted(() => {
   const id = route.params.i
   const id2 = id.slice(1,2)
   console.log(id2)
-    axios.get(wordpath+"/"+id2)
+    axios.get(wordpath+"/"+id2,)
         .then((res) => {
           console.log(res.data)
           game.solution = res.data;
@@ -94,13 +95,9 @@ onMounted(() => {
           // eslint-disable-next-line
           console.error(error);
         });
-    axios.get(creategame)
+    axiosAuth.get(creategame)
         .then((res) => {
           console.log(res.data)
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-          console.error(error);
         });
 });
 
