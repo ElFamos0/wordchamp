@@ -14,8 +14,8 @@ class Game(db.Model):
         'polymorphic_on':game_type
     }
 
-    def __init__(self, game_type,date):
-        self.id = uuid4().hex
+    def __init__(self,id, game_type,date):
+        self.id = id
         self.game_type = game_type
         self.date = date
         self.state = False
