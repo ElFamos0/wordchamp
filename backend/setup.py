@@ -80,6 +80,11 @@ if len(all_games.all()) == 0 :
 
     newGameNormal = game_normal.Game_normal(user.id,"dentifrice",6,10,"21022021")       #(last attribut = date en timestamp)
     db.session.add(newGameNormal)
+
+    # Et comment add une game survie
+
+    newGameSurvie = game_survie.Game_survie(user.id,8,10,"21022021")       #(last attribut = date en timestamp)
+    db.session.add(newGameSurvie)
     db.session.commit()
 
 #####
@@ -111,6 +116,25 @@ if game_type == "game_normal" :
     length = first_game.length      #Pour récup la longeur de la soluce
 
 #print(date,state,id,game_type,id_user,solution,maxtry,length)
+
+
+# Récup les infos d'une game survie
+
+game_s = all_games[1]
+
+date = game_s.date              
+state = game_s.state            
+id = game_s.id                  
+game_type = game_s.game_type    
+
+if game_type == "game_survie" :
+
+    id_user = game_s.id_user    #Pour récup le user_id
+    maxtry = game_s.maxtry      #Pour récup le nb de try
+    length = game_s.length      #Pour récup la longeur des soluces
+    score = game_s.score
+
+#print(solution,game_type,score,state)
 
 ########
 

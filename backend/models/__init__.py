@@ -3,5 +3,6 @@ __all__ = [
     "word",
     "game",
     "game_normal",
+    "game_survie",
     "try"
 ]
