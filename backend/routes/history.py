@@ -1,8 +1,20 @@
+from models.game_normal import Game_normal
 from setup import *
 from flask import request, jsonify
+# from utils import estGagnee
 
 @app.route('/history', methods=['GET'])
 def history():
+    current_user = ""
+    entries = []
+    requete = Game_normal.query.filter_by(id_user=current_user).all()
+    for game in requete:
+        temp={"id":"", "guesses":[], "solution":"", "result":""}
+        guesses=[]
+        temp.solution = game.solution
+        # temp.result = estGagnee(guesses, game.solution)
+        entries.append(temp)
+    return 'test'
     # à récup dans le DB plutôt que de l'écrire en dur
     return jsonify({
         "entries":[
