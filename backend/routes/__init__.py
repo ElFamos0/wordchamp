@@ -6,5 +6,6 @@ __all__ = [
     "login",
     "avatar",
     "profile",
-    "history"
+    "history",
+    "creategame"
 ]

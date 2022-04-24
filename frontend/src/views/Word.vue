@@ -14,6 +14,7 @@ import { useRoute } from 'vue-router'
 // path vers le backend
 
 const wordpath = `${process.env.VUE_APP_BACKEND_URL}/word`;
+const creategame = `${process.env.VUE_APP_BACKEND_URL}/creategame`;
 
 // gestion des inputs
 
@@ -77,7 +78,7 @@ onMounted(() => {
     displayinput(key);
     
   });
-  // on récupère la solution depuis l'api
+  // on récupère la solution depuis l'api on récupère une taille de mot en particulier si pas de taille renseigné on choisit une taille aléatoire.
   const route = useRoute()
   const id = route.params.i
   const id2 = id.slice(1,2)
@@ -88,6 +89,14 @@ onMounted(() => {
           game.solution = res.data;
           
           game.solutionlength = res.data.length;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    axios.get(creategame)
+        .then((res) => {
+          console.log(res.data)
         })
         .catch((error) => {
           // eslint-disable-next-line
