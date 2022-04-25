@@ -1,6 +1,7 @@
 from setup import *
 from uuid import uuid4
 from models.game import Game
+from utils.timestamp import now
 
 class Game_normal(Game):
     __tablename__ = 'games_normal'
@@ -14,10 +15,10 @@ class Game_normal(Game):
         'polymorphic_identity':'game_normal',
     }
 
-    def __init__(self,id_user,solution,maxtry,length,date):
+    def __init__(self,id_user,solution,maxtry,length):
         id = uuid4().hex
         self.id = id
-        super().__init__(id,"game_normal",date)
+        super().__init__(id,"game_normal")
         self.id_user = id_user
         self.solution = solution
         self.maxtry = maxtry
