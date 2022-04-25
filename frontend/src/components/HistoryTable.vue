@@ -8,7 +8,6 @@
         </div>
         <div>
           <DetailedEntry v-if="toggled[entry.id]" :entryId="entry.id" :solution="entry.solution" :result="entry.result" :guesses="entry.guesses" :maxtry="entry.maxtry"/>
-          <br>
         </div>
     </div>
   </div>

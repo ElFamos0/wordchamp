@@ -80,72 +80,72 @@ if len(all_games.all()) == 0 :
 
     user = user.User.query.first()       # Juste pour récupérer un user, sinon remplacer par ce qu'il vous faut
 
-    newGameNormal = game_normal.Game_normal(user.id,"dentifrice",6,10)       
+    newGameNormal = game_normal.Game_normal(user.id,"DENTIFRICE",6,10)       
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId, "bbbbbbbbbb",2))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId, "BBBBBBBBBB",2))
     
 
-    newGameNormal = game_normal.Game_normal(user.id,"test",6,4)
+    newGameNormal = game_normal.Game_normal(user.id,"TEST",6,4)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
-    db.session.add(tries.Tries(newGameId,"d"*newGameNormal.length,int(4)))
-    db.session.add(tries.Tries(newGameId,"test",int(5)))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
+    db.session.add(tries.Tries(newGameId,"TEST",int(5)))
 
-    newGameNormal = game_normal.Game_normal(user.id,"tester",6,6)
+    newGameNormal = game_normal.Game_normal(user.id,"TESTER",6,6)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"tests",6,5)
+    newGameNormal =game_normal.Game_normal(user.id,"TESTS",6,5)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"okay",6,4)
+    newGameNormal =game_normal.Game_normal(user.id,"OKAY",6,4)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
-    db.session.add(tries.Tries(newGameId,"d"*newGameNormal.length,int(4)))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"salut",6,5)
+    newGameNormal =game_normal.Game_normal(user.id,"SALUT",6,5)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"mec",6,3)
+    newGameNormal =game_normal.Game_normal(user.id,"MEC",6,3)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
-    db.session.add(tries.Tries(newGameId,"d"*newGameNormal.length,int(4)))
-    db.session.add(tries.Tries(newGameId,"e"*newGameNormal.length,int(5)))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
+    db.session.add(tries.Tries(newGameId,"E"*newGameNormal.length,int(5)))
 
 
-    newGameNormal =game_normal.Game_normal(user.id,"chien",6,5)
+    newGameNormal =game_normal.Game_normal(user.id,"CHIEN",6,5)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"banane",6,6)
+    newGameNormal =game_normal.Game_normal(user.id,"BANANE",6,6)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
 
 
     # Et comment add une game survie

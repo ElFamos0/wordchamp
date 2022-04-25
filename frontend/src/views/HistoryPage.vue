@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Historique</h1>
+        <h1>Historique des parties</h1>
         <history-table :entries="entries"/>
     </div>
 </template>
