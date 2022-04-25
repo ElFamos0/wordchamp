@@ -6,26 +6,58 @@
             <Profile />
           </b-modal>
           <tag v-if="isAuth">
-            <b-nav-item><a v-b-modal.modal-profile href="#">     <b-avatar variant="primary" v-bind:src="url + '/avatar/' + userid" size="25px"/> </a></b-nav-item>
+            <a v-b-modal.modal-profile href="#">
+              <b-nav-item>
+                <b-avatar variant="primary" v-bind:src="url + '/avatar/' + userid" size="25px"/>
+              </b-nav-item>
+            </a>
           </tag>
-          <b-nav-item> <router-link to="/"> <font-awesome-icon icon="house" /> </router-link></b-nav-item>
+          <router-link to="/">
+            <b-nav-item>
+              <font-awesome-icon icon="house" />
+            </b-nav-item>
+          </router-link>
           <tag v-if="isAuth">
-            <b-nav-item id="play"> <router-link to="/choice"> <font-awesome-icon icon="play" /> </router-link></b-nav-item>
-            <b-tooltip target="play" triggers="hover">
-              I am tooltip <b>component</b> content!
-            </b-tooltip>
+            <router-link to="/choice">
+              <b-nav-item id="play">
+                <font-awesome-icon icon="play" />
+              </b-nav-item>
+            </router-link>
+            <v-btn>
+              Top
+              <v-tooltip
+                activator="parent"
+                anchor="top"
+              >Tooltip</v-tooltip>
+            </v-btn>
           </tag>
           <tag v-if="isAuth">
-            <b-nav-item> <router-link to="/history"> Historique </router-link></b-nav-item>
+            <router-link to="/history"> 
+              <b-nav-item>
+                Historique
+              </b-nav-item>
+            </router-link>
           </tag>
           <tag v-if="!isAuth">
-            <b-nav-item> <router-link to="/login"> Connectes-toi </router-link></b-nav-item>
+            <router-link to="/login">
+              <b-nav-item>
+                Connectes-toi 
+              </b-nav-item>
+            </router-link>
           </tag>
           <tag v-if="isAuth">
-            <b-nav-item><router-link to="/logout"> Déconnectes-toi </router-link></b-nav-item>
+            <router-link to="/logout">
+              <b-nav-item>
+              Déconnectes-toi
+              </b-nav-item>
+            </router-link>
           </tag>
           <tag v-if="!isAuth">
-            <b-nav-item><router-link to="/register"> Enregistres-toi </router-link></b-nav-item>
+            <router-link to="/register">
+              <b-nav-item>
+                Enregistres-toi
+              </b-nav-item>
+            </router-link>
           </tag>
       </b-nav>
     </div>
@@ -82,9 +114,13 @@ export default {
   padding: 30px;
 }
 
-#nav a {
+#nav a>li>a {
   font-weight: bold;
   color: #2c3e50;
+}
+
+#nav a.router-link-exact-active>li>a {
+  color: #42b983;
 }
 
 #nav a.router-link-exact-active {

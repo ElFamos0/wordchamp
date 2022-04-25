@@ -21,14 +21,12 @@ import { faHouse, faPlay } from "@fortawesome/free-solid-svg-icons";
 library.add(faHouse)
 library.add(faPlay)
 
-
 const store = createStore({
   modules: {
     auth
   }
 })
 
-createApp(App).use(BootstrapVue3).use(router).use(store).mount('#app')
 createApp(App)
   .use(BootstrapVue3)
   .use(router)
