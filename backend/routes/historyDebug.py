@@ -1,9 +1,10 @@
+from models.tries import Tries
 from models.game_normal import Game_normal
 from models.game import Game
 from models.user import User
 from setup import *
 from flask import request, jsonify
-from utils import estGagnee
+from utils.estGagnee import estGagnee
 
 
 @app.route('/historyDebug', methods=['GET'])
@@ -11,8 +12,16 @@ def historyDebug():
     utilisateur = User.query.first()
     userId=utilisateur.id
     reqGames = Game_normal.query.filter_by(id_user=userId).all()
-    games = jsonify([e.toDict() for e in reqGames])
-    return games
+    games = [e.toDict() for e in reqGames]
+    entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":e["maxtry"]} for e in games]
+    for entry in entries:
+        reqTries = Tries.query.filter_by(id_game=entry["id"]).all()
+        tries = [e.toDict() for e in reqTries]
+        guesses = [{"id":e["try_number"],"word":e["word"]} for e in tries]
+        entry["guesses"]=guesses
+        entry["result"]= "Victoire" if estGagnee(entry) else "Défaite"
+    entries = {"entries":entries}
+    return jsonify(entries)
     return jsonify({
         "entries":[
             {"id":"10", "guesses":[{"id":"1", "word":"TESTER"}, {"id":"2", "word":"ZEROOS"}], "solution":"Oulala", "result":"Victoire", "maxtry":"3"},

@@ -94,6 +94,7 @@ if len(all_games.all()) == 0 :
     db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
     db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
     db.session.add(tries.Tries(newGameId,"d"*newGameNormal.length,int(4)))
+    db.session.add(tries.Tries(newGameId,"test",int(5)))
 
     newGameNormal = game_normal.Game_normal(user.id,"tester",6,6)
     db.session.add(newGameNormal)
