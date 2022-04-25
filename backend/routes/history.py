@@ -10,6 +10,15 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 @app.route('/history', methods=['GET'])
 @jwt_required()
 def history():
+    utilisateur = User.query.first()
+    userId=utilisateur.id
+    games = Game_normal.query.filter_by(id_user=userId).all()
+
+
+
+
+
+
     identity = get_jwt_identity()
     # user = User.query.get(identity)
     # if user == None: return jsonify({"error": "user not found"}), 400

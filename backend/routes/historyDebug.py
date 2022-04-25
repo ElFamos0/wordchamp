@@ -9,7 +9,10 @@ from utils import estGagnee
 @app.route('/historyDebug', methods=['GET'])
 def historyDebug():
     utilisateur = User.query.first()
-    return utilisateur.toDict()
+    userId=utilisateur.id
+    reqGames = Game_normal.query.filter_by(id_user=userId).all()
+    games = jsonify([e.toDict() for e in reqGames])
+    return games
     return jsonify({
         "entries":[
             {"id":"10", "guesses":[{"id":"1", "word":"TESTER"}, {"id":"2", "word":"ZEROOS"}], "solution":"Oulala", "result":"Victoire", "maxtry":"3"},

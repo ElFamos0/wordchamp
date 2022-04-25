@@ -25,3 +25,13 @@ class Game_normal(Game):
 
     def __repr__(self):
         return '<Game_normal %r>' % self.id
+
+    def toDict(self):
+        dictionnaire = {}
+        dictionnaire['id']=self.id
+        dictionnaire['id_user']=self.id_user
+        dictionnaire['solution']=self.solution
+        dictionnaire['maxtry']=self.maxtry
+        dictionnaire['length']=self.length
+        dictionnaire['date']=self.date
+        return dictionnaire
