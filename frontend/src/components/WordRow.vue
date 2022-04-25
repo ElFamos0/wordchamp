@@ -1,5 +1,5 @@
 <script setup>
-import Letter from '@/components/Letter.vue';
+import WordLetter from '@/components/WordLetter.vue';
 import {defineProps, ref, watch} from "vue"
 
 // la méthode de construire en fonction de la taille de la solution me semble vraiment pas opti cela induit une sorte de ralentissement chiant
@@ -57,7 +57,7 @@ watch( () => rowprop.submitted, (newVal) => {
 <template>
     <b-container>
         <b-row class="justify-content-center">
-            <letter v-for="i in rowprop.solution.length" :key="i" :letter=word[i-1] :color=colortab[i-1]></letter>
+            <WordLetter v-for="i in rowprop.solution.length" :key="i" :letter=word[i-1] :color=colortab[i-1]></WordLetter>
         </b-row>
     </b-container>
 </template>

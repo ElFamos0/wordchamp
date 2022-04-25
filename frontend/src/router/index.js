@@ -1,6 +1,6 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 import Home from "@/views/Home.vue";
-import Word from "@/views/Word.vue";
+import WordPage from "@/views/WordPage.vue";
 import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
@@ -31,7 +31,7 @@ const routes = [
   {
     path: "/word/:i",
     name: "Word",
-    component: Word,
+    component: WordPage,
 		meta: { 
       requiresAuth: true,
       title: 'Wordchamp - Le Jeu',

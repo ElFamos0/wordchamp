@@ -15,7 +15,7 @@
 
                             <v-text-field class="mx-auto" style="max-width:200px" id="password" type="password" v-model="this.form.password" :rules="nameRules" :counter="25" label="Password" required></v-text-field>
 
-                            <v-btn @click="submit()" color="primary">Login</v-btn>                    
+                            <v-btn @click="submit()" color="primary">Register</v-btn>                    
                         </v-form>
                     </v-container>
                 </v-card>
@@ -25,32 +25,37 @@
   </div>
 </template>
 
-<script setup>
-import {ref} from 'vue';
+<script>
 import axios from 'axios';
+import { ref } from 'vue';
 
-
-const form = ref({
-    username: '',
-    password: '',
-})
-
-const alertMessage = ref('')
-
-const alertVisible = ref(false)
-
-function submit() {
-    const path = `${process.env.VUE_APP_BACKEND_URL}/register`;
-      axios.post(path, form.value)
-        .then((res) => {
-          this.msg = res.data;
-          window.location = "#/login"
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-          alertMessage.value = error.response.data.error;
-          alertVisible.value = true;
-        });
+export default {
+    name: 'registerForm',
+    data() {
+        return {
+            form: ref({
+                username: '',
+                password: '',
+            }),
+            alertMessage: '',
+            alertVisible: false,
+        }
+    },
+    methods: {
+        submit: function() {
+          const path = `${process.env.VUE_APP_BACKEND_URL}/register`;
+          axios.post(path, this.form)
+            .then((res) => {
+              this.msg = res.data;
+              window.location = "#/login"
+            })
+            .catch((error) => {
+              // eslint-disable-next-line
+              this.alertMessage.value = error.response.data.error;
+              this.alertVisible.value = true;
+            });
+        },
+    }
 }
 
 </script>
