@@ -13,7 +13,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 def history():
     identity = get_jwt_identity()
     userId = identity
-    reqGames = Game_normal.query.filter_by(id_user=userId).order_by(Game.date.desc()).all()
+    reqGames = Game_normal.query.filter_by(id_user=userId, state=1).order_by(Game.date.desc()).all()
     games = [e.toDict() for e in reqGames]
     entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":str(e["maxtry"])} for e in games]
     for entry in entries:

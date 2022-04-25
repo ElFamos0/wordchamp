@@ -35,8 +35,11 @@ export default {
     /* max-width: 1000px; */
     margin: 5px 50px;
     overflow: auto;
-    border: 1px solid rgb(145, 145, 145);
+    /* border: 1px solid rgb(145, 145, 145); */
     padding: 10px;
     border-radius: 5px;
+    background: rgb(145, 145, 145);
+    /* opacity: 0.8; */
+
 }
 </style>

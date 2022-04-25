@@ -11,7 +11,7 @@ from utils.estGagnee import estGagnee
 def historyDebug():
     utilisateur = User.query.first()
     userId=utilisateur.id
-    reqGames = Game_normal.query.filter_by(id_user=userId).order_by(Game.date.desc()).all()
+    reqGames = Game_normal.query.filter_by(id_user=userId, state=True).order_by(Game.date.desc()).all()
     games = [e.toDict() for e in reqGames]
     entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":str(e["maxtry"])} for e in games]
     for entry in entries:

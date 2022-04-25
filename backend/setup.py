@@ -80,79 +80,79 @@ if len(all_games.all()) == 0 :
 
     user = user.User.query.first()       # Juste pour récupérer un user, sinon remplacer par ce qu'il vous faut
 
-    newGameNormal = game_normal.Game_normal(user.id,"DENTIFRICE",6,10)       
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId, "BBBBBBBBBB",2))
+    # newGameNormal = game_normal.Game_normal(user.id,"DENTIFRICE",2,10)       
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId, "BBBBBBBBBB",2))
     
 
-    newGameNormal = game_normal.Game_normal(user.id,"TEST",6,4)
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
-    db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
-    db.session.add(tries.Tries(newGameId,"TEST",int(5)))
+    # newGameNormal = game_normal.Game_normal(user.id,"TEST",6,4)
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    # db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    # db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
+    # db.session.add(tries.Tries(newGameId,"TEST",int(5)))
 
-    newGameNormal = game_normal.Game_normal(user.id,"TESTER",6,6)
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    # newGameNormal = game_normal.Game_normal(user.id,"TESTER",3,6)
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    # db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"TESTS",6,5)
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    # newGameNormal =game_normal.Game_normal(user.id,"TESTS",6,5)
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId,"TESTS",int(2)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"OKAY",6,4)
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
-    db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
+    # newGameNormal =game_normal.Game_normal(user.id,"OKAY",4,4)
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    # db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    # db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"SALUT",6,5)
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    # newGameNormal =game_normal.Game_normal(user.id,"SALUT",3,5)
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    # db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"MEC",6,3)
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
-    db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
-    db.session.add(tries.Tries(newGameId,"E"*newGameNormal.length,int(5)))
+    # newGameNormal =game_normal.Game_normal(user.id,"MEC",6,3)
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    # db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    # db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
+    # db.session.add(tries.Tries(newGameId,"MEC",int(5)))
 
 
-    newGameNormal =game_normal.Game_normal(user.id,"CHIEN",6,5)
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
+    # newGameNormal =game_normal.Game_normal(user.id,"CHIEN",3,5)
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    # db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"BANANE",6,6)
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
+    # newGameNormal =game_normal.Game_normal(user.id,"BANANE",2,6)
+    # db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
+    # db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
 
 
     # Et comment add une game survie
 
-    newGameSurvie = game_survie.Game_survie(user.id,8,10)     
-    db.session.add(newGameSurvie)
-    db.session.commit()
+    # newGameSurvie = game_survie.Game_survie(user.id,8,10)     
+    # db.session.add(newGameSurvie)
+    # db.session.commit()
 
 #####
 
@@ -187,19 +187,19 @@ if game_type == "game_normal" :
 
 # Récup les infos d'une game survie
 
-game_s = all_games[1]
+# game_s = all_games[1]
 
-date = game_s.date              
-state = game_s.state            
-id = game_s.id                  
-game_type = game_s.game_type    
+# date = game_s.date              
+# state = game_s.state            
+# id = game_s.id                  
+# game_type = game_s.game_type    
 
-if game_type == "game_survie" :
+# if game_type == "game_survie" :
 
-    id_user = game_s.id_user    #Pour récup le user_id
-    maxtry = game_s.maxtry      #Pour récup le nb de try
-    length = game_s.length      #Pour récup la longeur des soluces
-    score = game_s.score
+#     id_user = game_s.id_user    #Pour récup le user_id
+#     maxtry = game_s.maxtry      #Pour récup le nb de try
+#     length = game_s.length      #Pour récup la longeur des soluces
+#     score = game_s.score
 
 #print(solution,game_type,score,state)
 
