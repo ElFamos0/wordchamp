@@ -4,8 +4,7 @@
 
 import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
-import {onMounted, reactive} from "vue"
-import axios from 'axios';
+import {onMounted, onUnmounted, reactive} from "vue"
 import axiosAuth from '@/api/axios-auth';
 import { useRoute } from 'vue-router'
 
@@ -14,9 +13,9 @@ import { useRoute } from 'vue-router'
 
 // path vers le backend
 
-const wordpath = `${process.env.VUE_APP_BACKEND_URL}/word`;
-const creategame = `${process.env.VUE_APP_BACKEND_URL}/creategame`;
 
+const creategame = `${process.env.VUE_APP_BACKEND_URL}/creategame`;
+const sendtry = `${process.env.VUE_APP_BACKEND_URL}/send_try`;
 // gestion des inputs
 
 const displayinput = (keypressed) => {
@@ -25,7 +24,13 @@ const displayinput = (keypressed) => {
   }
   const wordguess = game.tried[game.currentTry];
   if (keypressed == "{enter}" && wordguess.length == game.solutionlength) {
+    console.log("j'envoie la maxi sauce")
     game.currentTry++;
+    axiosAuth.post(sendtry,{"data":wordguess})
+      .then((res) => {
+        console.log(res)
+        });
+
     // handle de la coloration des touches du clavier
   }
   if (keypressed == "{bksp}") {
@@ -70,36 +75,34 @@ const loosecase = () => {return (!wincase() && game.currentTry == 6)}
 
 
 // fonction qui s'execute dès la création de la page 
-
-onMounted(() => {
-  window.addEventListener("keydown", (e) => {
+function handleKeys(e) {
     let key = e.keyCode == 13 ? '{enter}' 
     : e.keyCode == 8 ? '{bksp}' 
     : String.fromCharCode(e.keyCode).toUpperCase();
     displayinput(key);
     
-  });
+}
+
+onMounted(() => {
+  window.addEventListener("keydown", handleKeys);
   // on récupère la solution depuis l'api on récupère une taille de mot en particulier si pas de taille renseigné on choisit une taille aléatoire.
   const route = useRoute()
   const id = route.params.i
   const id2 = id.slice(1,2)
   console.log(id2)
-    axios.get(wordpath+"/"+id2)
-        .then((res) => {
-          console.log(res.data)
-          game.solution = res.data;
-          
-          game.solutionlength = res.data.length;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-          console.error(error);
-        });
     axiosAuth.get(creategame+"/"+id2)
         .then((res) => {
           console.log(res.data)
+          game.solution = res.data.solution
+          game.solutionlength = res.data.solution.length
+          game.currentTry = res.data.currenttry
+          game.tried = res.data.guess
         });
 });
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeys)
+})
 
 </script>
 

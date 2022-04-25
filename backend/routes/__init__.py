@@ -9,4 +9,5 @@ __all__ = [
     "history",
     "creategame",
     "historyDebug",
+    "send_try"
 ]
