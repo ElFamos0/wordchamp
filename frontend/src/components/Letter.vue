@@ -41,6 +41,9 @@ const letterprop = defineProps({
     display:flex;
     flex-wrap: wrap;
     max-width: min(10vw, 10vh);
+    max-height: min(10vw, 10vh);
+    width:500px;
+    height:500px;
     position: relative;
     flex-basis: calc(10%);
     border: 1px solid;
