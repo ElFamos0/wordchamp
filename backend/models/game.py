@@ -8,7 +8,7 @@ class Game(db.Model):
     id = db.Column(db.String(40), primary_key=True)
     game_type = db.Column(db.String(40))
     state = db.Column(db.Boolean, nullable=False)
-    date = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.BigInteger, nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity':'games',
