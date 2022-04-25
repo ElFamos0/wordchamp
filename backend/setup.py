@@ -80,14 +80,36 @@ if len(all_games.all()) == 0 :
 
     user = user.User.query.first()       # Juste pour récupérer un user, sinon remplacer par ce qu'il vous faut
 
-    newGameNormal = game_normal.Game_normal(user.id,"dentifrice",6,10,"21022021")       #(last attribut = date en timestamp)
+    newGameNormal = game_normal.Game_normal(user.id,"dentifrice",6,10)       
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
     db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
     db.session.add(tries.Tries(newGameId, "bbbbbbbbbb",2))
     
 
-    newGameNormal = game_normal.Game_normal(user.id,"test",6,4,"21022022")
+    newGameNormal = game_normal.Game_normal(user.id,"test",6,4)
+    db.session.add(newGameNormal)
+    newGameId = newGameNormal.id
+    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
+    db.session.add(tries.Tries(newGameId,"d"*newGameNormal.length,int(4)))
+    db.session.add(tries.Tries(newGameId,"test",int(5)))
+
+    newGameNormal = game_normal.Game_normal(user.id,"tester",6,6)
+    db.session.add(newGameNormal)
+    newGameId = newGameNormal.id
+    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
+    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
+
+    newGameNormal =game_normal.Game_normal(user.id,"tests",6,5)
+    db.session.add(newGameNormal)
+    newGameId = newGameNormal.id
+    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
+    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
+
+    newGameNormal =game_normal.Game_normal(user.id,"okay",6,4)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
     db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
@@ -95,35 +117,14 @@ if len(all_games.all()) == 0 :
     db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
     db.session.add(tries.Tries(newGameId,"d"*newGameNormal.length,int(4)))
 
-    newGameNormal = game_normal.Game_normal(user.id,"tester",6,6,"21022022")
+    newGameNormal =game_normal.Game_normal(user.id,"salut",6,5)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
     db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
     db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
     db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"tests",6,5,"21022022")
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-
-    newGameNormal =game_normal.Game_normal(user.id,"okay",6,4,"21022022")
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
-    db.session.add(tries.Tries(newGameId,"d"*newGameNormal.length,int(4)))
-
-    newGameNormal =game_normal.Game_normal(user.id,"salut",6,5,"21022022")
-    db.session.add(newGameNormal)
-    newGameId = newGameNormal.id
-    db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
-    db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
-    db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
-
-    newGameNormal =game_normal.Game_normal(user.id,"mec",6,3,"21022022")
+    newGameNormal =game_normal.Game_normal(user.id,"mec",6,3)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
     db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
@@ -133,14 +134,14 @@ if len(all_games.all()) == 0 :
     db.session.add(tries.Tries(newGameId,"e"*newGameNormal.length,int(5)))
 
 
-    newGameNormal =game_normal.Game_normal(user.id,"chien",6,5,"21022022")
+    newGameNormal =game_normal.Game_normal(user.id,"chien",6,5)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
     db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
     db.session.add(tries.Tries(newGameId,"b"*newGameNormal.length,int(2)))
     db.session.add(tries.Tries(newGameId,"c"*newGameNormal.length,int(3)))
 
-    newGameNormal =game_normal.Game_normal(user.id,"banane",6,6,"21022022")
+    newGameNormal =game_normal.Game_normal(user.id,"banane",6,6)
     db.session.add(newGameNormal)
     newGameId = newGameNormal.id
     db.session.add(tries.Tries(newGameId,"a"*newGameNormal.length,int(1)))
@@ -149,7 +150,7 @@ if len(all_games.all()) == 0 :
 
     # Et comment add une game survie
 
-    newGameSurvie = game_survie.Game_survie(user.id,8,10,"21022021")       #(last attribut = date en timestamp)
+    newGameSurvie = game_survie.Game_survie(user.id,8,10)     
     db.session.add(newGameSurvie)
     db.session.commit()
 
@@ -163,7 +164,7 @@ if len(all_games.all()) == 0 :
 ##### Comment récupérer toutes les games :
 
 
-all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal])
+all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal,game_survie.Game_survie])
 
 all_games = db.session.query(all_games_poly)
 
