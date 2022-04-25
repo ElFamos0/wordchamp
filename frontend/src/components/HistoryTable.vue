@@ -7,7 +7,7 @@
           />
         </div>
         <div>
-          <DetailedEntry v-if="entry.detailsToggled" :entryId="entry.id" :solution="entry.solution" :result="entry.result" :guesses="entry.guesses" :maxtry="entry.maxtry"/>
+          <DetailedEntry v-if="toggled[entry.id]" :entryId="entry.id" :solution="entry.solution" :result="entry.result" :guesses="entry.guesses" :maxtry="entry.maxtry"/>
           <br>
         </div>
     </div>
@@ -31,8 +31,8 @@ export default {
   emits: ['show-details'],
   methods: {
       showDetails(entryId) {
-        console.log("vous avez cliqué sur l'entrée ", entryId, " toggle valait ", this.entries[entryId].detailsToggled)
-        this.entries[entryId].detailsToggled=!this.entries[entryId].detailsToggled
+        console.log("vous avez cliqué sur l'entrée ", entryId, " toggle valait ", this.toggled[entryId])
+        this.toggled[entryId]=!this.toggled[entryId]
       }
   },
   data() {
@@ -46,10 +46,13 @@ export default {
     //   console.log(toggled)
     // }   
     return {
-        // toggled: toggled
+        toggled: {},
     }
   },
   created() {
+    for (let i = 0; i < this.entries.length; i++) {
+      this.toggled[this.entries[i].id] = false
+    }
   }
 }
 
