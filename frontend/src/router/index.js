@@ -1,6 +1,5 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 import Home from "@/views/Home.vue";
-import Random from "@/views/Random.vue";
 import Word from "@/views/Word.vue";
 import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
@@ -28,14 +27,6 @@ const routes = [
         }
       ]
     },
-  },
-  {
-    path: "/random",
-    name: "About",
-    component: Random,
-    meta: {
-      title: 'Wordchamp - Aléatoire',
-    }
   },
   {
     path: "/word/:i",

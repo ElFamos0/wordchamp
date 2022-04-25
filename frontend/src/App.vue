@@ -6,12 +6,14 @@
             <Profile />
           </b-modal>
           <tag v-if="isAuth">
-            <b-nav-item><a v-b-modal.modal-profile href="#">     <b-avatar variant="primary" v-bind:src="url + '/avatar/' + userid" size="25px"/> Profil </a></b-nav-item>
+            <b-nav-item><a v-b-modal.modal-profile href="#">     <b-avatar variant="primary" v-bind:src="url + '/avatar/' + userid" size="25px"/> </a></b-nav-item>
           </tag>
-          <b-nav-item> <router-link to="/"> Maison </router-link></b-nav-item>
-          <b-nav-item> <router-link to="/random"> Aléatoire </router-link></b-nav-item>
+          <b-nav-item> <router-link to="/"> <font-awesome-icon icon="house" /> </router-link></b-nav-item>
           <tag v-if="isAuth">
-            <b-nav-item> <router-link to="/choice"> Joue </router-link></b-nav-item>
+            <b-nav-item id="play"> <router-link to="/choice"> <font-awesome-icon icon="play" /> </router-link></b-nav-item>
+            <b-tooltip target="play" triggers="hover">
+              I am tooltip <b>component</b> content!
+            </b-tooltip>
           </tag>
           <tag v-if="isAuth">
             <b-nav-item> <router-link to="/history"> Historique </router-link></b-nav-item>

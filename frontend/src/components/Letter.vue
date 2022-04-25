@@ -60,6 +60,9 @@ const letterprop = defineProps({
     padding-top: 100%;
 }
 
+.letter-content:after{
+    animation: flip .75s linear;
+}
 
 .letter-content {
   position: absolute;
