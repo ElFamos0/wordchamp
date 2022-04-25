@@ -23,7 +23,7 @@ def creategame(taille):
     if len(all_games) == 0:
         word = getrandomwordbysize(taille)
         data["solution"] = word
-        newGameNormal = game_normal.Game_normal(current_user.id,word,len(word),6)       #(last attribut = date en timestamp)
+        newGameNormal = game_normal.Game_normal(current_user.id,word,6,len(word))       #(last attribut = date en timestamp)
         for i in range(6):
             data["guess"].append("")
         db.session.add(newGameNormal)
