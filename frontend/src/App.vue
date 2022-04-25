@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <v-app>
     <div id="nav">
       <b-nav tabs>
           <b-modal id="modal-profile" :title="'Profil de ' + username">
@@ -28,7 +28,7 @@
       </b-nav>
     </div>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <script>
