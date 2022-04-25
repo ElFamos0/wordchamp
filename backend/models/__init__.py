@@ -4,5 +4,5 @@ __all__ = [
     "game",
     "game_normal",
     "game_survie",
-    "try"
+    "tries"
 ]

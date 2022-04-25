@@ -1,3 +1,5 @@
+from hashlib import new
+from operator import ne
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -80,6 +82,41 @@ if len(all_games.all()) == 0 :
 
     newGameNormal = game_normal.Game_normal(user.id,"dentifrice",6,10,"21022021")       #(last attribut = date en timestamp)
     db.session.add(newGameNormal)
+    # newGameId = newGameNormal.id
+    # db.session.add(try.Try.)
+
+    # newGameNormal = game_normal.Game_normal(user.id,"test",6,4,"21022022")
+    # db.session.add(newGameNormal)
+
+
+    # newGameNormal =game_normal.Game_normal(user.id,"tester",6,6,"21022022")
+    # db.session.add(newGameNormal)
+
+
+    # newGameNormal =game_normal.Game_normal(user.id,"tests",6,5,"21022022")
+    # db.session.add(newGameNormal)
+
+
+    # newGameNormal =game_normal.Game_normal(user.id,"okay",6,4,"21022022")
+    # db.session.add(newGameNormal)
+
+
+    # newGameNormal =game_normal.Game_normal(user.id,"salut",6,5,"21022022")
+    # db.session.add(newGameNormal)
+
+
+    # newGameNormal =game_normal.Game_normal(user.id,"mec",6,3,"21022022")
+    # db.session.add(newGameNormal)
+
+
+    # newGameNormal =game_normal.Game_normal(user.id,"chien",6,5,"21022022")
+    # db.session.add(newGameNormal)
+
+
+    # newGameNormal =game_normal.Game_normal(user.id,"banane",6,6,"21022022")
+    # db.session.add(newGameNormal)
+
+
 
     # Et comment add une game survie
 

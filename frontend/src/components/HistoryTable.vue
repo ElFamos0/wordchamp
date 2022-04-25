@@ -36,22 +36,23 @@ export default {
       }
   },
   data() {
+    // let toggled = {}
+    // console.log('entriesssss', this.entries)
+    // console.log('toggleeeeee', toggled)
+    // for (var entry in this.entries) {
+    //   const cle = entry.id
+    //   console.log("cle",cle)
+    //   toggled[cle]=entry.detailsToggled
+    //   console.log(toggled)
+    // }   
     return {
+        // toggled: toggled
     }
   },
   created() {
   }
 }
 
-
-// let toggled = {}
-// console.log('entriesssss', this.entries)
-  // for (var entry in this.entries) {
-  //   const cle = entry.id
-  //   console.log("cle",cle)
-  //   toggled[cle]=entry.detailsToggled
-  //   console.log(toggled)
-  // }
 </script>
 
 <style scoped>

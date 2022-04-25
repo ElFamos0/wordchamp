@@ -24,10 +24,10 @@ export default {
       }
   },
   created() {
-      const path = `${process.env.VUE_APP_BACKEND_URL}/history`
-      axios.get(path).then((res)=> {
-        this.entries = res.data.entries
-      })
+    const path = `${process.env.VUE_APP_BACKEND_URL}/history`
+    axios.get(path).then((res)=> {
+      this.entries = res.data.entries
+    })
   },
 }
 </script>

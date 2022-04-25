@@ -2,7 +2,7 @@ from setup import *
 from uuid import uuid4
 from setup import db
 
-class Try(db.Model):
+class Tries(db.Model):
     __tablename__ = 'tries'
     id = db.Column(db.String(40), primary_key=True)
     try_number = db.Column(db.Integer,nullable=False)
