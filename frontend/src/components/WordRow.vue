@@ -56,7 +56,7 @@ watch( () => rowprop.submitted, (newVal) => {
 
 <template>
     <b-container>
-        <b-row class="justify-content-md-center" style="font-size:50px;">
+        <b-row class="justify-content-center">
             <letter v-for="i in rowprop.solution.length" :key="i" :letter=word[i-1] :color=colortab[i-1]></letter>
         </b-row>
     </b-container>
