@@ -43,6 +43,15 @@ export default {
   }
 }
 
+
+// let toggled = {}
+// console.log('entriesssss', this.entries)
+  // for (var entry in this.entries) {
+  //   const cle = entry.id
+  //   console.log("cle",cle)
+  //   toggled[cle]=entry.detailsToggled
+  //   console.log(toggled)
+  // }
 </script>
 
 <style scoped>
