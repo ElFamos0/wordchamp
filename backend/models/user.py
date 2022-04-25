@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from uuid import uuid4
 import os
+import json
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -38,3 +39,10 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def toDict(self):
+        dictionnaire = {}
+        dictionnaire['id']=self.id
+        dictionnaire['username']=self.username
+        dictionnaire['password_hash']=self.password_hash
+        return dictionnaire
