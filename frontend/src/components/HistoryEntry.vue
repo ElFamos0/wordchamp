@@ -1,6 +1,6 @@
 <template>
     <!-- id inutile ? -->
-    <div @dblclick="$emit('show-details', entryId )" class="container">
+    <div @dblclick="$emit('show-details', entryId )" class="entryContainer">
         <div>(Id de la partie : {{entryId}})</div>
         <!-- <div>Solution : {{solution}}</div> -->
         <WordRow :solution="solution" :word="solution" submitted="true"/>
@@ -27,10 +27,10 @@ export default {
 
 
 <style scoped>
-.container {
-  margin: 10px auto;
+.entryContainer {
+  margin: 20px 50px auto;
   overflow: auto;
-  border: 2px solid rgb(55, 16, 229);
+  border: 1px solid rgb(145, 145, 145);
   padding: 10px;
   border-radius: 5px;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="hcontainer">
+    <div class="detailContainer">
         <h2>Historique détaillé de la partie {{entryId}}</h2>
         <div v-for='guess in guesses' :key='guess.id'>
             <word-row :solution='solution' :word='guess.word' :submitted='true'/>
@@ -31,11 +31,11 @@ export default {
 </script>
 
 <style scoped>
-.hcontainer {
+.detailContainer {
     /* max-width: 1000px; */
-    margin: 5px 100px;
+    margin: 5px 50px;
     overflow: auto;
-    border: 2px solid rgb(91, 229, 16);
+    border: 1px solid rgb(145, 145, 145);
     padding: 10px;
     border-radius: 5px;
 }
