@@ -1,8 +1,8 @@
 <template>
     <!-- id inutile ? -->
     <div @dblclick="$emit('show-details', entryId )" class="container">
-        <div>Id : {{entryId}}</div>
-        <div>Mot final : {{solution}}</div>
+        <div>(Id de la partie : {{entryId}})</div>
+        <div>Solution : {{solution}}</div>
         <div>{{result}}</div>
     </div>
 </template>

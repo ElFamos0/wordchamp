@@ -13,7 +13,7 @@ def historyDebug():
     userId=utilisateur.id
     reqGames = Game_normal.query.filter_by(id_user=userId).all()
     games = [e.toDict() for e in reqGames]
-    entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":e["maxtry"]} for e in games]
+    entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":str(e["maxtry"])} for e in games]
     for entry in entries:
         reqTries = Tries.query.filter_by(id_game=entry["id"]).all()
         tries = [e.toDict() for e in reqTries]
