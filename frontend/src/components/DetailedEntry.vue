@@ -32,10 +32,11 @@ export default {
 
 <style scoped>
 .hcontainer {
-  margin: 50px;
-  overflow: auto;
-  border: 2px solid rgb(91, 229, 16);
-  padding: 10px;
-  border-radius: 5px;
+    /* max-width: 1000px; */
+    margin: 5px 100px;
+    overflow: auto;
+    border: 2px solid rgb(91, 229, 16);
+    padding: 10px;
+    border-radius: 5px;
 }
 </style>

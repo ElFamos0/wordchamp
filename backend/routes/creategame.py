@@ -18,7 +18,7 @@ def creategame(taille):
     if current_user == None: return jsonify({"error": "user not found"}), 400
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_survie.Game_survie])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_normal.id_user == current_user.id).all()
-    print(all_games)
+    print(all_games[0].game_type)
     if len(all_games) == 0:
         word = getrandomwordbysize(taille)
         newGameNormal = game_normal.Game_normal(current_user.id,word,len(word),6)       #(last attribut = date en timestamp)

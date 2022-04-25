@@ -2,13 +2,15 @@
     <!-- id inutile ? -->
     <div @dblclick="$emit('show-details', entryId )" class="container">
         <div>(Id de la partie : {{entryId}})</div>
-        <div>Solution : {{solution}}</div>
+        <!-- <div>Solution : {{solution}}</div> -->
+        <WordRow :solution="solution" :word="solution" submitted="true"/>
         <div>{{result}}</div>
     </div>
 </template>
 
 
 <script>
+import WordRow from './WordRow.vue'
 export default {
   name: 'HistoryEntry',
   props: {
@@ -17,6 +19,7 @@ export default {
     result: String,
   },
   components: {
+    WordRow
   },
   emits: ['show-details'],
 }
