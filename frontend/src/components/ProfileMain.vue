@@ -1,33 +1,34 @@
 <template>
   <div class="hello">
-    <b-container>
-        <b-form-group>
-            <b-alert v-model="errorMessage" variant="danger" dismissible>
+    <v-container>
+        <v-form-group>
+            <v-alert v-model="errorMessage" type="danger" dismissible>
                 {{ errorMessage }}
-            </b-alert>
+            </v-alert>
 
             <div class="large-12 medium-12 small-12 cell">
-                <label>Avatar : 
-                    <input type="file" id="file" ref="file" v-on:change="gereEnvoi()"/>
-                </label>
-                <b-button variant="primary" v-if="file" v-on:click="envoiAvatar()">Envoyer</b-button>
+                <v-row class="my-1">
+                  <v-col align="center" justify="center" sm="8">
+                    <v-file-input prepend-icon="" chips label="Avatar" id="file" ref="file" v-on:change="gereEnvoi()"></v-file-input>
+                  </v-col>
+                  <v-col align="center" justify="center" sm="4">
+                    <v-btn color="primary" v-if="file" v-on:click="envoiAvatar()">Envoyer</v-btn>
+                  </v-col>
+                </v-row>
             </div>
 
             <div class="large-12 medium-12 small-12 cell mt-4">
-                <b-row class="my-1">
-                    <b-col sm="2">
-                        <label for="input-small">Username:</label>
-                    </b-col>
-                    <b-col sm="8">
-                        <b-form-input id="input-small" size="sm" v-model="new_username" v-bind:placeholder="username"></b-form-input>
-                    </b-col>
-                    <b-col sm="2">
-                        <b-button variant="primary" v-if="new_username" v-on:click="envoiUsername()">Envoyer</b-button>
-                    </b-col>
-                </b-row>
+                <v-row class="my-1">
+                    <v-col align="center" justify="center" sm="8">
+                      <v-text-field v-model="new_username" :rules="nameRules" :counter="25" label="Username" required></v-text-field>
+                    </v-col>
+                    <v-col align="center" justify="center" sm="4">
+                        <v-btn color="primary" v-if="new_username" v-on:click="envoiUsername()">Envoyer</v-btn>
+                    </v-col>
+                </v-row>
             </div>
-        </b-form-group>
-    </b-container>
+        </v-form-group>
+    </v-container>
   </div>
 </template>
 

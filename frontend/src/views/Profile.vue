@@ -1,8 +1,10 @@
 <template>
-  <div class="profil">
-    <b-row class="justify-content-center">
-      <b-avatar style="padding:0;" variant="primary" v-bind:src="url + '/avatar/' + id" size="100px"></b-avatar>
-    </b-row>
+  <div>
+    <v-row justify="center">
+      <v-avatar  style="padding:0;" color="primary"  size="100">
+        <img v-bind:src="url + '/avatar/' + id" style="width:100%"/>
+      </v-avatar>
+    </v-row>
     <div class="mb-4" id="nav">
       <b-nav tabs class="justify-content-center">
           <b-nav-item> <a href="javascript:void(0);" :class="{ 'router-link-exact-active': edit }" @click="edit=true; histo=false"> Modifier Profil </a></b-nav-item>
@@ -52,5 +54,10 @@ export default {
 
 .active {
   color:aqua;
+}
+
+a {
+  color:black;
+  text-decoration: bold;
 }
 </style>

@@ -47,6 +47,7 @@ const letterprop = defineProps({
     position: relative;
     flex-basis: calc(10%);
     border: 1px solid;
+    border-color: #2f2f2f !important;
     box-sizing: border-box;
 
     color:#ffffff;

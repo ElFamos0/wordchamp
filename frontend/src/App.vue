@@ -1,66 +1,81 @@
 <template>
   <v-app>
-    <div id="nav">
-      <b-nav tabs>
-          <b-modal id="modal-profile" :title="'Profil de ' + username">
-            <Profile />
-          </b-modal>
-          <tag v-if="isAuth">
-            <a v-b-modal.modal-profile href="#">
-              <b-nav-item>
-                <b-avatar variant="primary" v-bind:src="url + '/avatar/' + userid" size="25px"/>
-              </b-nav-item>
-            </a>
-          </tag>
-          <router-link to="/">
-            <b-nav-item>
-              <font-awesome-icon icon="house" />
-            </b-nav-item>
-          </router-link>
-          <tag v-if="isAuth">
-            <router-link to="/choice">
-              <b-nav-item id="play">
-                <font-awesome-icon icon="play" />
-              </b-nav-item>
-            </router-link>
-            <v-btn>
-              Top
-              <v-tooltip
-                activator="parent"
-                anchor="top"
-              >Tooltip</v-tooltip>
-            </v-btn>
-          </tag>
-          <tag v-if="isAuth">
-            <router-link to="/history"> 
-              <b-nav-item>
-                Historique
-              </b-nav-item>
-            </router-link>
-          </tag>
-          <tag v-if="!isAuth">
-            <router-link to="/login">
-              <b-nav-item>
-                Connectes-toi 
-              </b-nav-item>
-            </router-link>
-          </tag>
-          <tag v-if="isAuth">
-            <router-link to="/logout">
-              <b-nav-item>
-              Déconnectes-toi
-              </b-nav-item>
-            </router-link>
-          </tag>
-          <tag v-if="!isAuth">
-            <router-link to="/register">
-              <b-nav-item>
-                Enregistres-toi
-              </b-nav-item>
-            </router-link>
-          </tag>
-      </b-nav>
-    </div>
+
+    
+    <!-- <v-modal id="modal-profile" :title="'Profil de ' + username">
+      <Profile />
+    </v-modal> -->
+    <v-toolbar dark dense>
+      <v-tabs align-with-title>
+
+        <v-dialog transition="dialog-top-transition">
+          <template v-slot:activator="{ props }">
+            <v-tab v-bind="props" v-if="isAuth">
+              <v-tooltip activator="parent" anchor="bottom">
+                Profil
+              </v-tooltip>
+              <b-avatar variant="primary" v-bind:src="url + '/avatar/' + userid" size="25px"/>
+            </v-tab>
+          </template>
+          <template v-slot:default="{ isActive }">
+            <v-card>
+              <v-toolbar>Profil de {{ username }}</v-toolbar>
+              <v-card-text>
+                <Profile />
+              </v-card-text>
+              <v-card-actions class="justify-end">
+                <v-btn text @click="isActive.value = false" >Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </v-dialog>
+        
+        <v-tab to="/">
+          <v-tooltip activator="parent" anchor="bottom">
+            Maison
+          </v-tooltip>
+          <font-awesome-icon icon="house" />
+        </v-tab>
+        <v-tab v-if="isAuth" to="/choice">
+          <v-tooltip activator="parent" anchor="bottom">
+            Jouer
+          </v-tooltip>
+          <font-awesome-icon icon="play" />
+        </v-tab>
+        <v-tab v-if="isAuth" to="/history">
+          Historique
+        </v-tab>
+      </v-tabs>
+
+      <v-spacer></v-spacer>
+
+      <v-tabs align-with-title>
+        <v-tab v-if="!isAuth" to="/register">
+          <v-tooltip activator="parent" anchor="bottom">
+            Enregistres-toi
+          </v-tooltip>
+          <v-btn icon>
+            <v-icon>mdi-account-plus</v-icon>
+          </v-btn>
+        </v-tab>
+        <v-tab right v-if="!isAuth" to="/login">
+          <v-tooltip activator="parent" anchor="bottom">
+            Connectes-toi
+          </v-tooltip>
+          <v-btn icon>
+            <v-icon>mdi-login-variant</v-icon>
+          </v-btn>
+        </v-tab>
+        <v-tab v-if="isAuth" to="/logout">
+          <v-tooltip activator="parent" anchor="bottom">
+            Déconnecte-toi
+          </v-tooltip>
+          <v-btn icon>
+            <v-icon>mdi-logout-variant</v-icon>
+          </v-btn>
+        </v-tab>
+      </v-tabs>
+    </v-toolbar>
     <router-view/>
   </v-app>
 </template>
@@ -112,6 +127,10 @@ export default {
 
 #nav {
   padding: 30px;
+}
+
+#nav a {
+  text-decoration: none;
 }
 
 #nav a>li>a {

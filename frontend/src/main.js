@@ -16,10 +16,13 @@ loadFonts()
 
 //import * as icons from "@fortawesome/free-solid-svg-icons";
 
-import { faHouse, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faPlay, faDoorOpen, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faHouse)
 library.add(faPlay)
+library.add(faDoorOpen)
+library.add(faUserPlus)
+
 
 const store = createStore({
   modules: {
