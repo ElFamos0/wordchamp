@@ -16,6 +16,7 @@
     "axios": "^0.26.1",
     "bootstrap-vue-3": "^0.1.9",
     "core-js": "^3.8.3",
+    "particles-bg-vue": "^1.3.5",
     "roboto-fontface": "*",
     "simple-keyboard": "^3.4.74",
     "vue": "^3.2.13",

@@ -1,25 +1,23 @@
-    <template>
+<template>
   <div class="random">
-    <b-container>
+    <v-container>
         <h1>Login</h1>
-        <b-row class="justify-content-md-center mt-3">
-            <b-col col lg="4">
-                <b-card class="mx-auto" style="max-width:350px;">
-                    <b-form @submit="onSubmit" @reset="onReset">
+        <v-row class="justify-content-md-center mt-3">
+            <v-col col lg="4">
+                <v-card class="mx-auto" style="max-width:350px;">
+                    <v-container>
+                        <v-form @submit="onSubmit" @reset="onReset">
+                            <v-text-field class="mx-auto" style="max-width:200px" id="username" v-model="this.form.username" :rules="nameRules" :counter="25" label="Username" required></v-text-field>
 
-                    <b-form-group id="username-label" label="Username:" label-for="username">
-                        <b-form-input class="mx-auto" style="max-width:200px" id="username" v-model="this.form.username" placeholder="Enter username" required></b-form-input>
-                    </b-form-group>
+                            <v-text-field class="mx-auto" style="max-width:200px" id="password" type="password" v-model="this.form.password" :rules="nameRules" :counter="25" label="Password" required></v-text-field>
 
-                    <b-form-group id="password-label" label="Password:" label-for="password">
-                        <b-form-input class="mx-auto" style="max-width:200px" id="password" type="password" v-model="this.form.password" placeholder="Enter password" required></b-form-input>
-                    </b-form-group>
-
-                    <b-button @click="submit()" variant="primary">Login</b-button>                    </b-form>
-                </b-card>
-            </b-col>
-        </b-row>
-    </b-container>
+                            <v-btn @click="submit()" color="primary">Login</v-btn>                    
+                        </v-form>
+                    </v-container>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-container>
   </div>
 </template>
 

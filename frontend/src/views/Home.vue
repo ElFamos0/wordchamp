@@ -1,9 +1,13 @@
 <template>
   <div class="hello">
-    <h1>Bienvenue sur Wordchamp</h1> <!-- msg est une variable de template -->
-    <ul>
-      <li>Il faut utiliser les menus en haut pour se déplacer.</li>
-    </ul>
+    <v-container>
+      <v-card>
+        <h1>Bienvenue sur Wordchamp</h1> <!-- msg est une variable de template -->
+        <ul>
+          <li>Il faut utiliser les menus en haut pour se déplacer.</li>
+        </ul>
+      </v-card>
+    </v-container>
   </div>
 </template>
 

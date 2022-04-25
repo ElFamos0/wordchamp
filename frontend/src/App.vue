@@ -1,6 +1,5 @@
 <template>
-  <v-app>
-
+  <v-app v-bind:style="{ backgroundColor: '#0000' }">
     
     <!-- <v-modal id="modal-profile" :title="'Profil de ' + username">
       <Profile />
@@ -77,17 +76,21 @@
       </v-tabs>
     </v-toolbar>
     <router-view/>
+
+  <particles-bg type="cobweb" color="#EC407A" :canvas="{ backgroundColor: '#7B1FA2'}" :bg="true"/>
   </v-app>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import Profile from "@/views/Profile.vue";
+import { ParticlesBg } from 'particles-bg-vue';
 
 export default {
   name: 'App',
   components: {
     Profile,
+    ParticlesBg,
   },
   created() {
     this.$store.dispatch('auth/autoLogin');
@@ -144,5 +147,13 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.v-card {
+  background-color:#AB47BC;
+}
+
+.v-toolbar {
+  background-color:#AB47BC;
 }
 </style>
