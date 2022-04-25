@@ -1,6 +1,7 @@
 from setup import *
 from setup import db
 from uuid import uuid4
+from utils.timestamp import now
 
 class Game(db.Model):
     __tablename__ = 'games'
@@ -14,11 +15,12 @@ class Game(db.Model):
         'polymorphic_on':game_type
     }
 
-    def __init__(self,id, game_type,date):
+    def __init__(self,id, game_type):
         self.id = id
         self.game_type = game_type
-        self.date = date
+        self.date = now()
         self.state = False
+
 
     def __repr__(self):
         return '<Game %r>' % self.id
