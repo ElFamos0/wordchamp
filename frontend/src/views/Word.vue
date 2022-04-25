@@ -84,7 +84,7 @@ onMounted(() => {
   const id = route.params.i
   const id2 = id.slice(1,2)
   console.log(id2)
-    axios.get(wordpath+"/"+id2,)
+    axios.get(wordpath+"/"+id2)
         .then((res) => {
           console.log(res.data)
           game.solution = res.data;
@@ -95,7 +95,7 @@ onMounted(() => {
           // eslint-disable-next-line
           console.error(error);
         });
-    axiosAuth.get(creategame)
+    axiosAuth.get(creategame+"/"+id2)
         .then((res) => {
           console.log(res.data)
         });
