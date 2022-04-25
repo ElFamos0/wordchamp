@@ -8,7 +8,7 @@
 
 <script>
 import HistoryTable from '../components/HistoryTable.vue'
-import axios from 'axios';
+import axiosAuth from '@/api/axios-auth'
 
 export default {
   name: 'HistoryPage',
@@ -25,7 +25,7 @@ export default {
   },
   created() {
     const path = `${process.env.VUE_APP_BACKEND_URL}/history`
-    axios.get(path).then((res)=> {
+    axiosAuth.get(path).then((res)=> {
       this.entries = res.data.entries
     })
   },
