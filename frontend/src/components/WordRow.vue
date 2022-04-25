@@ -64,5 +64,4 @@ watch( () => rowprop.submitted, (newVal) => {
 
 
 <style scoped>
-
 </style>
