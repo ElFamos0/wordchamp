@@ -25,32 +25,31 @@ const grey = "#4a4a4a";
 const red = "#cc0808";
 const yellow = "#bd8517";
 
-watch( () => rowprop.submitted, (newVal) => {
-    if (newVal) {
-        let guess = rowprop.word;
-        let solution = rowprop.solution;
-        let letterbag = [];
+watch( () => rowprop.submitted, async (newVal) => {
+        if (newVal) {
+            let guess = rowprop.word;
+            let solution = rowprop.solution;
+            let letterbag = [];
 
-        for (let i = 0; i < solution.length; i++) {
-            // on vérifie si la lettre est bien placée
-            if (guess[i] == solution[i]) {
-                colortab.value[i] = red;
-            } else {
-                // on met la lettre dans notre sac car elle peut être mal placée
-                letterbag.push(solution[i]);
-                // on initialise à gris la case
-                colortab.value[i] = grey;
-            }
-        }
-        for (let i=0; i < solution.length; i++) {
-            if (colortab.value[i] == grey) {
-                if (letterbag.includes(guess[i])) {
-                    colortab.value[i] = yellow;
-                    letterbag.splice(letterbag.indexOf(guess[i]), 1);
+            for (let i = 0; i < solution.length; i++) {
+                // on vérifie si la lettre est bien placée
+                if (guess[i] == solution[i]) {
+                    colortab.value[i] = red;
+                } else {
+                    // on met la lettre dans notre sac car elle peut être mal placée
+                    letterbag.push(solution[i]);
+                    // on initialise à gris la case
+                    colortab.value[i] = grey;
                 }
+                if (colortab.value[i] == grey) {
+                    if (letterbag.includes(guess[i])) {
+                        colortab.value[i] = yellow;
+                        letterbag.splice(letterbag.indexOf(guess[i]), 1);
+                    }
+                }
+                await new Promise(resolve => setTimeout(resolve, 400));
             }
         }
-    }
 });
 
 
