@@ -66,6 +66,19 @@ if len(usertest) == 0 :
     newUser = user.User("pseudo","mdp",False)
     db.session.add(newUser)
     db.session.commit()
+    newUser = user.User("PGM","mdp",False,100)
+    db.session.add(newUser)
+    db.session.commit()
+    newUser = user.User("SemiPro","mdp",False,75)
+    db.session.add(newUser)
+    db.session.commit()
+    newUser = user.User("LeTiroir","mdp",False,30)
+    db.session.add(newUser)
+    db.session.commit()
+    newUser = user.User("MecPasOuf","mdp",False,10)
+    db.session.add(newUser)
+    db.session.commit()
+    
 ##### 
 
 

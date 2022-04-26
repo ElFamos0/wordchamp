@@ -44,6 +44,9 @@
         <v-tab v-if="isAuth" to="/history">
           Historique
         </v-tab>
+        <v-tab to="/classement">
+          Classement
+        </v-tab>
       </v-tabs>
 
       <v-spacer></v-spacer>

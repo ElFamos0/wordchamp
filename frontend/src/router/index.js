@@ -6,6 +6,7 @@ import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
 import Choice from "@/views/Choice.vue";
 import HistoryPage from "@/views/HistoryPage.vue";
+import ClassementPage from "@/views/ClassementPage.vue";
 import axiosAuth from '@/api/axios-auth';
 import axiosRefresh from '@/api/axios-refresh';
 
@@ -75,6 +76,14 @@ const routes = [
     component: HistoryPage,
     meta: {
       title: 'Wordchamp - Historique',
+    }
+  },
+  {
+    path: "/classement",
+    name: "classment-page",
+    component: ClassementPage,
+    meta: {
+      title: 'Wordchamp - Classement',
     }
   },
 ];
