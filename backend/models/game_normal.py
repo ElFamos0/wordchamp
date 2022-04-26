@@ -27,12 +27,18 @@ class Game_normal(Game):
     def __repr__(self):
         return '<Game_normal %r>' % self.id
 
-    def toDict(self):
+    def toDict(self, id, id_user, solution, maxtry, length, date):
         dictionnaire = {}
-        dictionnaire['id']=self.id
-        dictionnaire['id_user']=self.id_user
-        dictionnaire['solution']=self.solution
-        dictionnaire['maxtry']=self.maxtry
-        dictionnaire['length']=self.length
-        dictionnaire['date']=self.date
+        if id:
+            dictionnaire['id']=self.id
+        if id_user:
+            dictionnaire['id_user']=self.id_user
+        if solution:
+            dictionnaire['solution']=self.solution
+        if maxtry:
+            dictionnaire['maxtry']=self.maxtry
+        if length:
+            dictionnaire['length']=self.length
+        if date:
+            dictionnaire['date']=self.date
         return dictionnaire

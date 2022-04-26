@@ -27,12 +27,18 @@ class Game_survie(Game):
     def __repr__(self):
         return '<Game_normal %r>' % self.id
 
-    def toDict(self):
+    def toDict(self, id, id_user, score, maxtry, length, date):
         dictionnaire = {}
-        dictionnaire['id']=self.id
-        dictionnaire['id_user']=self.id_user
-        dictionnaire['score']=self.score
-        dictionnaire['maxtry']=self.maxtry
-        dictionnaire['length']=self.length
-        dictionnaire['date']=self.date
+        if id:
+            dictionnaire['id']=self.id
+        if id_user:
+            dictionnaire['id_user']=self.id_user
+        if score:
+            dictionnaire['solution']=self.score
+        if maxtry:
+            dictionnaire['maxtry']=self.maxtry
+        if length:
+            dictionnaire['length']=self.length
+        if date:
+            dictionnaire['date']=self.date
         return dictionnaire

@@ -14,11 +14,11 @@ def history():
     identity = get_jwt_identity()
     userId = identity
     reqGames = Game_normal.query.filter_by(id_user=userId, state=1).order_by(Game.date.desc()).all()
-    games = [e.toDict() for e in reqGames]
+    games = [e.toDict(1,1,1,1,1,1) for e in reqGames]
     entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":str(e["maxtry"])} for e in games]
     for entry in entries:
         reqTries = Tries.query.filter_by(id_game=entry["id"]).all()
-        tries = [e.toDict() for e in reqTries]
+        tries = [e.toDict(1,1,1,1) for e in reqTries]
         guesses = [{"id":e["try_number"],"word":e["word"]} for e in tries]
         entry["guesses"]=guesses
         entry["result"]= "Victoire" if estGagnee(entry) else "Défaite"

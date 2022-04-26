@@ -42,10 +42,14 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def toDict(self):
+    def toDict(self, id, username, password_hash, points):
         dictionnaire = {}
-        dictionnaire['id']=self.id
-        dictionnaire['username']=self.username
-        dictionnaire['password_hash']=self.password_hash
-        dictionnaire['points']=self.points
+        if id:
+            dictionnaire['id']=self.id
+        if username:
+            dictionnaire['username']=self.username
+        if password_hash:
+            dictionnaire['password_hash']=self.password_hash
+        if points:
+            dictionnaire['points']=self.points
         return dictionnaire

@@ -20,10 +20,14 @@ class Tries(db.Model):
     def __repr__(self):
         return '<Tentative %r>' % self.word
 
-    def toDict(self):
+    def toDict(self, id, try_number, word, id_game):
         dictionnaire = {}
-        dictionnaire['id']=self.id
-        dictionnaire['try_number']=self.try_number
-        dictionnaire['word']=self.word
-        dictionnaire['id_game']=self.id_game
+        if id:
+            dictionnaire['id']=self.id
+        if try_number:
+            dictionnaire['try_number']=self.try_number
+        if word:
+            dictionnaire['word']=self.word
+        if id_game:
+            dictionnaire['id_game']=self.id_game
         return dictionnaire
