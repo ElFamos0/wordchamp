@@ -53,6 +53,9 @@ const letterprop = defineProps({
     color:#ffffff;
     animation: flip .75s linear;
     font-size:min(7vh,7vw);
+
+    transition-property: background-color;
+    transition-duration: .5s;
 }
 
 .letter:before{

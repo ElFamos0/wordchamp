@@ -40,17 +40,17 @@ watch( () => rowprop.submitted, (newVal) => {
                 letterbag.push(solution[i]);
                 // on initialise à gris la case
                 colortab.value[i] = grey;
-                }
             }
+        }
         for (let i=0; i < solution.length; i++) {
             if (colortab.value[i] == grey) {
                 if (letterbag.includes(guess[i])) {
                     colortab.value[i] = yellow;
                     letterbag.splice(letterbag.indexOf(guess[i]), 1);
-                    }
                 }
             }
         }
+    }
 });
 
 
