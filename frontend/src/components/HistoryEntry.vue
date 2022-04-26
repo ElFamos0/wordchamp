@@ -1,10 +1,8 @@
 <template>
-    <!-- id inutile ? -->
     <div @dblclick="$emit('show-details', entryId )" class="entryContainer" :style="colorClass">
-        <div>(Id de la partie : {{entryId}})</div>
-        <!-- <div>Solution : {{solution}}</div> -->
-        <WordRow :solution="solution" :word="solution" submitted="true"/>
-        <div>{{result}}</div>
+      <!-- <div>(Id de la partie : {{entryId}})</div> -->
+      <div style="font-family: 'Roboto', sans-serif;font-size: 3em; max-width: 0px; padding-left: 7%">{{result}}</div>
+      <WordRow :solution="solution" :word="solution" submitted="true" style="padding-left: 53%; padding-top: 0.7%; max-width: 100%"/>
     </div>
 </template>
 
@@ -34,12 +32,14 @@ export default {
 
 
 <style scoped>
+
 .entryContainer {
-  margin: 20px 50px auto;
+  margin: 20px 20% auto;
   overflow: auto;
   /* border: 1px solid rgb(145, 145, 145); */
   padding: 10px;
   border-radius: 5px;
   background: rgb(205, 205, 205);
+  display: flex;
 }
 </style>

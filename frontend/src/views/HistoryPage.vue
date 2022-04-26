@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>Historique des parties</h1>
+    <div style="padding-top: 1%">
+        <h1 style="font-family: 'Roboto', sans-serif">Historique des parties</h1>
         <history-table :entries="entries"/>
     </div>
 </template>

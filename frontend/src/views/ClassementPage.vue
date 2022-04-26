@@ -36,7 +36,6 @@
         </tbody>
         </template>
     </v-table>    
-    <!-- <div v-for="userData in usersData" :key="userData.index">salut mec</div>  -->
 </div>
 </template>
 

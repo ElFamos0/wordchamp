@@ -10,13 +10,13 @@ export default {
 </script>
 
 <template>
-<div>
-    <h1>
+<div style="padding-top: 2%">
+    <h1 style="font-family: 'Roboto', sans-serif">
         Choisis le nombre de lettres
     </h1>
-    <v-container center>
-        <div class="my-2" v-for="i in 5" :key="i">
-            <v-btn @click="onClick(i)" x-small color="secondary">
+    <v-container style="display: flex; justify-content: center">
+        <div class="my-2" v-for="i in 5" :key="i" style="margin: 1%">
+            <v-btn @click="onClick(i)" x-small color="primary">
                 {{i+4}} lettres
             </v-btn>
         </div>

@@ -62,7 +62,7 @@
         </v-tab>
         <v-tab right v-if="!isAuth" to="/login">
           <v-tooltip activator="parent" anchor="bottom">
-            Connectes-toi
+            Connecte-toi
           </v-tooltip>
           <v-btn icon>
             <v-icon>mdi-login-variant</v-icon>
