@@ -32,19 +32,19 @@ watch( () => rowprop.submitted, async (newVal) => {
             let letterbag = [];
 
             for (let i = 0; i < solution.length; i++) {
+                letterbag.push(solution[i]);
+            }
+
+            for (let i = 0; i < solution.length; i++) {
                 // on vérifie si la lettre est bien placée
                 if (guess[i] == solution[i]) {
                     colortab.value[i] = red;
                 } else {
-                    // on met la lettre dans notre sac car elle peut être mal placée
-                    letterbag.push(solution[i]);
-                    // on initialise à gris la case
-                    colortab.value[i] = grey;
-                }
-                if (colortab.value[i] == grey) {
                     if (letterbag.includes(guess[i])) {
                         colortab.value[i] = yellow;
                         letterbag.splice(letterbag.indexOf(guess[i]), 1);
+                    } else {
+                        colortab.value[i] = grey;
                     }
                 }
                 await new Promise(resolve => setTimeout(resolve, 400));
