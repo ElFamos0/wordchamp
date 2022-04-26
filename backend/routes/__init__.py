@@ -9,5 +9,6 @@ __all__ = [
     "history",
     "creategame",
     "historyDebug",
-    "send_try"
+    "send_try",
+    "classement",
 ]

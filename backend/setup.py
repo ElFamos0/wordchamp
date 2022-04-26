@@ -168,19 +168,19 @@ all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal,game_survi
 
 all_games = db.session.query(all_games_poly)
 
-first_game = all_games[0]
+# first_game = all_games[0]
 
-date = first_game.date              #Pour récup la date
-state = first_game.state            #Pour récup le state
-id = first_game.id                  #Pour récup l'id
-game_type = first_game.game_type    #Pour récup le type de game
+# date = first_game.date              #Pour récup la date
+# state = first_game.state            #Pour récup le state
+# id = first_game.id                  #Pour récup l'id
+# game_type = first_game.game_type    #Pour récup le type de game
 
-if game_type == "game_normal" :
+# if game_type == "game_normal" :
 
-    id_user = first_game.id_user    #Pour récup le user_id
-    solution = first_game.solution  #Pour récup la solution
-    maxtry = first_game.maxtry      #Pour récup le nb de try
-    length = first_game.length      #Pour récup la longeur de la soluce
+#     id_user = first_game.id_user    #Pour récup le user_id
+#     solution = first_game.solution  #Pour récup la solution
+#     maxtry = first_game.maxtry      #Pour récup le nb de try
+#     length = first_game.length      #Pour récup la longeur de la soluce
 
 #print(date,state,id,game_type,id_user,solution,maxtry,length)
 

@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     admin = db.Column(db.Boolean, nullable=False)
+    points = db.Column(db.Integer, nullable=False)
 
     def is_admin(self):
         return self.admin
@@ -36,6 +37,7 @@ class User(db.Model, UserMixin):
         self.username = username
         self.set_password(password)
         self.admin = admin
+        self.points = 0
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -45,4 +47,5 @@ class User(db.Model, UserMixin):
         dictionnaire['id']=self.id
         dictionnaire['username']=self.username
         dictionnaire['password_hash']=self.password_hash
+        dictionnaire['points']=self.points
         return dictionnaire
