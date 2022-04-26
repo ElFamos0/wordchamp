@@ -57,7 +57,7 @@ export default {
 }
 
 a {
-  color:black;
+  color:rgb(255, 255, 255);
   text-decoration: bold;
 }
 </style>

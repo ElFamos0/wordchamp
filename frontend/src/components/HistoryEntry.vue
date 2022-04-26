@@ -1,6 +1,6 @@
 <template>
     <!-- id inutile ? -->
-    <div @dblclick="$emit('show-details', entryId )" class="entryContainer">
+    <div @dblclick="$emit('show-details', entryId )" class="entryContainer" :style="colorClass">
         <div>(Id de la partie : {{entryId}})</div>
         <!-- <div>Solution : {{solution}}</div> -->
         <WordRow :solution="solution" :word="solution" submitted="true"/>
@@ -17,6 +17,13 @@ export default {
     entryId : String,
     solution : String,
     result: String,
+  },
+  computed: {
+    colorClass() {
+      console.log(this.result)
+      let color = (this.result == 'Victoire' ) ? '#60b760' : '#ff4545';
+      return 'background-color: '+color;
+    }
   },
   components: {
     WordRow

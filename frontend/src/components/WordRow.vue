@@ -21,6 +21,9 @@ En particulier ici on vérifie si la ligne est "validée" par l'utilisateur et p
 
 Ici le traitement se fait en frontend mais il faudrait peut être faire un traitement en backend
 */
+const grey = "#4a4a4a";
+const red = "#cc0808";
+const yellow = "#bd8517";
 
 watch( () => rowprop.submitted, (newVal) => {
     if (newVal) {
@@ -31,18 +34,18 @@ watch( () => rowprop.submitted, (newVal) => {
         for (let i = 0; i < solution.length; i++) {
             // on vérifie si la lettre est bien placée
             if (guess[i] == solution[i]) {
-                colortab.value[i] = "#cc0808";
+                colortab.value[i] = red;
             } else {
                 // on met la lettre dans notre sac car elle peut être mal placée
                 letterbag.push(solution[i]);
                 // on initialise à gris la case
-                colortab.value[i] = "#1e1e1e";
+                colortab.value[i] = grey;
                 }
             }
         for (let i=0; i < solution.length; i++) {
-            if (colortab.value[i] == "#1e1e1e") {
+            if (colortab.value[i] == grey) {
                 if (letterbag.includes(guess[i])) {
-                    colortab.value[i] = "#bd8517";
+                    colortab.value[i] = yellow;
                     letterbag.splice(letterbag.indexOf(guess[i]), 1);
                     }
                 }

@@ -77,7 +77,7 @@
     </v-toolbar>
     <router-view/>
 
-  <particles-bg type="cobweb" color="#EC407A" :canvas="{ backgroundColor: '#7B1FA2'}" :bg="true"/>
+  <particles-bg type="cobweb" color="#7b1fa2" :canvas="{ backgroundColor: '#4a148c'}" :bg="true"/>
   </v-app>
 </template>
 
@@ -125,7 +125,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
 #nav {
@@ -142,18 +141,18 @@ export default {
 }
 
 #nav a.router-link-exact-active>li>a {
-  color: #42b983;
+  color: #00341d;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #00341d;
 }
 
 .v-card {
-  background-color:#AB47BC;
+  background-color:#aa00ff;
 }
 
 .v-toolbar {
-  background-color:#AB47BC;
+  background-color:#aa00ff;
 }
 </style>

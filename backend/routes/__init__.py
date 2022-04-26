@@ -10,5 +10,5 @@ __all__ = [
     "creategame",
     "historyDebug",
     "send_try",
-    "classement",
+    #"classement",
 ]

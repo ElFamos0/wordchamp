@@ -5,7 +5,7 @@
             <v-alert v-model="errorMessage" type="danger" dismissible>
                 {{ errorMessage }}
             </v-alert>
-
+            <h4> Modification du profil </h4>
             <div class="large-12 medium-12 small-12 cell">
                 <v-row class="my-1">
                   <v-col align="center" justify="center" sm="8">

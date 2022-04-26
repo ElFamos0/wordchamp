@@ -116,7 +116,7 @@ onUnmounted(() => {
     <p v-if="wincase()" style="text-align:center" >Vous avez gagné</p>
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
-      <Keyboard @onKeyPress="displayinput"></Keyboard>
+      <Keyboard style="color:#000" @onKeyPress="displayinput"></Keyboard>
     </b-container>
   </div>
 </template>
