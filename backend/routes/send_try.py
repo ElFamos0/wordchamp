@@ -45,6 +45,7 @@ def send_try():
         db.session.add(newTry)
 
         gam.state = True
+        current_user.points=current_user.points+1
 
         db.session.commit()
 
