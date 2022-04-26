@@ -32,12 +32,12 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def __init__(self, username, password, admin=False):
+    def __init__(self, username, password, admin=False, points=0):
         self.id = uuid4().hex
         self.username = username
         self.set_password(password)
         self.admin = admin
-        self.points = 0
+        self.points = points
 
     def __repr__(self):
         return '<User %r>' % self.username
