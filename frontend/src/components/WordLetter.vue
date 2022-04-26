@@ -1,18 +1,19 @@
 <template>
 <!-- Utilisation du v-bind afin de pouvoir choisir le background en fonction de l'état de la case -->
-<b-col class="border letter" v-bind:style="{background:letterprop.color}">
-    <div class="letter-content">
-        {{letterprop.letter}}
-    </div>
-</b-col>
+    <b-col ref="lettre" class="border letter" v-bind:style="{background:letterprop.color}">
+        <div class="letter-content">
+            {{letterprop.letter}}
+        </div>
+    </b-col>
 </template>
 
 
 <script setup>
-import {defineProps} from "vue"
+import {defineProps, ref, watch} from "vue"
 
 //var dictcolor = {"grey":"#1e1e1e","red":"#cc0808","yellow":"#bd8517"}
 
+let lettre = ref(null)
 
 // définit des propriétés pour le composant
 const letterprop = defineProps({
@@ -23,13 +24,14 @@ const letterprop = defineProps({
     color:{
         type: String,
         default: "#1e1e1e",
-    },
-    animate() {
-        var el = document.getElementById('animated');
-        el.style.animation = 'none';
-        el.offsetHeight; /* trigger reflow */
-        el.style.animation = null; 
     }
+})
+
+watch( () => letterprop.color, function () {
+    if (lettre.value == null) { return}
+    lettre.value.$el.style.animation = 'none';
+    lettre.value.$el.offsetHeight; /* trigger reflow */
+    lettre.value.$el.style.animation = null; 
 })
 
 
@@ -52,6 +54,8 @@ const letterprop = defineProps({
 
     color:#ffffff;
     animation: flip .75s linear;
+    animation-timing-function:ease-in-out;
+    animation-fill-mode:backwards;
     font-size:min(7vh,7vw);
 
     transition-property: background-color;
@@ -81,10 +85,10 @@ const letterprop = defineProps({
 
 @keyframes flip{
    from{
-    transform: rotateX(0deg);
-  }
+    transform: rotateX(180deg);
+}
    to{
-     transform: rotateX(180deg);
+     transform: rotateX(0deg);
   }
 }
 </style>
