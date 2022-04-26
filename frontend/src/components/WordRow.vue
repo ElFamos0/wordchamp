@@ -42,11 +42,11 @@ watch( () => rowprop.submitted, async (newVal) => {
                 } else {
                     if (letterbag.includes(guess[i])) {
                         colortab.value[i] = yellow;
-                        letterbag.splice(letterbag.indexOf(guess[i]), 1);
                     } else {
                         colortab.value[i] = grey;
                     }
                 }
+                letterbag.splice(letterbag.indexOf(guess[i]), 1);
                 await new Promise(resolve => setTimeout(resolve, 400));
             }
         }
