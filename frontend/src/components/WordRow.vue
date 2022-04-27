@@ -25,34 +25,44 @@ const grey = "#4a4a4a";
 const red = "#cc0808";
 const yellow = "#bd8517";
 
-watch( () => rowprop.submitted, async (newVal) => {
+async function Update(newVal)  {
         if (newVal) {
             let guess = rowprop.word;
             let solution = rowprop.solution;
-            let letterbag = [];
+            let colors = [];
+            let counts = {};
 
             for (let i = 0; i < solution.length; i++) {
-                letterbag.push(solution[i]);
+                counts[solution[i]] = (counts[solution[i]] || 0) + 1;
+                if (guess[i] == solution[i]) {
+                    colors[i] = red;
+                    counts[solution[i]]--
+                } else {
+                    colors[i] = grey;
+                }
             }
 
             for (let i = 0; i < solution.length; i++) {
-                // on vérifie si la lettre est bien placée
-                if (guess[i] == solution[i]) {
-                    colortab.value[i] = red;
-                } else {
-                    if (letterbag.includes(guess[i])) {
-                        colortab.value[i] = yellow;
-                    } else {
-                        colortab.value[i] = grey;
+                if (colors[i] == grey) {
+                    if (counts[guess[i]] > 0) {
+                        colors[i] = yellow;
+                        counts[guess[i]]--;
                     }
                 }
-                letterbag.splice(letterbag.indexOf(guess[i]), 1);
+            }
+
+            for (let i = 0; i < solution.length; i++) {
+                colortab.value[i] = colors[i];
                 await new Promise(resolve => setTimeout(resolve, 400));
             }
         }
-});
+}
 
+watch( () => rowprop.submitted, Update);
 
+if(rowprop.submitted) {
+    Update(true)
+}
 
 </script>
 

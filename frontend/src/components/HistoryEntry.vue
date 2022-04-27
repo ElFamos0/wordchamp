@@ -2,7 +2,7 @@
     <div @dblclick="$emit('show-details', entryId )" class="entryContainer" :style="colorClass">
       <!-- <div>(Id de la partie : {{entryId}})</div> -->
       <div style="font-family: 'Roboto', sans-serif;font-size: 3em; max-width: 0px; padding-left: 7%">{{result}}</div>
-      <WordRow :solution="solution" :word="solution" submitted="true" style="padding-left: 53%; padding-top: 0.7%; max-width: 100%"/>
+      <WordRow :solution="solution" :word="solution" :submitted="false" style="padding-left: 53%; padding-top: 0.7%; max-width: 100%"/>
     </div>
 </template>
 

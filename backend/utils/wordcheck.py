@@ -1,10 +1,8 @@
 from setup import *
-from models.word import Word
 
 """
 Fonctions qui vont nous permettre de voir si le mot est dans la db et qui vont nous permettre de donner tous les indices sur le mots
 """
-
 
 def check_word(word,solution):
     colortab = []    
@@ -14,7 +12,7 @@ def check_word(word,solution):
             colortab.append(0)
         elif word[i] == solution[i]:
             colortab.append(2)
-        elif word[i] in solution:
+        elif word[i] in solution[i:]:
             #a modifier les conditions sont plus complexes que ça
             colortab.append(1)
     return colortab

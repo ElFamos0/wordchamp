@@ -2,10 +2,10 @@
     <div class="detailContainer">
         <!-- <h2>Historique détaillé de la partie {{entryId}}</h2> -->
         <div v-for='guess in guesses' :key='guess.id'>
-            <word-row :solution='solution' :word='guess.word' :submitted='true'/>
+            <word-row :style="colorClass" :solution='solution' :word='guess.word' :submitted="true"/>
         </div>
         <div v-for='i in (maxtry-(guesses.length))' :key='i'>
-            <word-row :solution='solution' word='' :submitted='true'/>
+            <word-row :solution='solution' word='' :submitted="true"/>
         </div>
         <!-- <h3>La solution était : {{solution}}</h3> -->
     </div>
@@ -23,6 +23,10 @@ export default {
         result: String,
         maxtry: String,
         guesses: Array,
+    },
+    async onMounted() {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        //this.submits = true
     },
     components: {
         WordRow,
