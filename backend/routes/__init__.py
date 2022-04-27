@@ -13,4 +13,5 @@ __all__ = [
     "classement",
     "currentGame",
     "motValideDebug",
+    "motValide",
 ]

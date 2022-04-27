@@ -1,6 +1,6 @@
 from setup import *
-from utils.motValide import motValide
+from utils.isMot import isMot
 
 @app.route('/motValideDebug', methods=['GET'])
 def motValideDebug():
-    return motValide("AAAAA")
+    return isMot("AAAAA")
