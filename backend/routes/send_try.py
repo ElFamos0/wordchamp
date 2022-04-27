@@ -7,6 +7,7 @@ from models import *
 from sqlalchemy.orm import with_polymorphic
 from flask import request
 from sqlalchemy import desc
+from utils.motValide import motValide
 
 
 
@@ -38,6 +39,9 @@ def send_try():
     all_tries = tries.Tries.query.filter(tries.Tries.id_game == id_game).all()
 
     # Check ici si le mot est valide (à faire)
+    if not(motValide(data)):
+
+        return jsonify({"error": "word is not in database"}),200
 
     if len(data) > len(solution)  :
 
