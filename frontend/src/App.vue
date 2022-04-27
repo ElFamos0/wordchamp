@@ -80,12 +80,13 @@
     </v-toolbar>
     <router-view/>
 
-  <particles-bg type="cobweb" color="#7b1fa2" :canvas="{ backgroundColor: '#4a148c'}" :bg="true"/>
+  <particles-bg ref="shownBg" id="shown" type="cobweb" color="#7b1fa2" :canvas="{ backgroundColor: '#4a148c'}" :bg="true"/>
+  <particles-bg ref="hiddenBg" id="hidden" type="random" color="#7b1fa2" :canvas="{ visibility:'hidden', backgroundColor: '#4a148c'}" :bg="true"/>
   </v-app>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 import Profile from "@/views/Profile.vue";
 import { ParticlesBg } from 'particles-bg-vue';
 
@@ -95,8 +96,27 @@ export default {
     Profile,
     ParticlesBg,
   },
-  created() {
+  mounted() {
     this.$store.dispatch('auth/autoLogin');
+    let shownBg = this.$refs.shownBg;
+    let hiddenBg = this.$refs.hiddenBg;
+    
+    const kode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
+    const length = kode.length
+    var pos = 0
+    document.addEventListener('keydown', function (event) {
+      if (event.keyCode === kode[pos++]) {
+        if (length === pos) {
+          console.log(this.$refs)
+          shownBg.$el.style.visibility = 'hidden'
+          hiddenBg.$el.style.visibility = ''
+          pos = 0 // ability to start over
+          return false
+        }
+      } else {
+        pos = 0
+      }
+    }, false)
   },
   changed() {
     this.$store.dispatch('auth/autoLogin');
