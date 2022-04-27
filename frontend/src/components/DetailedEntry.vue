@@ -2,7 +2,7 @@
     <div class="detailContainer">
         <!-- <h2>Historique détaillé de la partie {{entryId}}</h2> -->
         <div v-for='guess in guesses' :key='guess.id'>
-            <word-row :style="colorClass" :solution='solution' :word='guess.word' :submitted="true"/>
+            <word-row style="" :solution='solution' :word='guess.word' :submitted="true"/>
         </div>
         <div v-for='i in (maxtry-(guesses.length))' :key='i'>
             <word-row :solution='solution' word='' :submitted="true"/>
@@ -31,6 +31,15 @@ export default {
     components: {
         WordRow,
     },
+    computed: {
+        colorClass() {
+      console.log(this.result)
+      let color1 = (this.result == 'Victoire' ) ? 'green' : 'red';
+      let color2 = (this.result == 'Victoire' ) ? 'rgb(118, 255, 127)' : 'rgb(255, 134, 134)';
+
+      return 'box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset; background:linear-gradient('+color1+', transparent),linear-gradient(to top left, '+color2+', transparent);background-blend-mode: screen;'
+    }
+    }
 }
 </script>
 
