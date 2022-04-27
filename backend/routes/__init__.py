@@ -12,4 +12,5 @@ __all__ = [
     "send_try",
     "classement",
     "currentGame",
+    "motValideDebug",
 ]

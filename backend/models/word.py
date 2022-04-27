@@ -14,3 +14,13 @@ class Word(db.Model):
 
     def __repr__(self):
         return '<Word %r>' % self.word
+
+    def toDict(self, id, word, size):
+        dictionnaire = {}
+        if id:
+            dictionnaire["id"]=self.id
+        if word:
+            dictionnaire["word"]=self.word
+        if size:
+            dictionnaire["size"]=self.size
+        return dictionnaire
