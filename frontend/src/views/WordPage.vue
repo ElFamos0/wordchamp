@@ -17,6 +17,7 @@ export default {
         return {
           creategame: `${process.env.VUE_APP_BACKEND_URL}/creategame`,
           sendtry: `${process.env.VUE_APP_BACKEND_URL}/send_try`,
+          pathMotValide: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
           dialog: false,
           game: {
             solution: "default",
@@ -25,6 +26,7 @@ export default {
             solutionlength: 8,
             iswin: false,
           },
+          motValide: false
         }
     },
     methods: {
@@ -33,14 +35,17 @@ export default {
           return;
         }
         const wordguess = this.game.tried[this.game.currentTry];
-        if (keypressed == "{enter}" && wordguess.length == this.game.solutionlength) {
+        const test = this.verifTry(wordguess)
+        if (keypressed == "{enter}" && (wordguess.length == this.game.solutionlength) && (test)) {
           console.log("j'envoie un try")
+          console.log("motValide était vrai :", this.motValide)
+          this.motValide=false
+          console.log("je remet à faux motValide :", this.motValide)
           this.game.currentTry++;
           axiosAuth.post(this.sendtry,{"data":wordguess})
             .then((res) => {
               console.log(res)
               });
-
           // handle de la coloration des touches du clavier
         }
         if (keypressed == "{bksp}") {
@@ -49,6 +54,16 @@ export default {
         if (this.isaLetter(keypressed) && wordguess.length < this.game.solutionlength) {
             this.game.tried[this.game.currentTry] += keypressed;
         }
+      },
+      verifTry: function(wordguess) {
+        console.log("valeur de motValide à l'appel de veriTry :", this.motValide)
+        axiosAuth.get(this.pathMotValide+'/'+wordguess)
+            .then((res) => {
+              console.log("valeur de motValide dans la req de veriTry :", this.motValide)
+              this.motValide=res.data
+            })
+            console.log("valeur de motValide retournée par veriTry :", this.motValide)
+        return this.motValide
       },
       isaLetter: function(keypressed) {
         return (keypressed.match(/[a-zA-Z]/) && keypressed.length == 1);
@@ -78,7 +93,7 @@ export default {
     mounted() {
       window.addEventListener("keydown", this.handleKeys);
       // on récupère la solution depuis l'api on récupère une taille de mot en particulier si pas de taille renseigné on choisit une taille aléatoire.
-      const route = useRoute()
+      const route = useRoute()  
       const id = route.params.i
       const id2 = id.slice(1,2)
       console.log(id2)
@@ -89,7 +104,7 @@ export default {
               this.game.solutionlength = res.data.solution.length
               this.game.currentTry = res.data.currenttry
               this.game.tried = res.data.guess
-            });
+          });
     },
     unmounted() {
       window.removeEventListener("keydown", this.handleKeys);
