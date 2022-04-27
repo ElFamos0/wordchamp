@@ -36,8 +36,10 @@ export default {
           return;
         }
         const wordguess = this.game.tried[this.game.currentTry];
-        const test = this.verifTry(wordguess)
-        if (keypressed == "{enter}" && (wordguess.length == this.game.solutionlength) && (test)) {
+        if (keypressed == "{enter}" && (wordguess.length == this.game.solutionlength))
+        { 
+          const test = this.verifTry(wordguess)
+          if (test) {
           console.log("j'envoie un try")
           console.log("motValide était vrai :", this.motValide)
           this.motValide=false
@@ -46,7 +48,9 @@ export default {
           axiosAuth.post(this.sendtry,{"data":wordguess})
             .then((res) => {
               console.log(res)
+              
               });
+            }
           // handle de la coloration des touches du clavier
         }
         if (keypressed == "{bksp}") {
