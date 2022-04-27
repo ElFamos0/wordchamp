@@ -41,7 +41,11 @@ def send_try():
 
     if len(data) > len(solution)  :
 
-        return jsonify({"error": "word sent is too long !"}),200
+        data = data[:len(solution)]
+        
+    elif len(data) < len(solution) :
+
+        data += 'A' * (len(solution) - len(data))
 
     if data == solution :
 
