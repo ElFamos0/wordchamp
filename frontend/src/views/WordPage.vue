@@ -93,6 +93,7 @@ export default {
     },
     unmounted() {
       window.removeEventListener("keydown", this.handleKeys);
+      this.$confetti.stop();
     }
 }
 </script>
