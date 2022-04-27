@@ -76,7 +76,7 @@
         </v-tab>
         <v-tab v-if="isAuth" to="/logout">
           <v-tooltip activator="parent" anchor="bottom">
-            DÃ©connecte-toi
+            Déconnecte-toi
           </v-tooltip>
           <v-btn icon>
             <v-icon>mdi-logout-variant</v-icon>
