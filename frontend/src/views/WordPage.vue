@@ -36,9 +36,9 @@ export default {
           return;
         }
         const wordguess = this.game.tried[this.game.currentTry];
+        const test = this.verifTry(wordguess)
         if (keypressed == "{enter}" && (wordguess.length == this.game.solutionlength))
         { 
-          const test = this.verifTry(wordguess)
           if (test) {
           console.log("j'envoie un try")
           console.log("motValide était vrai :", this.motValide)
