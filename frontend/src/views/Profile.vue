@@ -12,20 +12,21 @@
       </b-nav>
     </div>          
     <profile-main v-if="edit"></profile-main>
-    <hello-world v-if="histo"></hello-world>
+    <history-table v-if="histo"></history-table>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import ProfileMain from "../components/ProfileMain.vue";
-import HelloWorld from "../components/HelloWorld.vue";
+// import HelloWorld from "../components/HelloWorld.vue";
+import HistoryTable from '../components/HistoryTable.vue';
 
 export default {
   name: 'profil-page',
   components: {
     ProfileMain,
-    HelloWorld
+    HistoryTable,
   },
   computed: {
     ...mapGetters('auth', {
