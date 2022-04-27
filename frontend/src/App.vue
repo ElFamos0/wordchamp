@@ -35,7 +35,13 @@
           </v-tooltip>
           <font-awesome-icon icon="house" />
         </v-tab>
-        <v-tab v-if="isAuth" to="/choice">
+        <v-tab v-if="isAuth && currentGame" to="/word/:5">
+          <v-tooltip activator="parent" anchor="bottom">
+            Jouer
+          </v-tooltip>
+          <font-awesome-icon icon="play" />
+        </v-tab>
+        <v-tab v-if="isAuth && !currentGame" to="/choice">
           <v-tooltip activator="parent" anchor="bottom">
             Jouer
           </v-tooltip>
@@ -70,7 +76,7 @@
         </v-tab>
         <v-tab v-if="isAuth" to="/logout">
           <v-tooltip activator="parent" anchor="bottom">
-            Déconnecte-toi
+            DÃ©connecte-toi
           </v-tooltip>
           <v-btn icon>
             <v-icon>mdi-logout-variant</v-icon>
@@ -89,6 +95,7 @@
 import { mapGetters } from 'vuex';
 import Profile from "@/views/Profile.vue";
 import { ParticlesBg } from 'particles-bg-vue';
+import axiosAuth from '@/api/axios-auth'
 
 export default {
   name: 'App',
@@ -97,10 +104,11 @@ export default {
     ParticlesBg,
   },
   mounted() {
+    
     this.$store.dispatch('auth/autoLogin');
     let shownBg = this.$refs.shownBg;
     let hiddenBg = this.$refs.hiddenBg;
-    
+  
     const kode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
     const length = kode.length
     var pos = 0
@@ -118,12 +126,19 @@ export default {
       }
     }, false)
   },
+  created() {
+    const pathCG = `${process.env.VUE_APP_BACKEND_URL}/currentGame`
+    axiosAuth.get(pathCG).then((res)=> {
+      this.currentGame = res.data
+    })
+  },
   changed() {
     this.$store.dispatch('auth/autoLogin');
   },
   data() {
       return {
           url:process.env.VUE_APP_BACKEND_URL,
+          currentGame: false
       }
   },
   computed: {
@@ -179,3 +194,5 @@ export default {
   background-color:#aa00ff;
 }
 </style>
+message.txt
+6 Ko
