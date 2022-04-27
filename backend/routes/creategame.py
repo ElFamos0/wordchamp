@@ -32,6 +32,7 @@ def creategame(taille, maxtry):
         print(data)
     else:
         current_game = all_games[0]
+        data["maxtry"] = current_game.maxtry
         print(current_game)
         data["solution"] = current_game.solution
         guess = db.session.query(tries.Tries).filter_by(id_game = current_game.id).order_by(tries.Tries.try_number).all()
