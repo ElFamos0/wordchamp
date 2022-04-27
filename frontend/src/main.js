@@ -11,6 +11,7 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import VueConfetti from 'vue-confetti';
 
 loadFonts()
 
@@ -35,5 +36,6 @@ createApp(App)
   .use(router)
   .use(store)
   .use(vuetify)
+  .use(VueConfetti)
   .component('font-awesome-icon', FontAwesomeIcon)
   .mount('#app')
