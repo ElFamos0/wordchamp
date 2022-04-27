@@ -14,13 +14,20 @@ const onKeyPress = (button) => {
 onMounted(() => {
   keyboard.value = new Keyboard("simple-keyboard", {
     layout: {
-      default: [
-        'A Z E R T Y U I O P',
-        'Q S D F G H J K L M',
-        '{enter} W X C V B N {bksp}',
-        ],
-      },
-      onKeyPress: onKeyPress,
+    default: [
+      'A Z E R T Y U I O P',
+      'Q S D F G H J K L M',
+      '{enter} W X C V B N {bksp}',
+      ],
+    },
+    onKeyPress: onKeyPress,
+    theme: "hg-theme-default hg-layout-default myTheme",
+    buttonTheme: [
+      {
+        class: "hg-red",
+        buttons: "A Z E R T Y U I O P Q S D F G H J K L M W X C V B N {bksp} {enter}",
+      }
+    ]
   });
 });
       
@@ -39,4 +46,20 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
+</style>
+<style>
+
+.simple-keyboard.hg-theme-default.myTheme {
+  border: 5px solid rgba(182, 47, 255, 0.7);
+  background-color: rgba(133, 32, 187, 0.7);
+  border-radius: 10px;
+  margin: 10px;
+  width: calc(100% - 20px);
+}
+
+.simple-keyboard.hg-layout-default .hg-button.hg-red {
+  background: rgba(166, 35, 237, 0.7);
+  color: white;
+}
+
 </style>

@@ -92,10 +92,13 @@ watch( () => letterprop.color, function () {
 
 @keyframes flip{
    from{
-    transform: rotateX(180deg);
+    transform: rotateX(0deg);
 }
-   to{
-     transform: rotateX(0deg);
+   50% {
+     transform: rotateX(90deg);
+  }
+  100% {
+      transform:rotateX(0deg);
   }
 }
 </style>

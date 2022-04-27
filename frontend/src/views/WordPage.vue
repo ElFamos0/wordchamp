@@ -121,7 +121,7 @@ export default {
           </div>
         </v-card-text>
         <v-card-actions class="justify-end">
-          <v-btn text @click="this.$confetti.stop(); this.$router.go('/')" >Nouvelle partie</v-btn> 
+          <v-btn outlined raised rounded color="accent" @click="this.$confetti.stop(); this.$router.push('/choice')" >Nouvelle partie</v-btn> 
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -133,3 +133,9 @@ export default {
     </b-container>
   </div>
 </template>
+
+<style scoped>
+.v-btn {
+  background-color:rgb(201, 72, 255);
+}
+</style>
