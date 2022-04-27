@@ -12,7 +12,6 @@
 import {defineProps, ref, watch} from "vue"
 
 //var dictcolor = {"grey":"#1e1e1e","red":"#cc0808","yellow":"#bd8517"}
-
 let lettre = ref(null)
 
 // définit des propriétés pour le composant
@@ -27,11 +26,19 @@ const letterprop = defineProps({
     }
 })
 
+// watch( () => letterprop.color, function (newVal) {
 watch( () => letterprop.color, function () {
     if (lettre.value == null) { return}
     lettre.value.$el.style.animation = 'none';
     lettre.value.$el.offsetHeight; /* trigger reflow */
     lettre.value.$el.style.animation = null; 
+    // if (newVal=="#cc0808") {
+        // console.log("masterclass");
+        // var masterclass = new Audio("audio/masterclass.mp3") 
+        // <audio autoplay>
+        //     <source src="audio/masterclass.mp3" />
+        // </audio>
+    // }
 })
 
 
