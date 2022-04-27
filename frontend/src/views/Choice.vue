@@ -9,8 +9,8 @@ export default {
     },
     name: 'choice-page',
     methods: { 
-        onClick : function(i) {
-            this.$router.push('/word/:'+(i))
+        onClick : function(nbLettres, nbTentatives) {
+            this.$router.push('/word/:'+(nbLettres)+'/:'+(nbTentatives))
         }       
     },
     components: {
@@ -48,7 +48,7 @@ export default {
         <choice-slider v-model=nbTentatives min=1 max=10 thumbSize='24' thumbLabel="true" message="(max. 10)" style="padding-bottom: 4%"/>
         <v-container style="display: flex; justify-content: center">
         <div class="my-2">
-            <v-btn @click="onClick(nbLettres)" x-small color="primary">
+            <v-btn @click="onClick(nbLettres, nbTentatives)" x-small color="primary">
                 C'est parti !
             </v-btn>
         </div>

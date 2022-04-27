@@ -30,7 +30,7 @@ const routes = [
     },
   },
   {
-    path: "/word/:i",
+    path: "/word/:i/:j",
     name: "Word",
     component: WordPage,
 		meta: { 

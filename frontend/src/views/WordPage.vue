@@ -20,8 +20,9 @@ export default {
           pathMotValide: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
           dialog: false,
           game: {
+            maxtry: 6,
             solution: "default",
-            tried: ["", "", "", "", "", ""],
+            tried: ["","","","","",""],
             currentTry: 0,
             solutionlength: 8,
             iswin: false,
@@ -31,7 +32,7 @@ export default {
     },
     methods: {
       displayinput: function(keypressed) {
-        if (this.game.currentTry >= 6) {
+        if (this.game.currentTry >= this.game.maxtry) {
           return;
         }
         const wordguess = this.game.tried[this.game.currentTry];
@@ -70,12 +71,12 @@ export default {
       },
       wincase: function() {
         if (this.game.tried[this.game.currentTry - 1] === this.game.solution){
-          this.game.currentTry = 10;
+          this.game.currentTry = 11;
           this.game.iswin = true;
         }
         return this.game.iswin
       },
-      loosecase: function() {return (!this.wincase() && this.game.currentTry == 6)},
+      loosecase: function() {return (!this.wincase() && this.game.currentTry == this.game.maxtry)},
       endcase: function() {return this.wincase() || this.loosecase()},
       handleKeys: function(e) {
         let key = e.keyCode == 13 ? '{enter}' 
@@ -96,15 +97,19 @@ export default {
       const route = useRoute()  
       const id = route.params.i
       const id2 = id.slice(1,2)
-      console.log(id2)
-        axiosAuth.get(this.creategame+"/"+id2)
+      const id3 = route.params.j
+      const id4 = id3.slice(1,3)
+      console.log(id4)
+        axiosAuth.get(this.creategame+"/"+id2+"/"+id4)
             .then((res) => {
               console.log(res.data)
               this.game.solution = res.data.solution
               this.game.solutionlength = res.data.solution.length
               this.game.currentTry = res.data.currenttry
               this.game.tried = res.data.guess
-          });
+              this.game.maxtry = res.data.maxtry
+              this.game.guess = new Array(res.data.maxtry).fill("")
+            });
     },
     unmounted() {
       window.removeEventListener("keydown", this.handleKeys);
