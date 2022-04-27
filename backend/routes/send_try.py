@@ -39,6 +39,10 @@ def send_try():
 
     # Check ici si le mot est valide (à faire)
 
+    if len(data) > len(solution)  :
+
+        return jsonify({"error": "word sent is too long !"}),200
+
     if data == solution :
 
         newTry = tries.Tries(id_game,data,len(all_tries) + 1)
