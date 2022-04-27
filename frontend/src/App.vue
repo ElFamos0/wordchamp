@@ -194,5 +194,3 @@ export default {
   background-color:#aa00ff;
 }
 </style>
-message.txt
-6 Ko
