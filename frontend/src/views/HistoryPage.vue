@@ -1,7 +1,7 @@
 <template>
     <div style="padding-top: 1%">
         <h1 style="font-family: 'Roboto', sans-serif">Historique des parties</h1>
-        <history-table :entries="entries"/>
+        <history-table :entries="entries" style="margin-bottom: 5%"/>
     </div>
 </template>
 

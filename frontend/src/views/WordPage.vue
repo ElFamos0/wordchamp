@@ -34,7 +34,7 @@ export default {
         }
         const wordguess = this.game.tried[this.game.currentTry];
         if (keypressed == "{enter}" && wordguess.length == this.game.solutionlength) {
-          console.log("j'envoie la maxi sauce")
+          console.log("j'envoie un try")
           this.game.currentTry++;
           axiosAuth.post(this.sendtry,{"data":wordguess})
             .then((res) => {

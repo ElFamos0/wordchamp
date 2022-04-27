@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-table theme="light" density="default" style="margin-left:10%; margin-right:10%; margin-top:5% ; border-radius:4px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
+    <v-table theme="light" density="default" style="margin-bottom:5%; margin-left:10%; margin-right:10%; margin-top:5% ; border-radius:4px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
         <template v-slot:default>
         <thead style="background:rgb(50, 50, 50); color:white">
             <tr>
