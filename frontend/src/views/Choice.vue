@@ -45,6 +45,7 @@ export default {
 
     <!-- <v-subheader>Nombre de tentatives</v-subheader> -->
         <h3 style="font-family: 'Roboto', sans-serif">Sélectionne un nombre de tentatives</h3>
+
         <choice-slider v-model=nbTentatives min=1 max=10 thumbSize=24 thumbLabel="true" message="(max. 10)" style="padding-bottom: 4%"/>
         <v-container style="display: flex; justify-content: center">
         <div class="my-2">

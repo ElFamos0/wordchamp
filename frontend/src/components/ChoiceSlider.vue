@@ -22,7 +22,6 @@ export default {
         thumbLabel: String,
         thumbSize: String,
         color: String,
-
     },
     data() {
         return {
