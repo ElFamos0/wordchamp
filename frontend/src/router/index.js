@@ -10,6 +10,7 @@ import HistoryPage from "@/views/HistoryPage.vue";
 import ClassementPage from "@/views/ClassementPage.vue";
 import axiosAuth from '@/api/axios-auth';
 import axiosRefresh from '@/api/axios-refresh';
+import Redirect from "@/views/Redirect.vue";
 
 const routes = [
   {
@@ -69,6 +70,15 @@ const routes = [
     meta: { 
       requiresAuth: true,
       title: 'Blue or red pill ?',
+    }
+  },
+  {
+    path: "/redirect",
+    name: "redirect-page",
+    component: Redirect,
+    meta: { 
+      requiresAuth: true,
+      title: 'Redirect ...',
     }
   },
   {
