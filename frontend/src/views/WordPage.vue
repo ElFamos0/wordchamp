@@ -53,12 +53,12 @@ export default {
             this.game.currentTry++;
             axiosAuth.post(this.sendtry,{"data":wordguess})
               .then((res) => {
-              console.log("sendtry envoie à la DB :", wordguess, res)
+                this.showError = false;
+                console.log("sendtry envoie à la DB :", wordguess, res)
               });
           } else {
             this.showError = false;
             window.setTimeout(() => { this.showError = true }, 0);
-            window.setTimeout(this.hideError, 4000);
           }
 
           // handle de la coloration des touches du clavier
