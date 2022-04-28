@@ -30,6 +30,7 @@ export default {
             motsValides: []
           },
           motValide : false,
+          showError : false,
         }
     },
     methods: {
@@ -62,9 +63,10 @@ export default {
               console.log("sendtry envoie à la DB :", wordguess, res)
               });
             }
-          // else {
-          //   print erreur
-          // }
+          else {
+            this.showError=true
+            window.setTimeout(this.hideError(), 2000);
+          }
 
           // handle de la coloration des touches du clavier
         }
@@ -109,6 +111,9 @@ export default {
           this.dialog = true;
         }
       },
+      hideError() {
+        this.showError=false;
+      }
     },
     mounted() {
       window.addEventListener("keydown", this.handleKeys);
@@ -174,7 +179,9 @@ export default {
         <word-row class="justify-center" :word="tryy" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
       </div>
     </div>
-
+    <div>
+      {{this.showError}}
+    </div>
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
       <Keyboard style="color:#000" @onKeyPress="this.displayinput"></Keyboard>
