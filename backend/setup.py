@@ -177,7 +177,7 @@ if len(all_games.all()) == 0 :
 ##### Comment récupérer toutes les games :
 
 
-all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal,game_survie.Game_survie])
+all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal,game_carriere.Game_carriere])
 
 all_games = db.session.query(all_games_poly)
 

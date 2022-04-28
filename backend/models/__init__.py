@@ -3,7 +3,7 @@ __all__ = [
     "word",
     "game",
     "game_normal",
-    "game_survie",
+    "game_carriere",
     "tries",
     "dictionnaire",
 ]

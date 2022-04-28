@@ -8,7 +8,7 @@ import axiosAuth from '@/api/axios-auth';
 import {useRoute} from 'vue-router';
 
 export default {
-    name: 'puzzle-page',
+    name: 'carriere-page',
     components : {
         Keyboard,
         WordRow,
@@ -18,7 +18,7 @@ export default {
           creategame: `${process.env.VUE_APP_BACKEND_URL}/creategame`,
           sendtry: `${process.env.VUE_APP_BACKEND_URL}/send_try`,
           pathMotValide: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
-          puzzleURL: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
+          puzzleURL: `${process.env.VUE_APP_BACKEND_URL}/carriere`,
           dialog: false,
           gameShown: false,
           game: {

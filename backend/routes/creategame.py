@@ -24,7 +24,7 @@ def creategame(taille, maxtry):
     identity = get_jwt_identity()
     current_user = User.query.get(identity)
     if current_user == None: return jsonify({"error": "user not found"}), 400
-    all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_survie.Game_survie])
+    all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_carriere.Game_carriere])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_normal.id_user == current_user.id,all_games_poly.Game_normal.state == False).all()
 
     data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0, "motsValides" : [],"miss" : [],"found" : [],"misplace" : []}
@@ -53,7 +53,7 @@ def creategame(taille, maxtry):
         # print(data)
 
         data["miss"],data['found'],data['misplace'] = classLeters(data["guess"],data['solution'])
-        print(data)
+
 
     data["motsValides"]=[e.word for e in db.session.query(Dictionnaire).filter_by(size = len(data["solution"]))]
         

@@ -14,5 +14,6 @@ __all__ = [
     "currentGame",
     "motValideDebug",
     "motValide",
-    "puzzle"
+    "carriere",
+    "send_try_carriere"
 ]

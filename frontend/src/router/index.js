@@ -30,12 +30,12 @@ const routes = [
     }
   },
   {
-    path: "/puzzle",
-    name: "Puzzle",
-    component: PuzzlePage,
+    path: "/carriere",
+    name: "Carriere",
+    component: CarrierePage,
 		meta: { 
       requiresAuth: true,
-      title: "Wordchamp - L'entrainement",
+      title: "Wordchamp - Le défi",
     }
   },
   {
