@@ -120,6 +120,7 @@ export default {
     },
     unmounted() {
       window.removeEventListener("keydown", this.handleKeys);
+      this.dialog = false;
       this.$confetti.stop();
     }
 }
@@ -131,7 +132,7 @@ export default {
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">
       <v-card>
-        <v-toolbar>Oof</v-toolbar>
+        <v-toolbar>Fin de partie</v-toolbar>
         <v-card-text>
           <div v-if="this.loosecase()">
             <p>
@@ -148,6 +149,7 @@ export default {
           </div>
         </v-card-text>
         <v-card-actions class="justify-end">
+          <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/')" >Maison</v-btn> 
           <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/choice')" >Nouvelle partie</v-btn> 
         </v-card-actions>
       </v-card>

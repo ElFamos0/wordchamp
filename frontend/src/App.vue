@@ -137,8 +137,8 @@ export default {
   },
   data() {
       return {
-          url:process.env.VUE_APP_BACKEND_URL,
-          currentGame: false
+        url:process.env.VUE_APP_BACKEND_URL,
+        currentGame: false,
       }
   },
   computed: {
