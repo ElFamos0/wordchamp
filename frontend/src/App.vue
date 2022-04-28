@@ -35,7 +35,7 @@
           </v-tooltip>
           <font-awesome-icon icon="house" />
         </v-tab>
-        <v-tab v-if="isAuth && currentGame" to="/word/:5/:10">
+        <v-tab v-if="isAuth && currentGame" to="/word/:5/:3">
           <v-tooltip activator="parent" anchor="bottom">
             Jouer
           </v-tooltip>
