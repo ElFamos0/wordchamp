@@ -161,9 +161,8 @@ export default {
 
 <template>
   <div class="random">
-    <h1 style="margin-bottom:1%">Venez jouer à WordChamp</h1>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
-    <v-chip v-model="showError" class="text-center animatedChip mb-3" color="primary" dark height="200px">
+    <v-chip v-model="showError" class="text-center animatedChip mb-3" color="primary" dark height="200px" style="margin-top:1%">
       Ce mot n'est pas dans notre dictionnaire.
     </v-chip>
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">
@@ -191,7 +190,7 @@ export default {
       </v-card>
     </v-dialog>
     
-    <div v-if="this.gameShown">
+    <div v-if="this.gameShown" style="margin-top:2%">
       <div v-for="(tryy,i) in this.game.tried" :key="i" >
         <word-row class="justify-center" :word="tryy" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
       </div>
