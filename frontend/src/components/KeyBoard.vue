@@ -1,12 +1,16 @@
 <script setup>
 import Keyboard from 'simple-keyboard';
 import 'simple-keyboard/build/css/index.css';
-import {onMounted, ref, defineEmits} from 'vue';
+import {onMounted, ref, defineEmits, defineProps} from 'vue';
 
 const emit = defineEmits(["onKeyPress"]);
 
 const keyboard = ref(null);
 
+const props = defineProps({
+  guessedletter: Object,
+});
+console.log(props.guessedletter)
 const onKeyPress = (button) => {
   emit("onKeyPress", button)
 }
@@ -30,6 +34,14 @@ onMounted(() => {
     ]
   });
 });
+
+//watch( () => props.guessedletter, (newVal,oldVal) => {
+//  if (newVal) {
+//    keyboard.value.setInput(newVal);
+//  }
+//});
+
+//);
       
 </script>
 <template>
