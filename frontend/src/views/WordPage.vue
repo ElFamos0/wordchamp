@@ -20,6 +20,8 @@ export default {
           pathMotValide: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
           dialog: false,
           gameShown: false,
+          motValide : false,
+          showError : false,
           game: {
             maxtry: 1,
             solution: "default",
@@ -29,8 +31,6 @@ export default {
             iswin: false,
             motsValides: []
           },
-          motValide : false,
-          showError : false,
         }
     },
     methods: {
@@ -55,10 +55,10 @@ export default {
               .then((res) => {
               console.log("sendtry envoie à la DB :", wordguess, res)
               });
-            }
-          else {
-            this.showError=true
-            window.setTimeout(this.hideError(), 2000);
+          } else {
+            this.showError = false;
+            window.setTimeout(() => { this.showError = true }, 0);
+            window.setTimeout(this.hideError, 4000);
           }
 
           // handle de la coloration des touches du clavier
@@ -142,6 +142,9 @@ export default {
   <div class="random">
     <h1 style="margin-bottom:1%">Venez jouer à WordChamp</h1>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
+    <v-chip v-model="showError" class="text-center animatedChip mb-3" color="primary" dark height="200px">
+      Ce mot n'est pas dans notre dictionnaire.
+    </v-chip>
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">
       <v-card>
         <v-toolbar>Fin de partie</v-toolbar>
@@ -172,9 +175,6 @@ export default {
         <word-row class="justify-center" :word="tryy" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
       </div>
     </div>
-    <div>
-      {{this.showError}}
-    </div>
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
       <Keyboard style="color:#000" @onKeyPress="this.displayinput"></Keyboard>
@@ -185,5 +185,28 @@ export default {
 <style scoped>
 .v-btn {
   background-color:rgb(201, 72, 255);
+}
+
+.animatedChip {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  animation-fill-mode: forwards;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(4px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-8px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(8px, 0, 0);
+  }
 }
 </style>
