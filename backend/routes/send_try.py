@@ -1,3 +1,4 @@
+from routes.motValide import motValide
 from flask_login import current_user
 from numpy import identity
 from setup import *
@@ -7,7 +8,6 @@ from models import *
 from sqlalchemy.orm import with_polymorphic
 from flask import request
 from sqlalchemy import desc
-from utils.isMot import isMot
 
 
 
@@ -20,6 +20,9 @@ def send_try():
     if current_user == None: return jsonify({"error": "user not found"}), 400
 
     data = request.json["data"]
+
+    if not(motValide(data)):
+        return jsonify({"success": "word not in DB"}),200
 
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_normal.id_user == current_user.id,all_games_poly.Game_normal.state == False).order_by(desc(all_games_poly.Game_normal.date)).all()
