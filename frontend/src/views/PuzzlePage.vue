@@ -20,15 +20,18 @@ export default {
           pathMotValide: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
           puzzleURL: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
           dialog: false,
+          gameShown: false,
           game: {
-            maxtry: 6,
+            maxtry: 1,
             solution: "default",
             tried: ["","","","","",""],
             currentTry: 0,
             solutionlength: 8,
             iswin: false,
+            motsValides: []
           },
-          motValide: false
+          motValide : false,
+          showError : false,
         }
     },
     methods: {
@@ -36,43 +39,46 @@ export default {
         if (this.game.currentTry >= this.game.maxtry) {
           return;
         }
-        const wordguess = this.game.tried[this.game.currentTry];
-        const test = this.verifTry(wordguess)
-        if (keypressed == "{enter}" && (wordguess.length == this.game.solutionlength))
+        console.log("try avant ajout:", this.game.tried[this.game.currentTry])
+        if (this.isaLetter(keypressed) && this.game.tried[this.game.currentTry].length < this.game.solutionlength) {
+            this.game.tried[this.game.currentTry] += keypressed;
+        }
+        if (keypressed == "{enter}" && (this.game.tried[this.game.currentTry].length == this.game.solutionlength))
         { 
-          if (test) {
-          console.log("j'envoie un try")
-          console.log("motValide était vrai :", this.motValide)
-          this.motValide=false
-          console.log("je remet à faux motValide :", this.motValide)
-          this.game.currentTry++;
-          axiosAuth.post(this.sendtry,{"data":wordguess})
-            .then((res) => {
-              console.log(res)
-
-            
-              
+          const wordguess = this.game.tried[this.game.currentTry];
+          this.motValide = this.verifTry(wordguess)
+          //console.log("valeur de mot valide après la verifTry :", this.motValide)
+          if (this.motValide) {
+            this.motValide=false
+            //console.log("j'ai remis à faux motValide :", this.motValide)
+            this.game.currentTry++;
+            axiosAuth.post(this.sendtry,{"data":wordguess})
+              .then((res) => {
+              console.log("sendtry envoie à la DB :", wordguess, res)
               });
             }
+          else {
+            this.showError=true
+            window.setTimeout(this.hideError(), 2000);
+          }
 
-        //  .catch((res) =>{console.log(res)}
           // handle de la coloration des touches du clavier
         }
         if (keypressed == "{bksp}") {
-          this.game.tried[this.game.currentTry] = wordguess.slice(0, -1);
+          this.game.tried[this.game.currentTry] = this.game.tried[this.game.currentTry].slice(0, -1);
         }
-        if (this.isaLetter(keypressed) && wordguess.length < this.game.solutionlength) {
-            this.game.tried[this.game.currentTry] += keypressed;
-        }
+        console.log("FIN DE LA METHODE")
+        console.log("")
+        console.log("")
       },
       verifTry: function(wordguess) {
-        console.log("valeur de motValide à l'appel de veriTry :", this.motValide)
-        axiosAuth.get(this.pathMotValide+'/'+wordguess)
-            .then((res) => {
-              console.log("valeur de motValide dans la req de veriTry :", this.motValide)
-              this.motValide=res.data
-            })
-            console.log("valeur de motValide retournée par veriTry :", this.motValide)
+        console.log("valeur de wordguess envoyé à veriTry :", wordguess)
+        console.log("motssss", this.game.motsValides)
+
+        if (this.game.motsValides.includes(wordguess)) {
+            this.motValide = true
+        }
+        console.log("valeur MAJ par verifTry : ", this.motValide)
         return this.motValide
       },
       isaLetter: function(keypressed) {
@@ -99,6 +105,9 @@ export default {
           this.dialog = true;
         }
       },
+      hideError() {
+        this.showError=false;
+      }
     },
     mounted() {
       window.addEventListener("keydown", this.handleKeys);
@@ -109,19 +118,22 @@ export default {
       const id3 = route.params.j
       const id4 = id3.slice(1,3)
       console.log(id4)
-        axiosAuth.get(this.creategame+"/"+id2+"/"+id4)
-            .then((res) => {
-              console.log(res.data)
-              this.game.solution = res.data.solution
-              this.game.solutionlength = res.data.solution.length
-              this.game.currentTry = res.data.currenttry
-              this.game.tried = res.data.guess
-              this.game.maxtry = res.data.maxtry
-              this.game.guess = new Array(res.data.maxtry).fill("")
-            });
+      axiosAuth.get(this.creategame+"/"+id2+"/"+id4)
+          .then((res) => {
+            console.log(res.data)
+            this.game.solution = res.data.solution
+            this.game.solutionlength = res.data.solution.length
+            this.game.currentTry = res.data.currenttry
+            this.game.tried = res.data.guess
+            this.game.maxtry = res.data.maxtry
+            this.game.motsValides = res.data.motsValides
+            this.gameShown = true
+          });
+      
     },
     unmounted() {
       window.removeEventListener("keydown", this.handleKeys);
+      this.dialog = false;
       this.$confetti.stop();
     }
 }
@@ -133,7 +145,7 @@ export default {
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">
       <v-card>
-        <v-toolbar>Oof</v-toolbar>
+        <v-toolbar>Fin de partie</v-toolbar>
         <v-card-text>
           <div v-if="this.loosecase()">
             <p>
@@ -150,12 +162,20 @@ export default {
           </div>
         </v-card-text>
         <v-card-actions class="justify-end">
+          <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/')" >Maison</v-btn> 
           <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/choice')" >Nouvelle partie</v-btn> 
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <word-row class="justify-center" v-for="(tryy,i) in this.game.tried" :key="i" :word="tryy" :submitted="i < this.game.currentTry" :solution=this.game.solution></word-row>
-
+    
+    <div v-if="this.gameShown">
+      <div v-for="(tryy,i) in this.game.tried" :key="i" >
+        <word-row class="justify-center" :word="tryy" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
+      </div>
+    </div>
+    <div>
+      {{this.showError}}
+    </div>
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
       <Keyboard style="color:#000" @onKeyPress="this.displayinput"></Keyboard>

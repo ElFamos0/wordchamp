@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(128), nullable=False)
     admin = db.Column(db.Boolean, nullable=False)
     points = db.Column(db.Integer, nullable=False)
+    elo = db.Column(db.Float, nullable=False)
 
     def is_admin(self):
         return self.admin
@@ -38,18 +39,21 @@ class User(db.Model, UserMixin):
         self.set_password(password)
         self.admin = admin
         self.points = points
+        self.elo = 0
 
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def toDict(self, id, username, password_hash, points):
+    def toDict(self, id, username, password_hash, points,elo):
         dictionnaire = {}
         if id:
-            dictionnaire['id']=self.id
+            dictionnaire['id']= self.id
         if username:
-            dictionnaire['username']=self.username
+            dictionnaire['username']= self.username
         if password_hash:
-            dictionnaire['password_hash']=self.password_hash
+            dictionnaire['password_hash']= self.password_hash
         if points:
-            dictionnaire['points']=self.points
+            dictionnaire['points']= self.points
+        if elo :
+            dictionnaire['elo'] = self.elo
         return dictionnaire
