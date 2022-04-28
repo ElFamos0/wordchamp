@@ -8,7 +8,7 @@ from flask import request, jsonify
 @app.route('/classement', methods=['GET'])
 def classement():
     reqUser = db.session.query(User).order_by(User.points.desc()).all()
-    users = {"users":[e.toDict(0,1,0,1) for e in reqUser]}
+    users = {"users":[e.toDict(0,1,0,1,0) for e in reqUser]}
     for i in range(len(users["users"])):
         users["users"][i]["classement"]=i+1
     return jsonify(users)
