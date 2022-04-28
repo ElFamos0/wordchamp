@@ -9,11 +9,35 @@ def set_difficulte(word,freq) :
         def eval_freq(freq) :
 
             if freq > 10 :
-                modif = 10.1673-4.03133*(10**0.3745)
+                modif = 1
         
-            else :
+            elif freq > 5 :
+
+                modif = 2
+            
+            elif freq > 3 :
+
+                modif = 4
+            
+            elif freq > 2 :
+
+                modif = 6
+            
+            elif freq > 1.67 :
+
+                modif = 8
+
+            elif freq > 1 :
+
+                modif = 14.6
+
+            elif freq > 0.01 :
 
                 modif = 10.1673-4.03133*(freq**0.3745)
+            
+            else :
+
+                modif = 50
 
             return modif*100
         
