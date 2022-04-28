@@ -55,6 +55,9 @@ def normalize(word) :
         if letter not in alph :
             state = False
 
+    if state == False :
+
+        print (word)
     return word,state
     
 
