@@ -19,35 +19,37 @@ def do_it():
 
 def normalize(word) :
 
-    word = word.upper()
-    a_string = "àâä".upper()
-    e_string = "éèêë".upper()
-    o_string = "ôö".upper()
-    i_string = "îï".upper()
-    u_string = "ùûü".upper()
-    c_string = "ç".upper()
-    oe_string = "œ".upper()
+    
+    a_string = "àâä"
+    e_string = "éèêë"
+    o_string = "ôö"
+    i_string = "îï"
+    u_string = "ùûü"
+    c_string = "ç"
+    oe_string = "œ"
     alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     strange = "\n\t"
     state = True
 
     for letter in word :
         if letter in a_string :
-            word = word.replace(letter,"A")
+            word = word.replace(letter,"a")
         elif letter in e_string :
-            word =  word.replace(letter,"E")
+            word =  word.replace(letter,"e")
         elif letter in o_string :
-            word = word.replace(letter,"O")
+            word = word.replace(letter,"o")
         elif letter in i_string :
-            word = word.replace(letter,"I")
+            word = word.replace(letter,"i")
         elif letter in u_string :
-            word = word.replace(letter,"U")
+            word = word.replace(letter,"u")
         elif letter in c_string :
-            word = word.replace(letter,"C")
+            word = word.replace(letter,"c")
         elif letter in oe_string :
-            word = word.replace(letter,"OE")
+            word = word.replace(letter,"oe")
         elif letter in strange :
             word = word.replace(letter,"")
+
+    word = word.upper()
 
     for letter in word :
         if letter not in alph :
