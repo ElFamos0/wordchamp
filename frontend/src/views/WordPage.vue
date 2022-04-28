@@ -34,28 +34,21 @@ export default {
     },
     methods: {
       displayinput: function(keypressed) {
-        console.log("")
-        console.log("DEBUT DE LA METHODE")
-        console.log("keypressed :", keypressed)
         if (this.game.currentTry >= this.game.maxtry) {
           return;
         }
         console.log("try avant ajout:", this.game.tried[this.game.currentTry])
         if (this.isaLetter(keypressed) && this.game.tried[this.game.currentTry].length < this.game.solutionlength) {
             this.game.tried[this.game.currentTry] += keypressed;
-            const wordguessNext = this.game.tried[this.game.currentTry]
-            console.log("wordguessNext après ajout:", wordguessNext)
         }
         if (keypressed == "{enter}" && (this.game.tried[this.game.currentTry].length == this.game.solutionlength))
         { 
           const wordguess = this.game.tried[this.game.currentTry];
-          console.log("wordguess soumis à vérif", wordguess)
           this.motValide = this.verifTry(wordguess)
-          console.log("valeur de mot valide après la verifTry :", this.motValide)
+          //console.log("valeur de mot valide après la verifTry :", this.motValide)
           if (this.motValide) {
-            console.log("j'envoie un try")
             this.motValide=false
-            console.log("j'ai remis à faux motValide :", this.motValide)
+            //console.log("j'ai remis à faux motValide :", this.motValide)
             this.game.currentTry++;
             axiosAuth.post(this.sendtry,{"data":wordguess})
               .then((res) => {
