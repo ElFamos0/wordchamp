@@ -3,12 +3,9 @@ from models.word import Word
 from models.dictionnaire import Dictionnaire
 import unicodedata
 
-
-
-
 def do_it():
     FILE = "misc/dev_wordlist"
-    file = open(FILE, "r")
+    file = open(FILE, "r", encoding='utf-8')
 
     # We load the wordlist into the database
     for line in file.readlines():
@@ -22,25 +19,18 @@ def do_it():
 
 def normalize(word) :
 
-    word = ''.join((c for c in unicodedata.normalize('NFD', word) if unicodedata.category(c) != 'Mn'))
-   
-    oe_string = "œ"
+    
+    word = unicodedata.normalize('NFKD', word).encode('ascii', 'ignore').decode('utf-8')
+
     alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    strange = "\n\t"
-    state = True
-
-    for letter in word :
-        if letter in oe_string :
-            word = word.replace(letter,"oe")
-        elif letter in strange :
-            word = word.replace(letter,"")
-
     word = word.upper()
+
+    state = True
 
     for letter in word :
         if letter not in alph :
             state = False
-            
+
     return word,state
     
 
