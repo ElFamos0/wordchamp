@@ -23,13 +23,13 @@ class Game_carriere(Game):
 
     def __init__(self,id_user):
 
-        user =  user.User.query.get(id_user)
+        current_user =  user.User.query.get(id_user)
         
         id = uuid4().hex
         self.id = id
         super().__init__(id,"game_carriere")
         self.id_user = id_user
-        self.elo_player = user.elo
+        self.elo_player = current_user.elo
         self.solution,self.maxtry,self.difficulty = generateGame(self.elo_player,dictionnaire.Dictionnaire.query.filter(dictionnaire.Dictionnaire.size > 4).all())
         self.length = len(self.solution)
         
@@ -40,7 +40,7 @@ class Game_carriere(Game):
 
         self.won = won
         self.state = True
-        return (newElo(self.elo,self.difficulty,won))
+        return (newElo(self.elo_player,self.difficulty,won))
 
 
 
@@ -52,7 +52,7 @@ class Game_carriere(Game):
         if id_user:
             dictionnaire['id_user']=self.id_user
         if difficulty:
-            dictionnaire['solution']=self.score
+            dictionnaire['difficulty']=self.difficulty
         if maxtry:
             dictionnaire['maxtry']=self.maxtry
         if length:

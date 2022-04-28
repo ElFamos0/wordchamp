@@ -68,31 +68,31 @@ def generateGame(elo,wordlist) :
 
     # Tri de Shell
 
-    gaps = [701, 301, 132, 57, 23, 10, 4, 1]
+    # gaps = [701, 301, 132, 57, 23, 10, 4, 1]
 
-    gap = gaps[0]
-    while gap<len(diff_liste):
-        gap = int(gap*2.3)
-        gaps = [gap] + gaps
+    # gap = gaps[0]
+    # while gap<len(diff_liste):
+    #     gap = int(gap*2.3)
+    #     gaps = [gap] + gaps
 
     
     
-    n = len(diff_liste)
-    for m in gaps:
-        for r in range(m):
+    # n = len(diff_liste)
+    # for m in gaps:
+    #     for r in range(m):
         
-            for i in range (r + m, n, m):
-                j = i
-                x_diff = diff_liste[i]
-                x_mot = mots_valides[i]
+    #         for i in range (r + m, n, m):
+    #             j = i
+    #             x_diff = diff_liste[i]
+    #             x_mot = mots_valides[i]
 
-                while j > r and diff_liste[j-m] > x_diff:
-                    diff_liste[j] = diff_liste[j-m]
-                    mots_valides[j] = mots_valides[j-m]
-                    j = j - m
+    #             while j > r and diff_liste[j-m] > x_diff:
+    #                 diff_liste[j] = diff_liste[j-m]
+    #                 mots_valides[j] = mots_valides[j-m]
+    #                 j = j - m
 
-                diff_liste[j] = x_diff
-                mots_valides[j] = x_mot
+    #             diff_liste[j] = x_diff
+    #             mots_valides[j] = x_mot
 
 
     indice = randint(0,len(mots_valides) -1)

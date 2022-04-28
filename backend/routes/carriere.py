@@ -16,12 +16,13 @@ from utils.classLeters import classLeters
 @jwt_required()
 def carriere():
     
+    print(1)
     identity = get_jwt_identity()
     current_user = User.query.get(identity)
     if current_user == None: return jsonify({"error": "user not found"}), 400
 
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_carriere.Game_carriere])
-    all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_carrierel.id_user == current_user.id,all_games_poly.Game_carriere.state == False).all()
+    all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_carriere.id_user == current_user.id,all_games_poly.Game_carriere.state == False).all()
     
     data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0,"motsValides" : [],"miss" : [],"found" : [],"misplace" : [],
             "length" : 0, "elo_p" : 0, "difficulty" : 0}
@@ -42,7 +43,7 @@ def carriere():
 
         db.session.add(newGameCarriere)
         db.session.commit()
-        print(data)
+        #print(data)
 
 
 
@@ -50,11 +51,11 @@ def carriere():
         current_game = all_games[0]
         print(current_game.toDict(1,1,1,1,1,1,1,1,1))
 
-        data["solution"] = newGameCarriere.solution
-        data["maxtry"] = newGameCarriere.maxtry
-        data["length"] = newGameCarriere.length
-        data["difficulty"] = newGameCarriere.difficulty
-        data["elo_player"] = newGameCarriere.elo_player
+        data["solution"] = current_game.solution
+        data["maxtry"] = current_game.maxtry
+        data["length"] = current_game.length
+        data["difficulty"] = current_game.difficulty
+        data["elo_player"] = current_game.elo_player
 
 
         guess = db.session.query(tries.Tries).filter_by(id_game = current_game.id).order_by(tries.Tries.try_number).all()
@@ -72,6 +73,6 @@ def carriere():
 
     data["motsValides"]=[e.word for e in db.session.query(dictionnaire.Dictionnaire).filter_by(size = len(data["solution"]))]
 
-    print("Data",data)
+    print("Data",data["solution"])
 
     return jsonify(data),200

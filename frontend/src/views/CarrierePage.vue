@@ -5,7 +5,7 @@
 import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import axiosAuth from '@/api/axios-auth';
-import {useRoute} from 'vue-router';
+
 
 export default {
     name: 'carriere-page',
@@ -15,12 +15,13 @@ export default {
     },
     data() {
         return {
-          creategame: `${process.env.VUE_APP_BACKEND_URL}/creategame`,
-          sendtry: `${process.env.VUE_APP_BACKEND_URL}/send_try`,
+          creategame: `${process.env.VUE_APP_BACKEND_URL}/carriere`,
+          sendtry: `${process.env.VUE_APP_BACKEND_URL}/send_try_carriere`,
           pathMotValide: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
-          puzzleURL: `${process.env.VUE_APP_BACKEND_URL}/carriere`,
           dialog: false,
           gameShown: false,
+          motValide : false,
+          showError : false,
           game: {
             maxtry: 1,
             solution: "default",
@@ -28,10 +29,13 @@ export default {
             currentTry: 0,
             solutionlength: 8,
             iswin: false,
-            motsValides: []
+            motsValides: [],
+            guessedletters: {
+              miss: [],
+              found: [],
+              misplace: [],
+            }
           },
-          motValide : false,
-          showError : false,
         }
     },
     methods: {
@@ -39,7 +43,7 @@ export default {
         if (this.game.currentTry >= this.game.maxtry) {
           return;
         }
-        console.log("try avant ajout:", this.game.tried[this.game.currentTry])
+        //console.log("try avant ajout:", this.game.tried[this.game.currentTry])
         if (this.isaLetter(keypressed) && this.game.tried[this.game.currentTry].length < this.game.solutionlength) {
             this.game.tried[this.game.currentTry] += keypressed;
         }
@@ -49,17 +53,34 @@ export default {
           this.motValide = this.verifTry(wordguess)
           //console.log("valeur de mot valide après la verifTry :", this.motValide)
           if (this.motValide) {
+            // ici le mot est validé 
             this.motValide=false
             //console.log("j'ai remis à faux motValide :", this.motValide)
-            this.game.currentTry++;
+          for (var i = 0; i < wordguess.length; i++) {
+            let c = wordguess.charAt(i);
+            if (c == this.game.solution.charAt(i) && this.game.guessedletters.found.indexOf(c) == -1) {
+              this.game.guessedletters.found.push(c);
+            }
+            else if (this.game.solution.indexOf(c) != -1 && this.game.guessedletters.misplace.indexOf(c) == -1) {
+              this.game.guessedletters.misplace.push(c);
+            } 
+            else {
+              if(this.game.guessedletters.miss.indexOf(c) == -1) {
+                this.game.guessedletters.miss.push(c);
+              }
+            }
+          
+          }
+          console.log("guessedletters:", this.game.guessedletters)
+          this.game.currentTry++;
             axiosAuth.post(this.sendtry,{"data":wordguess})
               .then((res) => {
-              console.log("sendtry envoie à la DB :", wordguess, res)
+                this.showError = false;
+                console.log("sendtry envoie à la DB :", wordguess, res)
               });
-            }
-          else {
-            this.showError=true
-            window.setTimeout(this.hideError(), 2000);
+          } else {
+            this.showError = false;
+            window.setTimeout(() => { this.showError = true }, 0);
           }
 
           // handle de la coloration des touches du clavier
@@ -67,13 +88,10 @@ export default {
         if (keypressed == "{bksp}") {
           this.game.tried[this.game.currentTry] = this.game.tried[this.game.currentTry].slice(0, -1);
         }
-        console.log("FIN DE LA METHODE")
-        console.log("")
-        console.log("")
       },
       verifTry: function(wordguess) {
-        console.log("valeur de wordguess envoyé à veriTry :", wordguess)
-        console.log("motssss", this.game.motsValides)
+        //console.log("valeur de wordguess envoyé à veriTry :", wordguess)
+        //console.log("motssss", this.game.motsValides)
 
         if (this.game.motsValides.includes(wordguess)) {
             this.motValide = true
@@ -86,7 +104,7 @@ export default {
       },
       wincase: function() {
         if (this.game.tried[this.game.currentTry - 1] === this.game.solution){
-          this.game.currentTry = 11;
+          this.game.currentTry = this.maxtry+1;
           this.game.iswin = true;
         }
         return this.game.iswin
@@ -112,13 +130,7 @@ export default {
     mounted() {
       window.addEventListener("keydown", this.handleKeys);
       // on récupère la solution depuis l'api on récupère une taille de mot en particulier si pas de taille renseigné on choisit une taille aléatoire.
-      const route = useRoute()  
-      const id = route.params.i
-      const id2 = id.slice(1,2)
-      const id3 = route.params.j
-      const id4 = id3.slice(1,3)
-      console.log(id4)
-      axiosAuth.get(this.creategame+"/"+id2+"/"+id4)
+      axiosAuth.get(this.creategame)
           .then((res) => {
             console.log(res.data)
             this.game.solution = res.data.solution
@@ -128,6 +140,9 @@ export default {
             this.game.maxtry = res.data.maxtry
             this.game.motsValides = res.data.motsValides
             this.gameShown = true
+            this.game.guessedletters.misplace = res.data.misplace
+            this.game.guessedletters.miss = res.data.miss
+            this.game.guessedletters.found = res.data.found
           });
       
     },
@@ -143,6 +158,9 @@ export default {
   <div class="random">
     <h1 style="margin-bottom:1%">Venez jouer à WordChamp</h1>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
+    <v-chip v-model="showError" class="text-center animatedChip mb-3" color="primary" dark height="200px">
+      Ce mot n'est pas dans notre dictionnaire.
+    </v-chip>
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">
       <v-card>
         <v-toolbar>Fin de partie</v-toolbar>
@@ -173,9 +191,6 @@ export default {
         <word-row class="justify-center" :word="tryy" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
       </div>
     </div>
-    <div>
-      {{this.showError}}
-    </div>
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
       <Keyboard style="color:#000" @onKeyPress="this.displayinput"></Keyboard>
@@ -186,5 +201,28 @@ export default {
 <style scoped>
 .v-btn {
   background-color:rgb(201, 72, 255);
+}
+
+.animatedChip {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  animation-fill-mode: forwards;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(4px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-8px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(8px, 0, 0);
+  }
 }
 </style>
