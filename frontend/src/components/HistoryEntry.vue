@@ -1,8 +1,21 @@
 <template>
     <div @dblclick="$emit('show-details', entryId )" class="entryContainer" :style="colorClass">
       <!-- <div>(Id de la partie : {{entryId}})</div> -->
-      <div style="font-family: 'Roboto', sans-serif;font-size: 3em; max-width: 0px; padding-left: 7%">{{result}}</div>
-      <WordRow :solution="solution" :word="solution" :submitted="false" style="padding-left: 53%; padding-top: 0.7%; max-width: 100%"/>
+      <v-row>
+        <v-col cols="4">
+          <v-row class="ml-5">
+            <v-col cols="12">
+              <h1>{{result}}</h1>
+            </v-col>
+            <v-col cols="12">
+              <h5>{{new Date(date).toLocaleString()}}</h5>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="8">
+          <WordRow :solution="solution" :word="solution" :submitted="false" style="max-width: 100%"/>     
+        </v-col>
+      </v-row>
     </div>
 </template>
 
@@ -15,6 +28,7 @@ export default {
     entryId : String,
     solution : String,
     result: String,
+    date: String,
   },
   computed: {
     colorClass() {
@@ -37,7 +51,7 @@ export default {
 
 .entryContainer {
   margin: 20px 20% auto;
-  overflow: auto;
+  overflow: hidden;
   /* border: 1px solid rgb(145, 145, 145); */
   padding: 10px;
   border-radius: 5px;

@@ -3,7 +3,7 @@
     <div v-for="entry in entries" :key="entry.id">
         <div>
           <HistoryEntry @show-details="showDetails"
-          :entryId="entry.id" :solution="entry.solution" :result="entry.result"
+          :entryId="entry.id" :solution="entry.solution" :result="entry.result" :date="entry.date"
           />
         </div>
         <div>
