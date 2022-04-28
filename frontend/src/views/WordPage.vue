@@ -5,7 +5,7 @@
 import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import axiosAuth from '@/api/axios-auth';
-import {useRoute} from 'vue-router';
+import {useRoute} from 'vue-router'; 
 
 export default {
     name: 'word-page',
@@ -27,48 +27,62 @@ export default {
             currentTry: 0,
             solutionlength: 8,
             iswin: false,
+            motsValides: []
           },
-          motValide: false
+          motValide : false,
         }
     },
     methods: {
       displayinput: function(keypressed) {
+        console.log("")
+        console.log("DEBUT DE LA METHODE")
+        console.log("keypressed :", keypressed)
         if (this.game.currentTry >= this.game.maxtry) {
           return;
         }
-        const wordguess = this.game.tried[this.game.currentTry];
-        const test = this.verifTry(wordguess)
-        if (keypressed == "{enter}" && (wordguess.length == this.game.solutionlength))
+        console.log("try avant ajout:", this.game.tried[this.game.currentTry])
+        if (this.isaLetter(keypressed) && this.game.tried[this.game.currentTry].length < this.game.solutionlength) {
+            this.game.tried[this.game.currentTry] += keypressed;
+            const wordguessNext = this.game.tried[this.game.currentTry]
+            console.log("wordguessNext après ajout:", wordguessNext)
+        }
+        if (keypressed == "{enter}" && (this.game.tried[this.game.currentTry].length == this.game.solutionlength))
         { 
-          if (test) {
-          console.log("j'envoie un try")
-          console.log("motValide était vrai :", this.motValide)
-          this.motValide=false
-          console.log("je remet à faux motValide :", this.motValide)
-          this.game.currentTry++;
-          axiosAuth.post(this.sendtry,{"data":wordguess})
-            .then((res) => {
-              console.log(res)
-              
+          const wordguess = this.game.tried[this.game.currentTry];
+          console.log("wordguess soumis à vérif", wordguess)
+          this.motValide = this.verifTry(wordguess)
+          console.log("valeur de mot valide après la verifTry :", this.motValide)
+          if (this.motValide) {
+            console.log("j'envoie un try")
+            this.motValide=false
+            console.log("j'ai remis à faux motValide :", this.motValide)
+            this.game.currentTry++;
+            axiosAuth.post(this.sendtry,{"data":wordguess})
+              .then((res) => {
+              console.log("sendtry envoie à la DB :", wordguess, res)
               });
             }
+          // else {
+          //   print erreur
+          // }
+
           // handle de la coloration des touches du clavier
         }
         if (keypressed == "{bksp}") {
-          this.game.tried[this.game.currentTry] = wordguess.slice(0, -1);
+          this.game.tried[this.game.currentTry] = this.game.tried[this.game.currentTry].slice(0, -1);
         }
-        if (this.isaLetter(keypressed) && wordguess.length < this.game.solutionlength) {
-            this.game.tried[this.game.currentTry] += keypressed;
-        }
+        console.log("FIN DE LA METHODE")
+        console.log("")
+        console.log("")
       },
       verifTry: function(wordguess) {
-        console.log("valeur de motValide à l'appel de veriTry :", this.motValide)
-        axiosAuth.get(this.pathMotValide+'/'+wordguess)
-            .then((res) => {
-              console.log("valeur de motValide dans la req de veriTry :", this.motValide)
-              this.motValide=res.data
-            })
-            console.log("valeur de motValide retournée par veriTry :", this.motValide)
+        console.log("valeur de wordguess envoyé à veriTry :", wordguess)
+        console.log("motssss", this.game.motsValides)
+
+        if (this.game.motsValides.includes(wordguess)) {
+            this.motValide = true
+        }
+        console.log("valeur MAJ par verifTry : ", this.motValide)
         return this.motValide
       },
       isaLetter: function(keypressed) {
@@ -113,7 +127,7 @@ export default {
             this.game.currentTry = res.data.currenttry
             this.game.tried = res.data.guess
             this.game.maxtry = res.data.maxtry
-            this.game.guess = new Array(res.data.maxtry).fill("")
+            this.game.motsValides = res.data.motsValides
             this.gameShown = true
           });
       
@@ -156,7 +170,9 @@ export default {
     </v-dialog>
     
     <div v-if="this.gameShown">
-      <word-row class="justify-center" v-for="(tryy,i) in this.game.tried" :key="i" :word="tryy" :submitted="i < this.game.currentTry" :solution=this.game.solution></word-row>
+      <div v-for="(tryy,i) in this.game.tried" :key="i" >
+        <word-row class="justify-center" :word="tryy" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
+      </div>
     </div>
 
     <b-container>

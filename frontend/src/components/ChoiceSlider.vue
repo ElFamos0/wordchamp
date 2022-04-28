@@ -3,8 +3,8 @@
             v-model="slider"
             :thumb-size=thumbSize
             :thumb-label=thumbLabel
-            step='1'
-            ticks
+            step=1
+            ticks='true'
             :max=max
             :min=min
             :messages=message

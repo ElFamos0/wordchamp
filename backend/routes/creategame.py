@@ -1,3 +1,4 @@
+from models.dictionnaire import Dictionnaire
 from flask_login import current_user
 from numpy import identity
 from setup import *
@@ -7,6 +8,7 @@ from models.user import User
 from models.game import Game
 from models.game_normal import Game_normal
 from models.tries import Tries
+from models.word import Word
 from utils.getword import getrandomword, getrandomwordbysize
 from sqlalchemy.orm import with_polymorphic
 
@@ -19,7 +21,7 @@ def creategame(taille, maxtry):
     if current_user == None: return jsonify({"error": "user not found"}), 400
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_survie.Game_survie])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_normal.id_user == current_user.id,all_games_poly.Game_normal.state == False).all()
-    data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0}
+    data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0, "motsValides" : []}
     if len(all_games) == 0:
         word = getrandomwordbysize(taille)
         data["solution"] = word
@@ -29,7 +31,7 @@ def creategame(taille, maxtry):
             data["guess"].append("")
         db.session.add(newGameNormal)
         db.session.commit()
-        print(data)
+        # print(data)
     else:
         current_game = all_games[0]
         data["maxtry"] = current_game.maxtry 
@@ -41,7 +43,7 @@ def creategame(taille, maxtry):
         for i in range(current_game.maxtry - len(guess)):
             data["guess"].append("")   
         data["currenttry"] = len(guess)
-        print(data)
-        
+        # print(data)
+    data["motsValides"]=[e.word for e in db.session.query(Dictionnaire).filter_by(size = len(data["solution"]))]
         
     return jsonify(data),200

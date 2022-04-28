@@ -38,11 +38,6 @@ def send_try():
 
     all_tries = tries.Tries.query.filter(tries.Tries.id_game == id_game).all()
 
-    # Check ici si le mot est valide (à faire)
-    if not(isMot(data)):
-
-        return jsonify({"error": "word is not in database"}),200
-
     if len(data) > len(solution)  :
 
         data = data[:len(solution)]

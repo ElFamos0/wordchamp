@@ -9,5 +9,5 @@ from flask import request
 from sqlalchemy import desc
 
 def isMot(essai):
-    reqAllWords =  word.Word.query.filter_by(word=essai).all()
+    reqAllWords =  dictionnaire.Dictionnaire.query.filter_by(word=essai).all()
     return jsonify(True if len(reqAllWords)>0 else False)
