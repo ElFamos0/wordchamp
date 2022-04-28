@@ -16,12 +16,13 @@ class Game_carriere(Game):
     difficulty = db.Column(db.Float, nullable = False)
     won = db.Column(db.Boolean, nullable = True)
     elo_player =  db.Column(db.Float, nullable = True)
+    ranked = db.Column(db.Boolean, nullable = False)
 
     __mapper_args__ = {
         'polymorphic_identity':'game_carriere',
     }
 
-    def __init__(self,id_user):
+    def __init__(self,id_user,ranked):
 
         current_user =  user.User.query.get(id_user)
         
@@ -32,20 +33,25 @@ class Game_carriere(Game):
         self.elo_player = current_user.elo
         self.solution,self.maxtry,self.difficulty = generateGame(self.elo_player,dictionnaire.Dictionnaire.query.filter(dictionnaire.Dictionnaire.size > 4).all())
         self.length = len(self.solution)
+        self.ranked = ranked
+        
         
     def __repr__(self):
         return '<Game_normal %r>' % self.id
 
-    def endGame(self,won) :
+    def endGame(self,won,ranked) :
 
         self.won = won
         self.state = True
-        return (newElo(self.elo_player,self.difficulty,won))
+        if ranked :
+            return (newElo(self.elo_player,self.difficulty,won))
+        else :
+            return 0
 
 
 
 
-    def toDict(self, id, id_user, difficulty, maxtry, length, date,solution,won,elo_player):
+    def toDict(self, id, id_user, difficulty, maxtry, length, date,solution,won,elo_player,ranked):
         dictionnaire = {}
         if id:
             dictionnaire['id']=self.id
@@ -65,4 +71,6 @@ class Game_carriere(Game):
             dictionnaire['won'] = self.won
         if elo_player :
             dictionnaire['elo_player'] = self.elo_player
+        if won :
+            dictionnaire['ranked'] = self.ranked
         return dictionnaire

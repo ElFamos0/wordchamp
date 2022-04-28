@@ -13,10 +13,10 @@ export default {
     name: 'choicecarriere-page',
     methods: { 
         onClickRanked : function() {
-            this.$router.push('/carriere')
+            this.$router.push('/carriere/:1')
         },  
         onClickChill : function() {
-            this.$router.push('/carriere')
+            this.$router.push('/carriere/:0')
         },  
     },mounted() {
       

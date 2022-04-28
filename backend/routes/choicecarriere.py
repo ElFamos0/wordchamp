@@ -16,7 +16,7 @@ from utils.classLeters import classLeters
 @jwt_required()
 def choicecarriere():
     
-    print(1)
+    
     identity = get_jwt_identity()
     current_user = User.query.get(identity)
     if current_user == None: return jsonify({"error": "user not found"}), 400

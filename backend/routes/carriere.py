@@ -12,11 +12,10 @@ from sqlalchemy.orm import with_polymorphic
 from utils.classLeters import classLeters
 
 
-@app.route('/carriere', methods=['GET'])
+@app.route('/carriere/<ranked>', methods=['GET'])
 @jwt_required()
-def carriere():
+def carriere(ranked):
     
-    print(1)
     identity = get_jwt_identity()
     current_user = User.query.get(identity)
     if current_user == None: return jsonify({"error": "user not found"}), 400
@@ -25,16 +24,21 @@ def carriere():
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_carriere.id_user == current_user.id,all_games_poly.Game_carriere.state == False).all()
     
     data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0,"motsValides" : [],"miss" : [],"found" : [],"misplace" : [],
-            "length" : 0, "elo_p" : 0, "difficulty" : 0}
+            "length" : 0, "elo_p" : 0, "difficulty" : 0,"ranked" : False}
 
 
     if len(all_games) == 0:
-        newGameCarriere = game_carriere.Game_carriere(current_user.id)    
+        if int(ranked) == 1 :
+            
+            newGameCarriere = game_carriere.Game_carriere(current_user.id,True)
+        else :
+            newGameCarriere = game_carriere.Game_carriere(current_user.id,False)
         data["solution"] = newGameCarriere.solution
         data["maxtry"] = newGameCarriere.maxtry
         data["length"] = newGameCarriere.length
         data["difficulty"] = newGameCarriere.difficulty
         data["elo_player"] = newGameCarriere.elo_player
+        data["ranked"] = newGameCarriere.ranked
            
         maxtry = data["maxtry"]
         
@@ -49,13 +53,14 @@ def carriere():
 
     else:
         current_game = all_games[0]
-        print(current_game.toDict(1,1,1,1,1,1,1,1,1))
+        print(current_game.toDict(1,1,1,1,1,1,1,1,1,1))
 
         data["solution"] = current_game.solution
         data["maxtry"] = current_game.maxtry
         data["length"] = current_game.length
         data["difficulty"] = current_game.difficulty
         data["elo_player"] = current_game.elo_player
+        data["ranked"] = current_game.ranked
 
 
         guess = db.session.query(tries.Tries).filter_by(id_game = current_game.id).order_by(tries.Tries.try_number).all()
@@ -73,6 +78,6 @@ def carriere():
 
     data["motsValides"]=[e.word for e in db.session.query(dictionnaire.Dictionnaire).filter_by(size = len(data["solution"]))]
 
-    print("Data",data["solution"])
+    print("Data",data["solution"],data['ranked'])
 
     return jsonify(data),200

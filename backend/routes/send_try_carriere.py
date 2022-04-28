@@ -54,7 +54,7 @@ def send_try_carriere():
         newTry = tries.Tries(id_game,data,len(all_tries) + 1)
         db.session.add(newTry)
 
-        current_user.elo += round(gam.endGame(True),2)
+        current_user.elo += round(gam.endGame(True,gam.ranked),2)
         current_user.elo = round(current_user.elo,2)
         current_user.points=current_user.points+1
 
@@ -68,7 +68,7 @@ def send_try_carriere():
         newTry = tries.Tries(id_game,data,len(all_tries) + 1)
         db.session.add(newTry)
 
-        current_user.elo += round(gam.endGame(True),2)
+        current_user.elo += round(gam.endGame(False,gam.ranked),2)
         current_user.elo = round(current_user.elo,2)
 
         db.session.commit()

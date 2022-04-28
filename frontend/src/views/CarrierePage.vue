@@ -5,6 +5,7 @@
 import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import axiosAuth from '@/api/axios-auth';
+import {useRoute} from 'vue-router';
 
 
 export default {
@@ -130,7 +131,11 @@ export default {
     mounted() {
       window.addEventListener("keydown", this.handleKeys);
       // on récupère la solution depuis l'api on récupère une taille de mot en particulier si pas de taille renseigné on choisit une taille aléatoire.
-      axiosAuth.get(this.creategame)
+      const route = useRoute()  
+      const id = route.params.i
+      const id2 = id.slice(1,2)
+      console.log(id2)
+      axiosAuth.get(this.creategame +"/"+id2)
           .then((res) => {
             console.log(res.data)
             this.game.solution = res.data.solution

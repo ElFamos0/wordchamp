@@ -32,7 +32,7 @@ const routes = [
     }
   },
   {
-    path: "/carriere",
+    path: "/carriere/:i",
     name: "Carriere",
     component: CarrierePage,
 		meta: { 
