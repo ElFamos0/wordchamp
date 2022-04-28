@@ -59,7 +59,6 @@ const routes = [
     name: "Logout",
     component: Logout,
     meta: {
-      requiresAuth: true,
       title: 'Wordchamp - Déconnection',
     }
   },
@@ -108,7 +107,6 @@ function refresh_token() {
     return false
   });
 }
-
 
 router.beforeEach((to, from, next) => {
   // This goes through the matched routes from last to first, finding the closest route with a title.
