@@ -11,9 +11,9 @@
                     </v-alert>
                     <v-container>
                         <v-form v-on:submit.prevent="onSubmit" @submit="onSubmit" @reset="onReset">
-                            <v-text-field class="mx-auto" style="max-width:200px" id="username" v-model="this.form.username" :rules="nameRules" :counter="25" label="Username" required></v-text-field>
+                            <v-text-field class="mx-auto" style="max-width:200px" id="username" v-model="this.form.username" :rules="nameRules" :counter="25" label="Nom d'utilisateur" required></v-text-field>
 
-                            <v-text-field class="mx-auto" style="max-width:200px" id="password" type="password" v-model="this.form.password" :rules="nameRules" :counter="25" label="Password" required></v-text-field>
+                            <v-text-field class="mx-auto" style="max-width:200px" id="password" type="password" v-model="this.form.password" :rules="nameRules" :counter="25" label="Mot de passe" required></v-text-field>
 
                             <v-btn type="submit" @click="submit()" color="primary">Register</v-btn>                    
                         </v-form>

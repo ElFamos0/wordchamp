@@ -19,8 +19,9 @@ export default {
           sendtry: `${process.env.VUE_APP_BACKEND_URL}/send_try`,
           pathMotValide: `${process.env.VUE_APP_BACKEND_URL}/motValide`,
           dialog: false,
+          gameShown: false,
           game: {
-            maxtry: 6,
+            maxtry: 1,
             solution: "default",
             tried: ["","","","","",""],
             currentTry: 0,
@@ -104,16 +105,18 @@ export default {
       const id3 = route.params.j
       const id4 = id3.slice(1,3)
       console.log(id4)
-        axiosAuth.get(this.creategame+"/"+id2+"/"+id4)
-            .then((res) => {
-              console.log(res.data)
-              this.game.solution = res.data.solution
-              this.game.solutionlength = res.data.solution.length
-              this.game.currentTry = res.data.currenttry
-              this.game.tried = res.data.guess
-              this.game.maxtry = res.data.maxtry
-              this.game.guess = new Array(res.data.maxtry).fill("")
-            });
+      axiosAuth.get(this.creategame+"/"+id2+"/"+id4)
+          .then((res) => {
+            console.log(res.data)
+            this.game.solution = res.data.solution
+            this.game.solutionlength = res.data.solution.length
+            this.game.currentTry = res.data.currenttry
+            this.game.tried = res.data.guess
+            this.game.maxtry = res.data.maxtry
+            this.game.guess = new Array(res.data.maxtry).fill("")
+            this.gameShown = true
+          });
+      
     },
     unmounted() {
       window.removeEventListener("keydown", this.handleKeys);
@@ -149,7 +152,10 @@ export default {
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <word-row class="justify-center" v-for="(tryy,i) in this.game.tried" :key="i" :word="tryy" :submitted="i < this.game.currentTry" :solution=this.game.solution></word-row>
+    
+    <div v-if="this.gameShown">
+      <word-row class="justify-center" v-for="(tryy,i) in this.game.tried" :key="i" :word="tryy" :submitted="i < this.game.currentTry" :solution=this.game.solution></word-row>
+    </div>
 
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
