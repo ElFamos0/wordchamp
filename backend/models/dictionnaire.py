@@ -2,7 +2,7 @@ from setup import *
 from uuid import uuid4
 
 class Dictionnaire(db.Model):
-    __tablename__ = 'dictionnaires'
+    __tablename__ = 'dictionnaire'
     id = db.Column(db.String(40), primary_key=True)
     word = db.Column(db.String(20), nullable=False)
     size = db.Column(db.Integer, nullable=False)
