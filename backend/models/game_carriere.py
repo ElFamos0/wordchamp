@@ -1,7 +1,8 @@
 from setup import *
 from uuid import uuid4
 from models.game import Game
-from models import *
+from models import dictionnaire
+from models import user
 from utils.timestamp import now
 from utils.eloFunctions import *
 

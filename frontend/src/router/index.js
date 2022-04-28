@@ -4,7 +4,7 @@ import WordPage from "@/views/WordPage.vue";
 import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
-import PuzzlePage from "@/views/PuzzlePage.vue";
+import CarrierePage from "@/views/CarrierePage.vue";
 import Choice from "@/views/Choice.vue";
 import HistoryPage from "@/views/HistoryPage.vue";
 import ClassementPage from "@/views/ClassementPage.vue";
