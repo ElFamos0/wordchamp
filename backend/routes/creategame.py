@@ -16,11 +16,16 @@ from sqlalchemy.orm import with_polymorphic
 @app.route('/creategame/<taille>/<maxtry>', methods=['GET'])
 @jwt_required()
 def creategame(taille, maxtry):
+    if not (9>=int(taille)>=5):
+        taille = 5
+    if not (10>=int(maxtry)>=1):
+        maxtry = 6
     identity = get_jwt_identity()
     current_user = User.query.get(identity)
     if current_user == None: return jsonify({"error": "user not found"}), 400
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_survie.Game_survie])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_normal.id_user == current_user.id,all_games_poly.Game_normal.state == False).all()
+
     data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0, "motsValides" : []}
     if len(all_games) == 0:
         word = getrandomwordbysize(taille)
