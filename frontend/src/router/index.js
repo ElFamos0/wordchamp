@@ -4,6 +4,7 @@ import WordPage from "@/views/WordPage.vue";
 import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
+import PuzzlePage from "@/views/PuzzlePage.vue";
 import Choice from "@/views/Choice.vue";
 import HistoryPage from "@/views/HistoryPage.vue";
 import ClassementPage from "@/views/ClassementPage.vue";
@@ -26,6 +27,15 @@ const routes = [
 		meta: { 
       requiresAuth: true,
       title: 'Wordchamp - Le Jeu',
+    }
+  },
+  {
+    path: "/puzzle",
+    name: "Puzzle",
+    component: PuzzlePage,
+		meta: { 
+      requiresAuth: true,
+      title: "Wordchamp - L'entrainement",
     }
   },
   {
