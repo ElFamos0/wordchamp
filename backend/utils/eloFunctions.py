@@ -8,16 +8,16 @@ def newElo(elo,difficulty,won) :
     if diff > 50 :
 
         if won :
-            return elo + 0.24
+            return  0.24
         else :
-            return elo - 0.24
+            return -0.24
     
     else :
 
         if won :
-            return elo + (0.00101*(diff**2)-0.155*diff+5.47762)
+            return (0.00101*(diff**2)-0.155*diff+5.47762)
         else :
-            return elo - (0.00101*(diff**2)-0.155*diff+5.47762)
+            return -(0.00101*(diff**2)-0.155*diff+5.47762)
 
 
 def generateGame(elo,wordlist) :
