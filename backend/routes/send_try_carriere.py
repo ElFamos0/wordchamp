@@ -25,7 +25,7 @@ def send_try_carriere():
         return jsonify({"success": "word not in DB"}),200
 
     all_games_poly = with_polymorphic(game.Game, [game_carriere.Game_carriere])
-    all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_carriere.id_user == current_user.id,all_games_poly.Game_carriere.state == False).order_by(desc(all_games_poly.Game_normal.date)).all()
+    all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_carriere.id_user == current_user.id,all_games_poly.Game_carriere.state == False).order_by(desc(all_games_poly.Game_carriere.date)).all()
 
     gam = all_games[0]
 
@@ -54,7 +54,7 @@ def send_try_carriere():
         newTry = tries.Tries(id_game,data,len(all_tries) + 1)
         db.session.add(newTry)
 
-        current_user.elo += gam.endGame(True) 
+        current_user.elo += round(gam.endGame(True),2)
         current_user.points=current_user.points+1
 
         db.session.commit()
@@ -67,7 +67,7 @@ def send_try_carriere():
         newTry = tries.Tries(id_game,data,len(all_tries) + 1)
         db.session.add(newTry)
 
-        current_user.elo += gam.endGame(False)
+        current_user.elo += round(gam.endGame(True),2)
 
         db.session.commit()
 
