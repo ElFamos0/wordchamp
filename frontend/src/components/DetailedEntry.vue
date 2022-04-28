@@ -2,10 +2,10 @@
     <div class="detailContainer">
         <!-- <h2>Historique détaillé de la partie {{entryId}}</h2> -->
         <div v-for='guess in guesses' :key='guess.id'>
-            <word-row style="" :solution='solution' :word='guess.word' :submitted="true"/>
+            <word-row :animate="false" style="" :solution='solution' :word='guess.word' :submitted="true"/>
         </div>
         <div v-for='i in (maxtry-(guesses.length))' :key='i'>
-            <word-row :solution='solution' word='' :submitted="true"/>
+            <word-row :animate="false" :solution='solution' word='' :submitted="true"/>
         </div>
         <!-- <h3>La solution était : {{solution}}</h3> -->
     </div>

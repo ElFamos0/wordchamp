@@ -2,7 +2,7 @@
     <div @dblclick="$emit('show-details', entryId )" class="entryContainer" :style="colorClass">
       <!-- <div>(Id de la partie : {{entryId}})</div> -->
       <v-row>
-        <v-col cols="4">
+        <v-col cols="3">
           <v-row class="ml-5">
             <v-col cols="12">
               <h1>{{result}}</h1>
@@ -12,8 +12,10 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="8">
-          <WordRow :solution="solution" :word="solution" :submitted="false" style="max-width: 100%"/>     
+        <v-col cols="2">
+        </v-col>
+        <v-col cols="7">
+          <WordRow :animate="false" :solution="solution" :word="solution" :submitted="false" style="max-width: 100%"/>     
         </v-col>
       </v-row>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <v-container>
-        <v-form-group>
+        <v-form>
             <v-alert v-model="errorMessage" type="danger" dismissible>
                 {{ errorMessage }}
             </v-alert>
@@ -27,7 +27,7 @@
                     </v-col>
                 </v-row>
             </div>
-        </v-form-group>
+        </v-form>
     </v-container>
   </div>
 </template>

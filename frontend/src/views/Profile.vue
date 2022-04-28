@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="color:white">
     <v-row justify="center">
       <v-avatar  style="padding:0;" color="primary"  size="100">
         <img v-bind:src="url + '/avatar/' + id" style="width:100%"/>
@@ -8,11 +8,11 @@
     <div class="mb-4" id="nav">
       <b-nav tabs class="justify-content-center">
           <b-nav-item> <a href="javascript:void(0);" :class="{ 'router-link-exact-active': edit }" @click="edit=true; histo=false"> Modifier Profil </a></b-nav-item>
-          <b-nav-item> <a href="javascript:void(0);" :class="{ 'router-link-exact-active': histo }" @click="edit=false; histo=true"> Historique </a></b-nav-item>
+          <b-nav-item> <a href="javascript:void(0);" :class="{ 'router-link-exact-active': histo }" @click="loadHisto(); edit=false; histo=true"> Historique </a></b-nav-item>
       </b-nav>
     </div>          
     <profile-main v-if="edit"></profile-main>
-    <history-table v-if="histo"></history-table>
+    <history-table v-if="histo" :entries="entries"/>
   </div>
 </template>
 
@@ -21,12 +21,21 @@ import { mapGetters } from 'vuex';
 import ProfileMain from "../components/ProfileMain.vue";
 // import HelloWorld from "../components/HelloWorld.vue";
 import HistoryTable from '../components/HistoryTable.vue';
+import axiosAuth from '@/api/axios-auth'
 
 export default {
   name: 'profil-page',
   components: {
     ProfileMain,
     HistoryTable,
+  },
+  methods: {
+    loadHisto() {
+      const path = `${process.env.VUE_APP_BACKEND_URL}/history`
+      axiosAuth.get(path).then((res)=> {
+        this.entries = res.data.entries
+      })
+    }
   },
   computed: {
     ...mapGetters('auth', {
@@ -41,6 +50,7 @@ export default {
           url:process.env.VUE_APP_BACKEND_URL,
           histo:false,
           edit:true,
+          entries: [],
       }
   },
 };

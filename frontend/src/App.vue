@@ -18,8 +18,8 @@
           </template>
           <template v-slot:default="{ isActive }">
             <v-card>
-              <v-toolbar>Profil de {{ username }}</v-toolbar>
               <v-card-text>
+                <v-toolbar class="mb-5">Profil de {{ username }}</v-toolbar>
                 <Profile />
               </v-card-text>
               <v-card-actions class="justify-end">
@@ -46,9 +46,6 @@
             Jouer
           </v-tooltip>
           <font-awesome-icon icon="play" />
-        </v-tab>
-        <v-tab v-if="isAuth" to="/history">
-          Historique
         </v-tab>
         <v-tab to="/classement">
           Classement
