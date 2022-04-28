@@ -1,6 +1,10 @@
 from setup import *
 from models.word import Word
 from models.dictionnaire import Dictionnaire
+import unicodedata
+
+
+
 
 def do_it():
     FILE = "misc/dev_wordlist"
@@ -16,35 +20,17 @@ def do_it():
     file.close()
 
 
-
 def normalize(word) :
 
-    
-    a_string = "àâä"
-    e_string = "éèêë"
-    o_string = "ôö"
-    i_string = "îï"
-    u_string = "ùûü"
-    c_string = "ç"
+    word = ''.join((c for c in unicodedata.normalize('NFD', word) if unicodedata.category(c) != 'Mn'))
+   
     oe_string = "œ"
     alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     strange = "\n\t"
     state = True
 
     for letter in word :
-        if letter in a_string :
-            word = word.replace(letter,"a")
-        elif letter in e_string :
-            word =  word.replace(letter,"e")
-        elif letter in o_string :
-            word = word.replace(letter,"o")
-        elif letter in i_string :
-            word = word.replace(letter,"i")
-        elif letter in u_string :
-            word = word.replace(letter,"u")
-        elif letter in c_string :
-            word = word.replace(letter,"c")
-        elif letter in oe_string :
+        if letter in oe_string :
             word = word.replace(letter,"oe")
         elif letter in strange :
             word = word.replace(letter,"")
@@ -54,10 +40,7 @@ def normalize(word) :
     for letter in word :
         if letter not in alph :
             state = False
-
-    if state == False :
-
-        print (word)
+            
     return word,state
     
 
