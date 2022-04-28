@@ -1,5 +1,21 @@
 import axios from 'axios';
+import axiosRefresh from './axios-refresh';
 import router from '@/router';
+
+function refresh_token() {
+	const path = `${process.env.VUE_APP_BACKEND_URL}/refresh`;
+	axiosRefresh.post(path)
+		.then(response => {
+			localStorage.setItem('token', response.data.token);
+			localStorage.setItem('refresh_token', response.data.refresh_token);
+			localStorage.setItem('id', response.data.id);
+			localStorage.setItem('username', response.data.username);
+			return true
+		})
+		.catch(() => {
+			return false
+		});
+}
 
 const state = {
 	username: null,
@@ -40,18 +56,21 @@ const getters = {
 
 const actions = {
 	login: ({commit}, authData) => {
-        const path = `${process.env.VUE_APP_BACKEND_URL}/login`;
-		axios.post(path, authData).then(response => {
-            commit('authUser', { username: authData.username, id: response.data.id, token: response.data.token, refresh_token: response.data.refresh_token });
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('refresh_token', response.data.refresh_token);
-            localStorage.setItem('id', response.data.id);
-            localStorage.setItem('username', response.data.username);
-            router.replace('/');
-		}).catch(() => {
-			if (authData.refresh_token) {
-				this.$store.di
-			}
+		return new Promise((resolve, reject) => {
+			const path = `${process.env.VUE_APP_BACKEND_URL}/login`;
+			axios.post(path, authData).then(response => {
+				commit('authUser', { username: authData.username, id: response.data.id, token: response.data.token, refresh_token: response.data.refresh_token });
+				localStorage.setItem('token', response.data.token);
+				localStorage.setItem('refresh_token', response.data.refresh_token);
+				localStorage.setItem('id', response.data.id);
+				localStorage.setItem('username', response.data.username);
+				router.replace('/');
+				resolve()
+			}).catch(() => {
+				if (!refresh_token()) {
+					reject('cannot log in');
+				}
+			})
 		})
 	},
 	autoLogin({commit}) {

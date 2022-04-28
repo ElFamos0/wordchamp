@@ -3,12 +3,12 @@
     <v-container>
         <h1>Register</h1>
 
-        <v-alert v-model="alertVisible" type="danger" dismissible>
-          {{alertMessage}}
-        </v-alert>
         <v-row class="justify-content-md-center mt-3">
             <v-col col lg="4">
                 <v-card class="mx-auto" style="max-width:350px;">
+                    <v-alert v-model="alertVisible" dense type="error">
+                    {{alertMessage}}
+                    </v-alert>
                     <v-container>
                         <v-form v-on:submit.prevent="onSubmit" @submit="onSubmit" @reset="onReset">
                             <v-text-field class="mx-auto" style="max-width:200px" id="username" v-model="this.form.username" :rules="nameRules" :counter="25" label="Username" required></v-text-field>
@@ -50,9 +50,8 @@ export default {
               window.location = "#/login"
             })
             .catch((error) => {
-              // eslint-disable-next-line
-              this.alertMessage.value = error.response.data.error;
-              this.alertVisible.value = true;
+              this.alertMessage = error.response.data.error;
+              this.alertVisible = true;
             });
         },
     }
