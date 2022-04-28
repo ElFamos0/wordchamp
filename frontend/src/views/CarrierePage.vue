@@ -181,7 +181,7 @@ export default {
         </v-card-text>
         <v-card-actions class="justify-end">
           <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/')" >Maison</v-btn> 
-          <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/choice')" >Nouvelle partie</v-btn> 
+          <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/choicecarriere')" >Nouvelle partie</v-btn> 
         </v-card-actions>
       </v-card>
     </v-dialog>

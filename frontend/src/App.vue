@@ -41,6 +41,12 @@
           </v-tooltip>
           <font-awesome-icon icon="play" />
         </v-tab>
+        <v-tab v-if="isAuth" to="/choicecarriere">
+          <v-tooltip activator="parent" anchor="bottom">
+            Carrière
+          </v-tooltip>
+          <font-awesome-icon icon="fa-solid fa-arrow-trend-up" />
+        </v-tab>
         <v-tab to="/classement">
           Classement
         </v-tab>

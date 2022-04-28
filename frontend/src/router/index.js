@@ -6,6 +6,7 @@ import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
 import CarrierePage from "@/views/CarrierePage.vue";
 import Choice from "@/views/Choice.vue";
+import ChoiceCarriere from "@/views/ChoiceCarriere.vue";
 import HistoryPage from "@/views/HistoryPage.vue";
 import ClassementPage from "@/views/ClassementPage.vue";
 import axiosAuth from '@/api/axios-auth';
@@ -67,6 +68,15 @@ const routes = [
     path: "/choice",
     name: "choice-page",
     component: Choice,
+    meta: { 
+      requiresAuth: true,
+      title: 'Blue or red pill ?',
+    }
+  },
+  {
+    path: "/choicecarriere",
+    name: "choicecarriere-page",
+    component: ChoiceCarriere,
     meta: { 
       requiresAuth: true,
       title: 'Blue or red pill ?',

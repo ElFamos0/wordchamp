@@ -15,5 +15,6 @@ __all__ = [
     "motValideDebug",
     "motValide",
     "carriere",
-    "send_try_carriere"
+    "send_try_carriere",
+    "choicecarriere"
 ]
