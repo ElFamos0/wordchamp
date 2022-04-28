@@ -3,6 +3,7 @@ from models.word import Word
 from models.dictionnaire import Dictionnaire
 import unicodedata
 
+
 def do_it():
     FILE = "misc/dev_wordlist"
     file = open(FILE, "r", encoding='utf-8')
@@ -32,15 +33,11 @@ def normalize(word) :
             state = False
 
     return word,state
-    
-
-
-
 
 def do_it_bis() :
 
     FILE = "misc/lex.txt"
-    file = open(FILE, "r")
+    file = open(FILE, "r", encoding='utf-8')
 
     # We load the wordlist into the database
     for line in file.readlines():
