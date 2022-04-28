@@ -1,6 +1,6 @@
 <template>
 <!-- Utilisation du v-bind afin de pouvoir choisir le background en fonction de l'état de la case -->
-    <b-col ref="lettre" class="border letter" v-bind:style="{background:letterprop.color}">
+    <b-col ref="lettre" class="border letter" :class="{'letter-animate':letterprop.animate}" v-bind:style="{background:letterprop.color}">
         <div class="letter-content">
             {{letterprop.letter}}
         </div>
@@ -23,12 +23,18 @@ const letterprop = defineProps({
     color:{
         type: String,
         default: "#1e1e1e",
+    },
+    animate:{
+        type: Boolean,
+        default: true,
     }
 })
 
 // watch( () => letterprop.color, function (newVal) {
 watch( () => letterprop.color, function () {
-    if (lettre.value == null) { return}
+    if (lettre.value == null) { return }
+    if (!letterprop.animate) { return }
+    
     lettre.value.$el.style.animation = 'none';
     lettre.value.$el.offsetHeight; /* trigger reflow */
     lettre.value.$el.style.animation = null; 
@@ -59,11 +65,14 @@ watch( () => letterprop.color, function () {
     border-color: #2f2f2f !important;
     box-sizing: border-box;
 
+    font-size:min(7vh,7vw);
     color:#ffffff;
+}
+
+.letter-animate {
     animation: flip .75s linear;
     animation-timing-function:ease-in-out;
     animation-fill-mode:backwards;
-    font-size:min(7vh,7vw);
 
     transition-property: background-color;
     transition-duration: .5s;

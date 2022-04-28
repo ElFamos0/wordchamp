@@ -7,6 +7,10 @@ const rowprop = defineProps({
     solution: String,
     word: String,
     submitted: Boolean,
+    animate: {
+      type: Boolean,
+      default: true
+    },
 })
 
 // storage de la couleur de chacune des lignes
@@ -53,7 +57,9 @@ async function Update(newVal)  {
 
             for (let i = 0; i < solution.length; i++) {
                 colortab.value[i] = colors[i];
-                await new Promise(resolve => setTimeout(resolve, 400));
+                if (rowprop.animate) {
+                    await new Promise(resolve => setTimeout(resolve, 400));
+                }
             }
         }
 }
@@ -69,7 +75,7 @@ if(rowprop.submitted) {
 <template>
     <b-container>
         <b-row class="justify-content-center">
-            <WordLetter v-for="i in rowprop.solution.length" :key="i" :letter=word[i-1] :color=colortab[i-1]></WordLetter>
+            <WordLetter v-for="i in rowprop.solution.length" :animate="rowprop.animate" :key="i" :letter=word[i-1] :color=colortab[i-1]></WordLetter>
         </b-row>
     </b-container>
 </template>
