@@ -29,7 +29,12 @@ export default {
             currentTry: 0,
             solutionlength: 8,
             iswin: false,
-            motsValides: []
+            motsValides: [],
+            guessedletters: {
+              miss: [],
+              found: [],
+              misplace: [],
+            }
           },
         }
     },
@@ -38,7 +43,7 @@ export default {
         if (this.game.currentTry >= this.game.maxtry) {
           return;
         }
-        console.log("try avant ajout:", this.game.tried[this.game.currentTry])
+        //console.log("try avant ajout:", this.game.tried[this.game.currentTry])
         if (this.isaLetter(keypressed) && this.game.tried[this.game.currentTry].length < this.game.solutionlength) {
             this.game.tried[this.game.currentTry] += keypressed;
         }
@@ -48,9 +53,26 @@ export default {
           this.motValide = this.verifTry(wordguess)
           //console.log("valeur de mot valide après la verifTry :", this.motValide)
           if (this.motValide) {
+            // ici le mot est validé 
             this.motValide=false
             //console.log("j'ai remis à faux motValide :", this.motValide)
-            this.game.currentTry++;
+          for (var i = 0; i < wordguess.length; i++) {
+            let c = wordguess.charAt(i);
+            if (c == this.game.solution.charAt(i) && this.game.guessedletters.found.indexOf(c) == -1) {
+              this.game.guessedletters.found.push(c);
+            }
+            else if (this.game.solution.indexOf(c) != -1 && this.game.guessedletters.misplace.indexOf(c) == -1) {
+              this.game.guessedletters.misplace.push(c);
+            } 
+            else {
+              if(this.game.guessedletters.miss.indexOf(c) == -1) {
+                this.game.guessedletters.miss.push(c);
+              }
+            }
+          
+          }
+          console.log("guessedletters:", this.game.guessedletters)
+          this.game.currentTry++;
             axiosAuth.post(this.sendtry,{"data":wordguess})
               .then((res) => {
                 this.showError = false;
@@ -66,13 +88,10 @@ export default {
         if (keypressed == "{bksp}") {
           this.game.tried[this.game.currentTry] = this.game.tried[this.game.currentTry].slice(0, -1);
         }
-        console.log("FIN DE LA METHODE")
-        console.log("")
-        console.log("")
       },
       verifTry: function(wordguess) {
-        console.log("valeur de wordguess envoyé à veriTry :", wordguess)
-        console.log("motssss", this.game.motsValides)
+        //console.log("valeur de wordguess envoyé à veriTry :", wordguess)
+        //console.log("motssss", this.game.motsValides)
 
         if (this.game.motsValides.includes(wordguess)) {
             this.motValide = true
@@ -116,7 +135,6 @@ export default {
       const id2 = id.slice(1,2)
       const id3 = route.params.j
       const id4 = id3.slice(1,3)
-      console.log(id4)
       axiosAuth.get(this.creategame+"/"+id2+"/"+id4)
           .then((res) => {
             console.log(res.data)
@@ -127,6 +145,9 @@ export default {
             this.game.maxtry = res.data.maxtry
             this.game.motsValides = res.data.motsValides
             this.gameShown = true
+            this.game.guessedletters.misplace = res.data.misplace
+            this.game.guessedletters.miss = res.data.miss
+            this.game.guessedletters.found = res.data.found
           });
       
     },
