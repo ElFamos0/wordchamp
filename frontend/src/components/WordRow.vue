@@ -74,7 +74,7 @@ if(rowprop.submitted) {
 
 <template>
     <b-container>
-        <b-row class="justify-content-center">
+        <b-row class="justify-content-center ligne">
             <WordLetter v-for="i in rowprop.solution.length" :animate="rowprop.animate" :key="i" :letter=word[i-1] :color=colortab[i-1]></WordLetter>
         </b-row>
     </b-container>
@@ -82,4 +82,7 @@ if(rowprop.submitted) {
 
 
 <style scoped>
+.ligne {
+    /* margin-bottom:1px; */
+}
 </style>

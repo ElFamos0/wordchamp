@@ -161,7 +161,6 @@ export default {
             this.game.elom = res.data.elom
             this.game.n_elop = res.data.n_elop
             this.game.n_elom = res.data.n_elom
-
           });
       
     },

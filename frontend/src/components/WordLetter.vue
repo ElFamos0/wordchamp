@@ -61,8 +61,8 @@ watch( () => letterprop.color, function () {
     height:500px;
     position: relative;
     flex-basis: calc(10%);
-    border: 1px solid;
-    border-color: #2f2f2f !important;
+    border-color: #1b1b1b !important;
+    border-style: inset;
     box-sizing: border-box;
 
     font-size:min(7vh,7vw);
