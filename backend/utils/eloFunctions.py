@@ -106,45 +106,41 @@ def generateGame(elo,wordlist,defaultword) :
         diff_liste.append(abs(mot.difficulte - target_difficulty))
 
 
-    # Tri de Shell
+    # # Tri de Shell
 
-    gaps = [701, 301, 132, 57, 23, 10, 4, 1]
+    # gaps = [701, 301, 132, 57, 23, 10, 4, 1]
 
-    gap = gaps[0]
-    while gap<len(diff_liste):
-        gap = int(gap*2.3)
-        gaps = [gap] + gaps
+    # gap = gaps[0]
+    # while gap<len(diff_liste):
+    #     gap = int(gap*2.3)
+    #     gaps = [gap] + gaps
 
     
     
-    n = len(diff_liste)
-    for m in gaps:
-        for r in range(m):
+    # n = len(diff_liste)
+    # for m in gaps:
+    #     for r in range(m):
         
-            for i in range (r + m, n, m):
-                j = i
-                x_diff = diff_liste[i]
-                x_mot = mots_valides[i]
+    #         for i in range (r + m, n, m):
+    #             j = i
+    #             x_diff = diff_liste[i]
+    #             x_mot = mots_valides[i]
 
-                while j > r and diff_liste[j-m] > x_diff:
-                    diff_liste[j] = diff_liste[j-m]
-                    mots_valides[j] = mots_valides[j-m]
-                    j = j - m
+    #             while j > r and diff_liste[j-m] > x_diff:
+    #                 diff_liste[j] = diff_liste[j-m]
+    #                 mots_valides[j] = mots_valides[j-m]
+    #                 j = j - m
 
-                diff_liste[j] = x_diff
-                mots_valides[j] = x_mot
+    #             diff_liste[j] = x_diff
+    #             mots_valides[j] = x_mot
 
     if len(mots_valides) == 0 :
         mot_choisi = defaultword
     else :
 
 
-        if len(mots_valides) < 102 :
 
-            indice = randint(0,len(mots_valides) -1)
-
-        else :
-            indice = randint(0,100)
+        indice = randint(0,len(mots_valides) -1)
         
 
         mot_choisi = mots_valides[indice]
