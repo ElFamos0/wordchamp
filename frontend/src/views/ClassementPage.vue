@@ -1,8 +1,8 @@
 <template>
 <div>
     <v-tabs class="justify-content-center" style="margin: auto; max-width: 240px">
-        <v-tab><a href="javascript:void(0);" :class="{ 'router-link-exact-active': normal }" @click="normal=true; carriere=false"> Classique </a></v-tab>
-        <v-tab><a href="javascript:void(0);" :class="{ 'router-link-exact-active': carriere }" @click="normal=false; carriere=true"> Carrière </a></v-tab>
+        <v-tab @click="normal=true; carriere=false"> Classique </v-tab>
+        <v-tab @click="normal=false; carriere=true"> Carrière </v-tab>
     </v-tabs>
     <v-table v-if="normal" theme="light" density="default" style="margin-bottom:5%; margin-left:10%; margin-right:10%; margin-top:5% ; border-radius:4px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
         <template v-slot:default>
