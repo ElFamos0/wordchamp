@@ -15,7 +15,13 @@ def newElo(elo,difficulty,won) :
     baseValue = 5 * mult
 
     diff = (difficulty - elo) //5
-    signe =  (diff / abs(diff))
+
+    if diff != 0 :
+        signe =  (diff / abs(diff))
+        
+    else :
+
+        signe = 1
     diff = abs(diff)
 
     if diff >= 2*len(tab) : 
@@ -48,7 +54,7 @@ def generateGame(elo,wordlist,defaultword) :
 
             if abs(mot.difficulte - target_difficulty ) <= spread and mot.size >= 5 :
 
-                if (mot.gram =="ADJ" or mot.gram == "NOM") and mot.nombre == "s" :
+                if (mot.gram =="ADJ" or mot.gram == "NOM") :
                     mots_valides.append(mot)
         
                 elif mot.gram == "PRO" and (mot.genre == "m" or mot.genre == "f") :
@@ -59,7 +65,7 @@ def generateGame(elo,wordlist,defaultword) :
 
                     mots_valides.append(mot)
         
-                elif mot.gram == "ADV" or mot.gram =="PRE" or mot.gram =="CON" or mot.gram =="ONO"   :
+                elif mot.gram == "ADV"  :
 
                     mots_valides.append(mot)
 

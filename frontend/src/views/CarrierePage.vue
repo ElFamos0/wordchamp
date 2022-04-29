@@ -177,7 +177,7 @@ export default {
 </script>
 
 <template>
-  <div class="random" style="margin-bottom:5%">
+  <div class="random" style="margin-bottom:1%">
     <h1 style="margin-bottom:1%">Mode carrière</h1>
     <h3 style="margin-bottom:1%">Difficulté : {{game.difficulty}} </h3>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
