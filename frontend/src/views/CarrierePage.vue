@@ -80,11 +80,11 @@ export default {
           }
           console.log("guessedletters:", this.game.guessedletters)
           this.game.currentTry++;
-            axiosAuth.post(this.sendtry,{"data":wordguess})
-              .then((res) => {
-                this.showError = false;
-                console.log("sendtry envoie à la DB :", wordguess, res)
-              });
+          axiosAuth.post(this.sendtry,{"data":wordguess})
+            .then((res) => {
+              this.showError = false;
+              console.log("sendtry envoie à la DB :", wordguess, res)
+            });
           } else {
             this.showError = false;
             window.setTimeout(() => { this.showError = true }, 0);
@@ -111,7 +111,7 @@ export default {
       },
       wincase: function() {
         if (this.game.tried[this.game.currentTry - 1] === this.game.solution){
-          this.game.currentTry = this.maxtry+1;
+          this.game.currentTry = this.game.maxtry+1;
           this.game.iswin = true;
         }
         return this.game.iswin
@@ -123,6 +123,7 @@ export default {
         : e.keyCode == 8 ? '{bksp}' 
         : String.fromCharCode(e.keyCode).toUpperCase();
         this.displayinput(key);
+
         if (this.endcase()) {
           if (this.wincase()) {
             this.$confetti.start();

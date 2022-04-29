@@ -76,8 +76,7 @@ def carriere(ranked):
             mult = 1
         else :
             mult = 0
-
-
+            
         data["elop"] = round(newElo(data["elo_player"],data["difficulty"],True),2) * mult
         data["elom"] = round(newElo(data["elo_player"],data["difficulty"],False),2) * mult
         data["n_elom"] = max(0,round(data["elo_player"] +  data["elom"],2))
@@ -87,10 +86,10 @@ def carriere(ranked):
         for elm in guess:
             data["guess"].append(elm.word)
 
-        data["currenttry"] = len(guess)
-
         for i in range(current_game.maxtry - len(guess)):
             data["guess"].append("")   
+
+        data["currenttry"] = len(guess)
         
         
         
