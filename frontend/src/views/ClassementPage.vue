@@ -1,8 +1,8 @@
 <template>
 <div>
     <v-tabs class="justify-content-center" style="padding-top:1%; margin: auto; max-width: 240px">
-        <v-tab @click="normal=true; carriere=false"> Classique </v-tab>
-        <v-tab @click="normal=false; carriere=true"> Carrière </v-tab>
+        <v-tab @click="normal=true; carriere=false" style="font-family: 'Roboto', sans-serif;"> Classique </v-tab>
+        <v-tab @click="normal=false; carriere=true" style="font-family: 'Roboto', sans-serif;"> Carrière </v-tab>
     </v-tabs>
     <v-container class="tableau mt-5" v-if="normal">
         <v-row class="haut-tableau">
@@ -96,6 +96,7 @@ const path = `${process.env.VUE_APP_BACKEND_URL}/classement`;
     background:rgb(50, 50, 50);
     color:white;
     border-radius:8px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .haut-tableau {

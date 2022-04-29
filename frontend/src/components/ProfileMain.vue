@@ -5,14 +5,14 @@
             <v-alert v-model="errorMessage" type="danger" dismissible>
                 {{ errorMessage }}
             </v-alert>
-            <h4> Modification du profil </h4>
+            <h4 style="font-family: 'Roboto', sans-serif;"> Modification du profil </h4>
             <div class="large-12 medium-12 small-12 cell">
                 <v-row class="my-1">
                   <v-col align="center" justify="center" sm="8">
                     <v-file-input prepend-icon="" chips label="Avatar" id="file" ref="file" v-on:change="gereEnvoi()"></v-file-input>
                   </v-col>
                   <v-col align="center" justify="center" sm="4">
-                    <v-btn color="primary" v-if="file" v-on:click="envoiAvatar()">Envoyer</v-btn>
+                    <v-btn color="primary" v-if="file" v-on:click="envoiAvatar()" style="font-family: 'Roboto', sans-serif;">Envoyer</v-btn>
                   </v-col>
                 </v-row>
             </div>
@@ -23,7 +23,7 @@
                       <v-text-field v-model="new_username" :rules="nameRules" :counter="25" label="Username" required></v-text-field>
                     </v-col>
                     <v-col align="center" justify="center" sm="4">
-                        <v-btn color="primary" v-if="new_username" v-on:click="envoiUsername()">Envoyer</v-btn>
+                        <v-btn color="primary" v-if="new_username" v-on:click="envoiUsername()" style="font-family: 'Roboto', sans-serif;">Envoyer</v-btn>
                     </v-col>
                 </v-row>
             </div>

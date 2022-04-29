@@ -5,10 +5,10 @@
         <v-col cols="3">
           <v-row class="ml-5">
             <v-col cols="12">
-              <h1>{{result}}</h1>
+              <h1 style="font-family: 'Roboto', sans-serif;">{{result}}</h1>
             </v-col>
             <v-col cols="12">
-              <h5>{{new Date(date).toLocaleString()}}</h5>
+              <h5 style="font-family: 'Roboto', sans-serif;">{{new Date(date).toLocaleString()}}</h5>
             </v-col>
           </v-row>
         </v-col>
@@ -17,7 +17,7 @@
         <v-col cols="7">
           <WordRow :animate="false" :solution="solution" :word="solution" :submitted="false" style="max-width: 100%"/>     
           <div style="padding: 10%;">
-            <h5>Mode : {{type==="game_normal" ? "Classique" : "Carrière"}}</h5>
+            <h5 style="font-family: 'Roboto', sans-serif;">Mode : {{type==="game_normal" ? "Classique" : "Carrière"}}</h5>
           </div>
         </v-col>
       </v-row>

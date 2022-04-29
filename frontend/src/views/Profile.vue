@@ -7,8 +7,8 @@
     </v-row>
     <div class="mb-4" id="nav">
       <b-nav tabs class="justify-content-center">
-          <b-nav-item> <a href="javascript:void(0);" :class="{ 'router-link-exact-active': edit }" @click="edit=true; histo=false"> Modifier Profil </a></b-nav-item>
-          <b-nav-item> <a href="javascript:void(0);" :class="{ 'router-link-exact-active': histo }" @click="loadHisto(); edit=false; histo=true"> Historique </a></b-nav-item>
+          <b-nav-item style="font-family: 'Roboto', sans-serif;"> <a href="javascript:void(0);" :class="{ 'router-link-exact-active': edit }" @click="edit=true; histo=false"> Modifier Profil </a></b-nav-item>
+          <b-nav-item style="font-family: 'Roboto', sans-serif;"> <a href="javascript:void(0);" :class="{ 'router-link-exact-active': histo }" @click="loadHisto(); edit=false; histo=true"> Historique </a></b-nav-item>
       </b-nav>
     </div>          
     <profile-main v-if="edit"></profile-main>

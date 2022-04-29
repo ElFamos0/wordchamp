@@ -74,7 +74,7 @@ export default {
 
         <v-container style="display: flex; justify-content: center">
         <div class="my-2">
-            <v-btn @click="onClick(nbLettres, nbTentatives)" x-small color="primary">
+            <v-btn @click="onClick(nbLettres, nbTentatives)" x-small color="primary" style="font-family: 'Roboto', sans-serif;">
                 C'est parti !
             </v-btn>
         </div>

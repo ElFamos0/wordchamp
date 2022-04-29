@@ -12,7 +12,7 @@
         <v-dialog transition="dialog-top-transition">
           <template v-slot:activator="{ props }">
             <v-tab v-bind="props" v-if="isAuth">
-              <v-tooltip activator="parent" anchor="bottom">
+              <v-tooltip activator="parent" anchor="bottom" style="font-family: 'Roboto', sans-serif">
                 Profil
               </v-tooltip>
               <b-avatar variant="primary" v-bind:src="url + '/avatar/' + userid" size="25px"/>
@@ -21,37 +21,37 @@
           <template v-slot:default="{ isActive }">
             <v-card>
               <v-card-text>
-                <v-toolbar class="mb-5">Profil de {{ username }}</v-toolbar>
+                <v-toolbar class="mb-5" style="font-family: 'Roboto', sans-serif">Profil de {{ username }}</v-toolbar>
                 <Profile />
               </v-card-text>
               <v-card-actions class="justify-end">
-                <v-btn text @click="isActive.value = false" >Close</v-btn>
+                <v-btn text @click="isActive.value = false" style="font-family: 'Roboto', sans-serif">Close</v-btn>
               </v-card-actions>
             </v-card>
           </template>
         </v-dialog>
         
         <v-tab to="/">
-          <v-tooltip activator="parent" anchor="bottom">
+          <v-tooltip activator="parent" anchor="bottom" style="font-family: 'Roboto', sans-serif">
             Maison
           </v-tooltip>
           <font-awesome-icon icon="house" />
         </v-tab>
         <v-tab v-if="isAuth" to="/redirect">
-          <v-tooltip activator="parent" anchor="bottom">
+          <v-tooltip activator="parent" anchor="bottom" style="font-family: 'Roboto', sans-serif">
             Jouer
           </v-tooltip>
           <font-awesome-icon icon="play" />
         </v-tab>
         <v-tab v-if="isAuth" to="/choicecarriere">
-          <v-tooltip activator="parent" anchor="bottom">
+          <v-tooltip activator="parent" anchor="bottom" style="font-family: 'Roboto', sans-serif">
             Carrière
           </v-tooltip>
            <v-btn icon>
             <v-icon>mdi-trending-up</v-icon>
           </v-btn>
         </v-tab>
-        <v-tab to="/classement">
+        <v-tab to="/classement" style="font-family: 'Roboto', sans-serif">
           Classement
         </v-tab>
       </v-tabs>
@@ -60,7 +60,7 @@
 
       <v-tabs align-with-title>
         <v-tab v-if="!isAuth" to="/register">
-          <v-tooltip activator="parent" anchor="bottom">
+          <v-tooltip activator="parent" anchor="bottom" style="font-family: 'Roboto', sans-serif">
             Enregistres-toi
           </v-tooltip>
           <v-btn icon>
@@ -68,7 +68,7 @@
           </v-btn>
         </v-tab>
         <v-tab right v-if="!isAuth" to="/login">
-          <v-tooltip activator="parent" anchor="bottom">
+          <v-tooltip activator="parent" anchor="bottom" style="font-family: 'Roboto', sans-serif">
             Connecte-toi
           </v-tooltip>
           <v-btn icon>
@@ -76,7 +76,7 @@
           </v-btn>
         </v-tab>
         <v-tab v-if="isAuth" to="/logout">
-          <v-tooltip activator="parent" anchor="bottom">
+          <v-tooltip activator="parent" anchor="bottom" style="font-family: 'Roboto', sans-serif">
             Déconnecte-toi
           </v-tooltip>
           <v-btn icon>
@@ -103,7 +103,7 @@
                     <Profile />
                   </v-card-text>
                   <v-card-actions class="justify-end">
-                    <v-btn text @click="isActive.value = false" >Close</v-btn>
+                    <v-btn text @click="isActive.value = false" style="font-family: 'Roboto', sans-serif">Close</v-btn>
                   </v-card-actions>
                 </v-card>
               </template>

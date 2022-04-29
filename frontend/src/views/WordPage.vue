@@ -166,7 +166,7 @@ export default {
 <template>
   <div class="random">
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
-    <v-chip v-model="showError" class="text-center animatedChip mb-5" color="primary" dark height="200px" style="margin-top:1%">
+    <v-chip v-model="showError" class="text-center animatedChip mb-5" color="primary" dark height="200px" style="margin-top:1%;font-family: 'Roboto', sans-serif">
       Ce mot n'est pas dans notre dictionnaire.
     </v-chip>
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">
@@ -174,22 +174,22 @@ export default {
         <v-toolbar>Fin de partie</v-toolbar>
         <v-card-text>
           <div v-if="this.loosecase()">
-            <p>
+            <p style="font-family: 'Roboto', sans-serif">
               Vous avez perdu !
             </p>
-            <p>
+            <p style="font-family: 'Roboto', sans-serif">
               La solution était {{this.game.solution}}
             </p>
           </div>
           <div v-if="this.wincase()">
-            <p>
+            <p style="font-family: 'Roboto', sans-serif">
               Vous avez gagné !
             </p>
           </div>
         </v-card-text>
         <v-card-actions class="justify-end">
-          <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/')" >Maison</v-btn> 
-          <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/choice')" >Nouvelle partie</v-btn> 
+          <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/')" style="font-family: 'Roboto', sans-serif" >Maison</v-btn> 
+          <v-btn outlined raised rounded color="accent" @click="this.dialog = false; this.$confetti.stop(); this.$router.push('/choice')" style="font-family: 'Roboto', sans-serif" >Nouvelle partie</v-btn> 
         </v-card-actions>
       </v-card>
     </v-dialog>

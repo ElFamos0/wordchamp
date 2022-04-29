@@ -1,12 +1,12 @@
 <template>
   <div class="random">
     <v-container>
-        <h1>Register</h1>
+        <h1 style="font-family: 'Roboto', sans-serif;">Register</h1>
 
         <v-row class="justify-content-md-center mt-3">
             <v-col col lg="4">
                 <v-card class="mx-auto" style="max-width:350px;">
-                    <v-alert v-model="alertVisible" dense type="error">
+                    <v-alert v-model="alertVisible" dense type="error" style="font-family: 'Roboto', sans-serif;">
                     {{alertMessage}}
                     </v-alert>
                     <v-container>
@@ -15,7 +15,7 @@
 
                             <v-text-field class="mx-auto" style="max-width:200px" id="password" type="password" v-model="this.form.password" :rules="nameRules" :counter="25" label="Mot de passe" required></v-text-field>
 
-                            <v-btn type="submit" @click="submit()" color="primary">Register</v-btn>                    
+                            <v-btn type="submit" @click="submit()" color="primary" style="font-family: 'Roboto', sans-serif;">Register</v-btn>                    
                         </v-form>
                     </v-container>
                 </v-card>
