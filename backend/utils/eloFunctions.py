@@ -3,9 +3,8 @@ from math import *
 
 def newElo(elo,difficulty,won) :
     
-   # diff = abs(elo - difficulty)
 
-    tab =  [9.5,9.4,9.2,9,8.7,8,7,6.1,5.6,5.2,5,4.8,4.4,3.9,3,2,1.3,1,0.8,0.6,0.5]
+    tab =  [9.5,9.4,9.2,8.8,8.2,7.5,6.8,6.1,5.6,5.2,5,4.8,4.4,3.9,3.2,2.5,1.8,1.2,0.8,0.6,0.5]
 
     if won :
 
@@ -37,24 +36,6 @@ def newElo(elo,difficulty,won) :
 
         return -val
 
-
-    # if diff > 50 :
-
-    #     if diff > 90 :
-
-    #         return 0
-
-    #     if won :
-    #         return  0.24
-    #     else :
-    #         return -0.24
-    
-    # else :
-
-    #     if won :
-    #         return (0.00101*(diff**2)-0.155*diff+5.47762)
-    #     else :
-    #         return -(0.00101*(diff**2)-0.155*diff+5.47762)
 
 
 def generateGame(elo,wordlist,defaultword) :
@@ -92,7 +73,7 @@ def generateGame(elo,wordlist,defaultword) :
 
 
     mots_valides = selectwords(target_difficulty,wordlist,spread)
-    while len(mots_valides) == 0 :
+    while len(mots_valides) == 0 and spread <=100 :
 
         spread += 25
         mots_valides = selectwords(target_difficulty,wordlist,spread)
@@ -147,15 +128,7 @@ def generateGame(elo,wordlist,defaultword) :
 
     if mot_choisi.size <= 6 :
         maxtry = 6
-    elif mot_choisi.size <= 9 :
-        maxtry = 7
     else :
-        maxtry = 8
+        maxtry = mot_choisi.size
 
     return mot_choisi.word,maxtry,mot_choisi.difficulte
-
-
-
-
-
-    

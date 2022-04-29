@@ -38,6 +38,7 @@ def do_it_bis() :
 
     FILE = "misc/lex.txt"
     file = open(FILE, "r", encoding='utf-8')
+    count = 0
 
     # We load the wordlist into the database
     for line in file.readlines():
@@ -65,7 +66,8 @@ def do_it_bis() :
         gram = liste_param[3][:3]
 
         if len(word) > 0 and len(word) <= 10 and state:
-
+            
+            count +=1
             nombre = None
             conjug = None
             genre = None
@@ -74,9 +76,13 @@ def do_it_bis() :
             if liste_param[5] != "" :
                 nombre = liste_param[5]
             if liste_param[10] != "" :
-                conjug = liste_param[10]
+                taille = min(20,len(liste_param[10]) - 1)
+                conjug = liste_param[10][:taille]
 
             dic = Dictionnaire(word,freq,gram,genre,nombre,conjug)
             db.session().add(dic)
-    db.session().commit()
+
+            if count % 100 == 0 :
+                db.session().commit()
+    
     file.close()

@@ -63,8 +63,8 @@ from models import *
 
 usertest = user.User.query.all() 
 if len(usertest) == 0 :
-    newUser = user.User("pseudo","mdp",False)
-    db.session.add(newUser)
+    newUserPseudo = user.User("pseudo","mdp",False)
+    db.session.add(newUserPseudo)
     db.session.commit()
     newUser = user.User("PGM","mdp",False,100)
     db.session.add(newUser)

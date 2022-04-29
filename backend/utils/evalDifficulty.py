@@ -88,4 +88,4 @@ def set_difficulte(word,freq) :
         diff += eval_doublons(coeff_doublons)
 
 
-        return diff*modif_freq
+        return round(diff*modif_freq,2)
