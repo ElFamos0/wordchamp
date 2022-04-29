@@ -16,6 +16,9 @@
         </v-col>
         <v-col cols="7">
           <WordRow :animate="false" :solution="solution" :word="solution" :submitted="false" style="max-width: 100%"/>     
+          <div style="padding: 10%;">
+            <h5>Mode : {{type==="game_normal" ? "Classique" : "Carrière"}}</h5>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -31,6 +34,7 @@ export default {
     solution : String,
     result: String,
     date: String,
+    type: String,
   },
   computed: {
     colorClass() {

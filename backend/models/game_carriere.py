@@ -53,7 +53,7 @@ class Game_carriere(Game):
 
 
 
-    def toDict(self, id, id_user, difficulty, maxtry, length, date,solution,won,elo_player,ranked):
+    def toDict(self, id, id_user, difficulty, maxtry, length, date,solution,won,elo_player,ranked, game_type):
         dictionnaire = {}
         if id:
             dictionnaire['id']=self.id
@@ -75,4 +75,6 @@ class Game_carriere(Game):
             dictionnaire['elo_player'] = self.elo_player
         if won :
             dictionnaire['ranked'] = self.ranked
+        if game_type:
+            dictionnaire['game_type']=self.game_type
         return dictionnaire

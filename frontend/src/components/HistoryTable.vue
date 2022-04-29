@@ -3,7 +3,7 @@
     <div v-for="entry in entries" :key="entry.id">
         <div>
           <HistoryEntry @show-details="showDetails"
-          :entryId="entry.id" :solution="entry.solution" :result="entry.result" :date="entry.date"
+          :entryId="entry.id" :solution="entry.solution" :result="entry.result" :date="entry.date" :type="entry.type"
           />
         </div>
         <div>
@@ -30,7 +30,7 @@ export default {
   emits: ['show-details'],
   methods: {
       showDetails(entryId) {
-        console.log("vous avez cliqué sur l'entrée ", entryId, " toggle valait ", this.toggled[entryId])
+        // console.log("vous avez cliqué sur l'entrée ", entryId, " toggle valait ", this.toggled[entryId])
         this.toggled[entryId]=!this.toggled[entryId]
       }
   },

@@ -1,5 +1,6 @@
 from models.tries import Tries
 from models.game_normal import Game_normal
+from models.game_carriere import Game_carriere
 from models.game import Game
 from setup import *
 from flask import request, jsonify
@@ -14,9 +15,11 @@ import datetime
 def history():
     identity = get_jwt_identity()
     userId = identity
-    reqGames = Game_normal.query.filter_by(id_user=userId, state=1).order_by(Game.date.desc()).all()
-    games = [e.toDict(1,1,1,1,1,1) for e in reqGames]
-    entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":str(e["maxtry"]), "date":e["date"]} for e in games]
+    all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_carriere.Game_carriere])
+    reqGames = db.session.query(all_games_poly).order_by(Game.date.desc()).all()
+    games = [e.toDict(1,1,1,1,1,1,1) if e.game_type=="game_normal" else e.toDict(1,1,0,1,1,1,1,0,0,0,1) for e in reqGames]
+    gamesUser = [e if e["id_user"]==userId else None for e in games]
+    entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":str(e["maxtry"]), "date":e["date"], "type":e["game_type"]} for e in gamesUser]
     for entry in entries:
         reqTries = Tries.query.filter_by(id_game=entry["id"]).all()
         tries = [e.toDict(1,1,1,1) for e in reqTries]
@@ -28,7 +31,6 @@ def history():
             entry["colors"].append(check_word(guess["word"], entry["solution"]))
         #entry["date"] = datetime.datetime.fromtimestamp(1651133760108 / 1000.0, tz=datetime.timezone.utc)
     entries = {"entries":entries}
-    print(entries)
     return jsonify(entries)
     
     # return jsonify({

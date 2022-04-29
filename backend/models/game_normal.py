@@ -27,7 +27,7 @@ class Game_normal(Game):
     def __repr__(self):
         return '<Game_normal %r>' % self.id
 
-    def toDict(self, id, id_user, solution, maxtry, length, date):
+    def toDict(self, id, id_user, solution, maxtry, length, date, game_type):
         dictionnaire = {}
         if id:
             dictionnaire['id']=self.id
@@ -41,4 +41,6 @@ class Game_normal(Game):
             dictionnaire['length']=self.length
         if date:
             dictionnaire['date']=self.date
+        if game_type:
+            dictionnaire['game_type']=self.game_type
         return dictionnaire
