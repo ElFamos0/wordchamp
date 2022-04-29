@@ -122,6 +122,9 @@ export default {
         let key = e.keyCode == 13 ? '{enter}' 
         : e.keyCode == 8 ? '{bksp}' 
         : String.fromCharCode(e.keyCode).toUpperCase();
+        if (key == '{enter}' || key == '{bksp}') {
+          e.preventDefault();
+        }
         this.displayinput(key);
 
         if (this.endcase()) {
