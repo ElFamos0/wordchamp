@@ -45,7 +45,9 @@
           <v-tooltip activator="parent" anchor="bottom">
             Carrière
           </v-tooltip>
-          <font-awesome-icon icon="fa-solid fa-arrow-trend-up" />
+           <v-btn icon>
+            <v-icon>mdi-trending-up</v-icon>
+          </v-btn>
         </v-tab>
         <v-tab to="/classement">
           Classement
