@@ -4,34 +4,26 @@
         <template v-slot:default>
         <thead style="background:rgb(50, 50, 50); color:white">
             <tr>
-            <th class="text-center" style="padding-top:10px">
-                <h3>#</h3>   
-            </th>
-            <th class="text-center" style="padding-top:10px">
-                <h3>Pseudo</h3>
-            </th>
-            <th class="text-center" style="padding-top:10px">
-                <h3>Parties gagnées</h3>
-            </th>
+                <th class="text-center" style="padding-top:10px">
+                    <h3>#</h3>   
+                </th>
+                <th class="text-center" style="padding-top:10px">
+                    <h3>Pseudo</h3>
+                </th>
+                <th class="text-center" style="padding-top:10px">
+                    <h3>Elo</h3>
+                </th>
+                <th class="text-center" style="padding-top:10px">
+                    <h3>Points</h3>
+                </th>
             </tr>
         </thead>
         <tbody>
-            <tr
-            v-for="userData in usersData"
-            :key="userData.classement"
-            >
-            <td v-if="userData.classement===1" style="font-weight: bolder; background:rgb(225, 209, 106)">{{ userData.classement }}</td>
-            <td v-else-if="userData.classement===2" style="font-weight: bolder; background:rgb(195, 195, 195)">{{ userData.classement }}</td>
-            <td v-else-if="userData.classement===3" style="font-weight: bolder; background:rgb(192, 137, 80)">{{ userData.classement }}</td>
-            <td v-else>{{ userData.classement }}</td>
-            <td v-if="userData.classement===1" style="font-weight: bolder; background:rgb(225, 209, 106)">{{ userData.username }}</td>
-            <td v-else-if="userData.classement===2" style="font-weight: bolder; background:rgb(195, 195, 195)">{{ userData.username }}</td>
-            <td v-else-if="userData.classement===3" style="font-weight: bolder; background:rgb(192, 137, 80)">{{ userData.username }}</td>
-            <td v-else>{{ userData.username }}</td>
-            <td v-if="userData.classement===1" style="font-weight: bolder; background:rgb(225, 209, 106)">{{ userData.points }}</td>
-            <td v-else-if="userData.classement===2" style="font-weight: bolder; background:rgb(195, 195, 195)">{{ userData.points }}</td>
-            <td v-else-if="userData.classement===3" style="font-weight: bolder; background:rgb(192, 137, 80)">{{ userData.points }}</td>
-            <td v-else>{{ userData.points }}</td>
+            <tr v-for="userData in usersData" :key="userData.classement" :class="{'rank-first': userData.classement == 1, 'rank-second': userData.classement == 2, 'rank-third': userData.classement == 3} "> 
+                <td>{{ userData.classement }}</td>
+                <td>{{ userData.username }}</td>
+                <td>{{ userData.elo }}</td>
+                <td>{{ userData.points }}</td>
             </tr>
         </tbody>
         </template>
@@ -65,4 +57,19 @@ const path = `${process.env.VUE_APP_BACKEND_URL}/classement`;
 </script>
 
 <style scoped>
+
+.rank-first {
+    font-weight: bolder; 
+    background:rgb(225, 209, 106);
+}
+
+.rank-second {
+    font-weight: bolder;
+    background:rgb(195, 195, 195);
+}
+
+.rank-third {
+    font-weight: bolder; 
+    background:rgb(192, 137, 80);
+}
 </style>
