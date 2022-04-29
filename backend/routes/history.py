@@ -18,7 +18,10 @@ def history():
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_carriere.Game_carriere])
     reqGames = db.session.query(all_games_poly).order_by(Game.date.desc()).all()
     games = [e.toDict(1,1,1,1,1,1,1) if e.game_type=="game_normal" else e.toDict(1,1,0,1,1,1,1,0,0,0,1) for e in reqGames]
-    gamesUser = [e if e["id_user"]==userId else None for e in games]
+    gamesUser = []
+    for e in games:
+        if e["id_user"] == userId:
+            gamesUser.append(e)
     entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":str(e["maxtry"]), "date":e["date"], "type":e["game_type"]} for e in gamesUser]
     for entry in entries:
         reqTries = Tries.query.filter_by(id_game=entry["id"]).all()
