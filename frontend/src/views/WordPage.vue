@@ -197,7 +197,7 @@ export default {
     </div>
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
-      <Keyboard style="color:#000" @onKeyPress="this.displayinput" :guessedletter=[]></Keyboard>
+      <Keyboard style="color:#000" @onKeyPress="this.displayinput" :guessedletter="this.game.guessedletters"></Keyboard>
     </b-container>
   </div>
 </template>

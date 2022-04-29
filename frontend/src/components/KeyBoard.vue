@@ -1,7 +1,7 @@
 <script setup>
 import Keyboard from 'simple-keyboard';
 import 'simple-keyboard/build/css/index.css';
-import {onMounted, ref, defineEmits, defineProps} from 'vue';
+import {onMounted, ref, defineEmits, defineProps, watch} from 'vue';
 
 const emit = defineEmits(["onKeyPress"]);
 
@@ -10,6 +10,7 @@ const keyboard = ref(null);
 const props = defineProps({
   guessedletter: Object,
 });
+
 console.log(props.guessedletter)
 const onKeyPress = (button) => {
   emit("onKeyPress", button)
@@ -35,13 +36,23 @@ onMounted(() => {
   });
 });
 
-//watch( () => props.guessedletter, (newVal,oldVal) => {
-//  if (newVal) {
-//    keyboard.value.setInput(newVal);
-//  }
-//});
-
-//);
+watch( () => props.guessedletter, (guessedletter) => {
+  console.log("j'update le clavier")
+  keyboard.value.addButtonTheme(
+    guessedletter.miss.join(" "),
+    "miss"
+  );
+  keyboard.value.addButtonTheme(
+    guessedletter.misplace.join(" "),
+    "misplace"
+  );  
+  keyboard.value.addButtonTheme(
+    guessedletter.found.join(" "),
+    "found"
+  );
+},
+  { deep: true }
+);
       
 </script>
 <template>
@@ -71,6 +82,19 @@ li {
 
 .simple-keyboard.hg-layout-default .hg-button.hg-red {
   background: rgba(166, 35, 237, 0.7);
+  color: white;
+}
+
+.miss {
+  background: rgba(78, 78, 72, 0.7) !important;
+  color: white;
+}
+.misplace {
+  background: rgba(252, 218, 25, 0.7) !important;
+  color: white;
+}
+.found {
+  background: rgba(221, 30, 23, 0.7) !important;
   color: white;
 }
 
