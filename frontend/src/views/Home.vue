@@ -32,7 +32,7 @@
               La difficulté augmente avec ton elo, la longueur du mot et le nombre de tentatives sont aléatoires.<br>
               <br>
               Si tu réussis à deviner le mot, ton elo augmente et ton classement aussi !<br>
-              Si tu échoue, ils diminuent...<br>
+              Si tu échoues, ils diminuent...<br>
               T'es bon, tu montes.<br>
               <br>  
               </li>
