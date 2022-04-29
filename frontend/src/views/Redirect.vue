@@ -13,11 +13,11 @@ export default {
         axiosAuth.get(this.currentgamepath).then((res) => {
         this.currentgame=res.data
         if (!this.currentgame) {
-            console.log("je pars vers choice")
+            // console.log("je pars vers choice")
             this.$router.push('/choice')
         }
         else {
-            console.log("je pars vers word")
+            // console.log("je pars vers word")
             this.$router.push('/word/:5/:6')
         }
         })

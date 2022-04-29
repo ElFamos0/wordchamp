@@ -11,7 +11,7 @@ const props = defineProps({
   guessedletter: Object,
 });
 
-console.log(props.guessedletter)
+// console.log(props.guessedletter)
 const onKeyPress = (button) => {
   emit("onKeyPress", button)
 }
@@ -42,7 +42,7 @@ onMounted(() => {
 });
 
 watch( () => props.guessedletter, (guessedletter) => {
-  console.log("j'update le clavier")
+  // console.log("j'update le clavier")
   keyboard.value.addButtonTheme(
     guessedletter.miss.join(" "),
     "miss"

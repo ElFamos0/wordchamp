@@ -195,7 +195,7 @@ all_games = db.session.query(all_games_poly)
 #     maxtry = first_game.maxtry      #Pour récup le nb de try
 #     length = first_game.length      #Pour récup la longeur de la soluce
 
-#print(date,state,id,game_type,id_user,solution,maxtry,length)
+##print(date,state,id,game_type,id_user,solution,maxtry,length)
 
 
 # Récup les infos d'une game survie
@@ -214,7 +214,7 @@ all_games = db.session.query(all_games_poly)
 #     length = game_s.length      #Pour récup la longeur des soluces
 #     score = game_s.score
 
-#print(solution,game_type,score,state)
+##print(solution,game_type,score,state)
 
 ########
 

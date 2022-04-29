@@ -50,7 +50,7 @@ export default {
         if (this.game.currentTry >= this.game.maxtry) {
           return;
         }
-        //console.log("try avant ajout:", this.game.tried[this.game.currentTry])
+        //// console.log("try avant ajout:", this.game.tried[this.game.currentTry])
         if (this.isaLetter(keypressed) && this.game.tried[this.game.currentTry].length < this.game.solutionlength) {
             this.game.tried[this.game.currentTry] += keypressed;
         }
@@ -58,11 +58,11 @@ export default {
         { 
           const wordguess = this.game.tried[this.game.currentTry];
           this.motValide = this.verifTry(wordguess)
-          //console.log("valeur de mot valide après la verifTry :", this.motValide)
+          //// console.log("valeur de mot valide après la verifTry :", this.motValide)
           if (this.motValide) {
             // ici le mot est validé 
             this.motValide=false
-            //console.log("j'ai remis à faux motValide :", this.motValide)
+            //// console.log("j'ai remis à faux motValide :", this.motValide)
           for (var i = 0; i < wordguess.length; i++) {
             let c = wordguess.charAt(i);
             if (c == this.game.solution.charAt(i) && this.game.guessedletters.found.indexOf(c) == -1) {
@@ -78,12 +78,12 @@ export default {
             }
           
           }
-          console.log("guessedletters:", this.game.guessedletters)
+          // console.log("guessedletters:", this.game.guessedletters)
           this.game.currentTry++;
           axiosAuth.post(this.sendtry,{"data":wordguess})
             .then((res) => {
               this.showError = false;
-              console.log("sendtry envoie à la DB :", wordguess, res)
+              // console.log("sendtry envoie à la DB :", wordguess, res)
             });
           } else {
             this.showError = false;
@@ -97,13 +97,13 @@ export default {
         }
       },
       verifTry: function(wordguess) {
-        //console.log("valeur de wordguess envoyé à veriTry :", wordguess)
-        //console.log("motssss", this.game.motsValides)
+        //// console.log("valeur de wordguess envoyé à veriTry :", wordguess)
+        //// console.log("motssss", this.game.motsValides)
 
         if (this.game.motsValides.includes(wordguess)) {
             this.motValide = true
         }
-        console.log("valeur MAJ par verifTry : ", this.motValide)
+        // console.log("valeur MAJ par verifTry : ", this.motValide)
         return this.motValide
       },
       isaLetter: function(keypressed) {
@@ -144,11 +144,12 @@ export default {
       const route = useRoute()  
       const id = route.params.i
       const id2 = id.slice(1,2)
-      console.log(id2)
+      // console.log(id2)
       axiosAuth.get(this.creategame +"/"+id2)
           .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             this.game.solution = res.data.solution
+            console.log("Voici la solution : ", this.game.solution)
             this.game.solutionlength = res.data.solution.length
             this.game.currentTry = res.data.currenttry
             this.game.tried = res.data.guess

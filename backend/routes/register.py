@@ -4,7 +4,7 @@ from models.user import User
 
 @app.route('/register', methods=['POST'])
 def register():
-    #print(request.json)
+    ##print(request.json)
     username = request.json["username"]
     password = request.json["password"]
     if password == "" or username == "":
@@ -14,5 +14,5 @@ def register():
     newUsr = User(username, password)
     db.session.add(newUsr)
     db.session.commit()
-    #print("new user created")
+    ##print("new user created")
     return jsonify({"success": "user created"}), 200

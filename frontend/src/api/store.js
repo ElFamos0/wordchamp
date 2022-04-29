@@ -74,7 +74,7 @@ const actions = {
 		})
 	},
 	autoLogin({commit}) {
-		console.log('autoLogin');
+		// console.log('autoLogin');
 		let token = localStorage.getItem('token');
 		let refresh_token = localStorage.getItem('refresh_token');
 		let username = localStorage.getItem('username');

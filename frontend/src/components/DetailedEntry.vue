@@ -33,7 +33,7 @@ export default {
     },
     computed: {
         colorClass() {
-      console.log(this.result)
+      // console.log(this.result)
       let color1 = (this.result == 'Victoire' ) ? 'green' : 'red';
       let color2 = (this.result == 'Victoire' ) ? 'rgb(118, 255, 127)' : 'rgb(255, 134, 134)';
 

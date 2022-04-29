@@ -60,7 +60,7 @@ export default {
           that.$store.dispatch('auth/changeUsername', response.data.new_username)
         }).catch(function(err) {
           that.errorMessage = err.response.data.error;
-          console.log(that.errorMessage)
+          // console.log(that.errorMessage)
         });
       },
       envoiAvatar(){

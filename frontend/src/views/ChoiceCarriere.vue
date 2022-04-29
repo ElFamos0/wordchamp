@@ -23,7 +23,7 @@ export default {
       // on récupère l'élo'
       axiosAuth.get(this.route)
           .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             this.elo = res.data.elo
           });
       

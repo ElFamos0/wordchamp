@@ -30,7 +30,7 @@ export default {
   emits: ['show-details'],
   methods: {
       showDetails(entryId) {
-        // console.log("vous avez cliqué sur l'entrée ", entryId, " toggle valait ", this.toggled[entryId])
+        // // console.log("vous avez cliqué sur l'entrée ", entryId, " toggle valait ", this.toggled[entryId])
         this.toggled[entryId]=!this.toggled[entryId]
       }
   },

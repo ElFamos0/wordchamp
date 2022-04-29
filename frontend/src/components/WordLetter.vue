@@ -51,7 +51,7 @@ watch( () => letterprop.color, function () {
     lettre.value.$el.style.animation = null; 
 
     // if (newVal=="#cc0808") {
-        // console.log("masterclass");
+        // // console.log("masterclass");
         // var masterclass = new Audio("audio/masterclass.mp3") 
         // <audio autoplay>
         //     <source src="audio/masterclass.mp3" />

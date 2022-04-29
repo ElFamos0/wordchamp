@@ -57,13 +57,13 @@ def carriere(ranked):
 
         db.session.add(newGameCarriere)
         db.session.commit()
-        #print(data)
+        ##print(data)
 
 
 
     else:
         current_game = all_games[0]
-        print(current_game.toDict(1,1,1,1,1,1,1,1,1,1))
+        #print(current_game.toDict(1,1,1,1,1,1,1,1,1,1))
 
         data["solution"] = current_game.solution
         data["maxtry"] = current_game.maxtry
@@ -97,6 +97,6 @@ def carriere(ranked):
 
     data["motsValides"]=[e.word for e in db.session.query(dictionnaire.Dictionnaire).filter_by(size = len(data["solution"]))]
 
-    print("Data",data["solution"],data['ranked'])
+    #print("Data",data["solution"],data['ranked'])
 
     return jsonify(data),200

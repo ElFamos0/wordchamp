@@ -37,11 +37,11 @@ def creategame(taille, maxtry):
             data["guess"].append("")
         db.session.add(newGameNormal)
         db.session.commit()
-        # print(data)
+        # #print(data)
     else:
         current_game = all_games[0]
         data["maxtry"] = current_game.maxtry 
-        print(current_game)
+        #print(current_game)
         data["solution"] = current_game.solution
         guess = db.session.query(tries.Tries).filter_by(id_game = current_game.id).order_by(tries.Tries.try_number).all()
 
@@ -50,7 +50,7 @@ def creategame(taille, maxtry):
         for i in range(current_game.maxtry - len(guess)):
             data["guess"].append("")   
         data["currenttry"] = len(guess)
-        # print(data)
+        # #print(data)
 
         data["miss"],data['found'],data['misplace'] = classLeters(data["guess"],data['solution'])
 

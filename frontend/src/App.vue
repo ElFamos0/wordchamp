@@ -168,7 +168,7 @@ export default {
     document.addEventListener('keydown', function (event) {
       if (event.keyCode === kode[pos++]) {
         if (length === pos) {
-          console.log(this.$refs)
+          // console.log(this.$refs)
           shownBg.$el.style.visibility = 'hidden'
           hiddenBg.$el.style.visibility = ''
           pos = 0 // ability to start over
