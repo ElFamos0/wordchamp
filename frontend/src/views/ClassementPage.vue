@@ -4,54 +4,42 @@
         <v-tab @click="normal=true; carriere=false"> Classique </v-tab>
         <v-tab @click="normal=false; carriere=true"> Carrière </v-tab>
     </v-tabs>
-    <v-table v-if="normal" theme="light" density="default" style="margin-bottom:5%; margin-left:10%; margin-right:10%; margin-top:5% ; border-radius:4px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
-        <template v-slot:default>
-        <thead style="background:rgb(50, 50, 50); color:white">
-            <tr>
-                <th class="text-center" style="padding-top:10px">
-                    <h3>#</h3>   
-                </th>
-                <th class="text-center" style="padding-top:10px">
-                    <h3>Pseudo</h3>
-                </th>
-                <th class="text-center" style="padding-top:10px">
-                    <h3>Points</h3>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="userData in usersData" :key="userData.classement" :class="{'rank-first': userData.classement == 1, 'rank-second': userData.classement == 2, 'rank-third': userData.classement == 3} "> 
-                <td>{{ userData.classement }}</td>
-                <td>{{ userData.username }}</td>
-                <td>{{ userData.points }}</td>
-            </tr>
-        </tbody>
-        </template>
-    </v-table>  
-    <v-table v-if="carriere" theme="light" density="default" style="margin-bottom:5%; margin-left:10%; margin-right:10%; margin-top:5% ; border-radius:4px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
-        <template v-slot:default>
-        <thead style="background:rgb(50, 50, 50); color:white">
-            <tr>
-                <th class="text-center" style="padding-top:10px">
-                    <h3>#</h3>   
-                </th>
-                <th class="text-center" style="padding-top:10px">
-                    <h3>Pseudo</h3>
-                </th>
-                <th class="text-center" style="padding-top:10px">
-                    <h3>&nbsp;&nbsp;Elo&nbsp;&nbsp;&nbsp;</h3>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="userData in usersData" :key="userData.classement" :class="{'rank-first': userData.classement == 1, 'rank-second': userData.classement == 2, 'rank-third': userData.classement == 3} "> 
-                <td>{{ userData.classement }}</td>
-                <td>{{ userData.username }}</td>
-                <td>{{ userData.elo }}</td>
-            </tr>
-        </tbody>
-        </template>
-    </v-table>     
+    <v-container class="tableau mt-5" v-if="normal">
+        <v-row class="haut-tableau">
+            <v-col cols="4">
+                <h3>#</h3>   
+            </v-col>
+            <v-col cols="4">
+                <h3>Pseudo</h3>
+            </v-col>
+            <v-col cols="4">
+                <h3>Points</h3>
+            </v-col>
+        </v-row>
+        <v-row v-for="userData in usersData" :key="userData.classement" :class="{'rank':true,'rank-first': userData.classement == 1, 'rank-second': userData.classement == 2, 'rank-third': userData.classement == 3, 'bas-tableau': userData.classement == usersData.length} "> 
+            <v-col cols="4">{{ userData.classement }}</v-col>
+            <v-col cols="4">{{ userData.username }}</v-col>
+            <v-col cols="4">{{ userData.points }}</v-col>
+        </v-row>
+    </v-container>  
+    <v-container class="tableau mt-5" v-if="carriere">
+        <v-row class="haut-tableau">
+            <v-col cols="4">
+                <h3>#</h3>   
+            </v-col>
+            <v-col cols="4">
+                <h3>Pseudo</h3>
+            </v-col>
+            <v-col cols="4">
+                <h3>Elo</h3>
+            </v-col>
+        </v-row>
+        <v-row v-for="userData in usersData" :key="userData.classement" :class="{'rank':true, 'rank-first': userData.classement == 1, 'rank-second': userData.classement == 2, 'rank-third': userData.classement == 3, 'bas-tableau': userData.classement == usersData.length} "> 
+            <v-col cols="4">{{ userData.classement }}</v-col>
+            <v-col cols="4">{{ userData.username }}</v-col>
+            <v-col cols="4">{{ userData.elo }}</v-col>
+        </v-row>
+    </v-container>     
 </div>
 </template>
 
@@ -72,9 +60,8 @@ export default {
     created() {
         axios.get(path).then((res)=> {
             res.data.users.forEach(element => {
-                
-                this.usersData.push(element);
-            });
+                    this.usersData.push(element);
+                });
             })
     },
 }
@@ -86,16 +73,37 @@ const path = `${process.env.VUE_APP_BACKEND_URL}/classement`;
 
 .rank-first {
     font-weight: bolder; 
-    background:rgb(225, 209, 106);
+    background:rgb(225, 209, 106) !important;
 }
 
 .rank-second {
     font-weight: bolder;
-    background:rgb(195, 195, 195);
+    background:rgb(195, 195, 195) !important;
 }
 
 .rank-third {
     font-weight: bolder; 
-    background:rgb(192, 137, 80);
+    background:rgb(192, 137, 80) !important;
+}
+
+.rank {
+    color: black;
+    background: white;
+    margin-bottom:5px;
+}
+
+.tableau {
+    background:rgb(50, 50, 50);
+    color:white;
+    border-radius:8px;
+}
+
+.haut-tableau {
+    border-radius:8px;
+}
+
+.bas-tableau {
+    border-radius:5px;
+    margin-bottom:-5px;
 }
 </style>
