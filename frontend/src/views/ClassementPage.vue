@@ -16,7 +16,7 @@
                 <h3>Points</h3>
             </v-col>
         </v-row>
-        <v-row v-for="userData in usersData" :key="userData.classement" :class="{'rank':true,'rank-first': userData.classement == 1, 'rank-second': userData.classement == 2, 'rank-third': userData.classement == 3, 'bas-tableau': userData.classement == usersData.length} "> 
+        <v-row v-for="userData in usersData2" :key="userData.classement" :class="{'rank':true,'rank-first': userData.classement == 1, 'rank-second': userData.classement == 2, 'rank-third': userData.classement == 3, 'bas-tableau': userData.classement == usersData.length} "> 
             <v-col cols="4">{{ userData.classement }}</v-col>
             <v-col cols="4">{{ userData.username }}</v-col>
             <v-col cols="4">{{ userData.points }}</v-col>
@@ -53,14 +53,18 @@ export default {
     data () {
         return {
             usersData: [],
+            usersData2: [],
             normal: true,
             carriere: false,
             }
     },
     created() {
         axios.get(path).then((res)=> {
-            res.data.users.forEach(element => {
+            res.data.users.users.forEach(element => {
                     this.usersData.push(element);
+                });
+            res.data.users2.users.forEach(element => {
+                    this.usersData2.push(element);
                 });
             })
     },
