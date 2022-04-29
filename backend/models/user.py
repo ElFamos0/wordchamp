@@ -39,7 +39,7 @@ class User(db.Model, UserMixin):
         self.set_password(password)
         self.admin = admin
         self.points = points
-        self.elo = 0
+        self.elo = 30
 
     def __repr__(self):
         return '<User %r>' % self.username

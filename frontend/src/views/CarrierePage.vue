@@ -30,6 +30,12 @@ export default {
             currentTry: 0,
             solutionlength: 8,
             iswin: false,
+            difficulty:0,
+            elo : 0,
+            elop: 0,
+            elom: 0,
+            n_elop: 0,
+            n_elom: 0,
             motsValides: [],
             guessedletters: {
               miss: [],
@@ -145,9 +151,16 @@ export default {
             this.game.maxtry = res.data.maxtry
             this.game.motsValides = res.data.motsValides
             this.gameShown = true
+            this.game.difficulty = res.data.difficulty
             this.game.guessedletters.misplace = res.data.misplace
             this.game.guessedletters.miss = res.data.miss
             this.game.guessedletters.found = res.data.found
+            this.game.elo = res.data.elo_player
+            this.game.elop = res.data.elop
+            this.game.elom = res.data.elom
+            this.game.n_elop = res.data.n_elop
+            this.game.n_elom = res.data.n_elom
+
           });
       
     },
@@ -161,7 +174,8 @@ export default {
 
 <template>
   <div class="random">
-    <h1 style="margin-bottom:1%">Venez jouer à WordChamp</h1>
+    <h1 style="margin-bottom:1%">Mode carrière</h1>
+    <h3 style="margin-bottom:1%">Difficulté : {{game.difficulty}} </h3>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
     <v-chip v-model="showError" class="text-center animatedChip mb-3" color="primary" dark height="200px">
       Ce mot n'est pas dans notre dictionnaire.
@@ -174,6 +188,7 @@ export default {
             <p>
               Vous avez perdu !
             </p>
+            <p> Nouvel elo : {{this.game.n_elom}}</p>
             <p>
               La solution était {{this.game.solution}}
             </p>
@@ -182,6 +197,7 @@ export default {
             <p>
               Vous avez gagné !
             </p>
+            <p> Nouvel elo : {{this.game.n_elop}}</p>
           </div>
         </v-card-text>
         <v-card-actions class="justify-end">
@@ -196,6 +212,9 @@ export default {
         <word-row class="justify-center" :word="tryy" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
       </div>
     </div>
+
+    <h3 style="margin-top:1%">Elo : {{this.game.elo}}  (+{{this.game.elop}},{{this.game.elom}})</h3>
+
     <b-container>
       <!-- Clavier qui réagit avec l'action onKeyPress et active la fonction display input-->
       <Keyboard style="color:#000" @onKeyPress="this.displayinput"></Keyboard>

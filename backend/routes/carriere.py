@@ -10,12 +10,18 @@ from models.game_carriere import Game_carriere
 from models.tries import Tries
 from sqlalchemy.orm import with_polymorphic
 from utils.classLeters import classLeters
+from utils.eloFunctions import newElo
 
 
 @app.route('/carriere/<ranked>', methods=['GET'])
 @jwt_required()
 def carriere(ranked):
     
+    if ranked == "1" :
+        mult = 1
+    else :
+        mult = 0
+
     identity = get_jwt_identity()
     current_user = User.query.get(identity)
     if current_user == None: return jsonify({"error": "user not found"}), 400
@@ -24,7 +30,7 @@ def carriere(ranked):
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_carriere.id_user == current_user.id,all_games_poly.Game_carriere.state == False).all()
     
     data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0,"motsValides" : [],"miss" : [],"found" : [],"misplace" : [],
-            "length" : 0, "elo_p" : 0, "difficulty" : 0,"ranked" : False}
+            "length" : 0, "elo_p" : 0, "difficulty" : 0,"ranked" : False,"elop" : 0,"elom" : 0,'n_elop':0,'n_elom':0}
 
 
     if len(all_games) == 0:
@@ -36,9 +42,13 @@ def carriere(ranked):
         data["solution"] = newGameCarriere.solution
         data["maxtry"] = newGameCarriere.maxtry
         data["length"] = newGameCarriere.length
-        data["difficulty"] = newGameCarriere.difficulty
-        data["elo_player"] = newGameCarriere.elo_player
+        data["difficulty"] = round(newGameCarriere.difficulty,2)
+        data["elo_player"] = round(newGameCarriere.elo_player,2)
         data["ranked"] = newGameCarriere.ranked
+        data["elop"] = round(newElo(data["elo_player"],data["difficulty"],True),2) * mult
+        data["elom"] = round(newElo(data["elo_player"],data["difficulty"],False),2) * mult
+        data["n_elom"] = max(0,round(data["elo_player"] +  data["elom"],2))
+        data["n_elop"] = max(0,round(data["elo_player"] +  data["elop"],2))
            
         maxtry = data["maxtry"]
         
@@ -58,10 +68,13 @@ def carriere(ranked):
         data["solution"] = current_game.solution
         data["maxtry"] = current_game.maxtry
         data["length"] = current_game.length
-        data["difficulty"] = current_game.difficulty
-        data["elo_player"] = current_game.elo_player
+        data["difficulty"] = round(current_game.difficulty,2)
+        data["elo_player"] = round(current_game.elo_player,2)
         data["ranked"] = current_game.ranked
-
+        data["elop"] = round(newElo(data["elo_player"],data["difficulty"],True),2) * mult
+        data["elom"] = round(newElo(data["elo_player"],data["difficulty"],False),2) * mult
+        data["n_elom"] = max(0,round(data["elo_player"] +  data["elom"],2))
+        data["n_elop"] = max(0,round(data["elo_player"] +  data["elop"],2))
 
         guess = db.session.query(tries.Tries).filter_by(id_game = current_game.id).order_by(tries.Tries.try_number).all()
         for elm in guess:

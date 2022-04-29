@@ -55,7 +55,7 @@ def send_try_carriere():
         db.session.add(newTry)
 
         current_user.elo += round(gam.endGame(True,gam.ranked),2)
-        current_user.elo = round(current_user.elo,2)
+        current_user.elo = max(0,round(current_user.elo,2))
         current_user.points=current_user.points+1
 
         db.session.commit()
@@ -69,7 +69,7 @@ def send_try_carriere():
         db.session.add(newTry)
 
         current_user.elo += round(gam.endGame(False,gam.ranked),2)
-        current_user.elo = round(current_user.elo,2)
+        current_user.elo = max(0,round(current_user.elo,2))
 
         db.session.commit()
 

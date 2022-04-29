@@ -25,13 +25,15 @@ class Game_carriere(Game):
     def __init__(self,id_user,ranked):
 
         current_user =  user.User.query.get(id_user)
+
+        defaultword = dictionnaire.Dictionnaire.query.filter(dictionnaire.Dictionnaire.word == "TRICHEUR").first()
         
         id = uuid4().hex
         self.id = id
         super().__init__(id,"game_carriere")
         self.id_user = id_user
         self.elo_player = current_user.elo
-        self.solution,self.maxtry,self.difficulty = generateGame(self.elo_player,dictionnaire.Dictionnaire.query.filter(dictionnaire.Dictionnaire.size > 4).all())
+        self.solution,self.maxtry,self.difficulty = generateGame(self.elo_player,dictionnaire.Dictionnaire.query.filter(dictionnaire.Dictionnaire.size > 4,dictionnaire.Dictionnaire.difficulte > self.elo_player - 100,dictionnaire.Dictionnaire.difficulte < self.elo_player + 100).all(),defaultword)
         self.length = len(self.solution)
         self.ranked = ranked
         
