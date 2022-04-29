@@ -84,5 +84,7 @@ def do_it_bis() :
 
             if count % 100 == 0 :
                 db.session().commit()
+            
+    db.session().commit()
     
     file.close()
