@@ -4,14 +4,14 @@ from utils.evalDifficulty import set_difficulte
 
 class Dictionnaire(db.Model):
     __tablename__ = 'dictionnaire'
-    id = db.Column(db.String(40), primary_key=True)
-    word = db.Column(db.String(20), nullable=False)
+    id = db.Column(db.String(80), primary_key=True)
+    word = db.Column(db.String(50), nullable=False)
     size = db.Column(db.Integer, nullable=False)
     freq = db.Column(db.Float,nullable= False)
-    gram = db.Column(db.String(20),nullable= False)
-    genre = db.Column(db.String(20),nullable= True)
-    nombre = db.Column(db.String(20),nullable= True)
-    conjug = db.Column(db.String(20),nullable= True)
+    gram = db.Column(db.String(50),nullable= False)
+    genre = db.Column(db.String(50),nullable= True)
+    nombre = db.Column(db.String(50),nullable= True)
+    conjug = db.Column(db.String(50),nullable= True)
     difficulte = db.Column(db.Float,nullable= False)
 
 
