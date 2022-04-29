@@ -129,42 +129,6 @@ async function refresh_token() {
   }
 }
 
-router.beforeEach((to, from, next) => {
-  const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
-  const nearestWithMeta = to.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
-  const previousNearestWithMeta = from.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
-
-  // If a route with a title was found, set the document (page) title to that value.
-  if(nearestWithTitle) {
-    document.title = nearestWithTitle.meta.title;
-  } else if(previousNearestWithMeta) {
-    document.title = previousNearestWithMeta.meta.title;
-  }
-
-  // Remove any stale meta tags from the document using the key attribute we set below.
-  Array.from(document.querySelectorAll('[data-vue-router-controlled]')).map(el => el.parentNode.removeChild(el));
-
-  // Skip rendering meta tags if there are none.
-  if(nearestWithMeta) {
-    // Turn the meta tag definitions into actual elements in the head.
-    nearestWithMeta.meta.metaTags.map(tagDef => {
-      const tag = document.createElement('meta');
-
-      Object.keys(tagDef).forEach(key => {
-        tag.setAttribute(key, tagDef[key]);
-      });
-
-      // We use this to track which meta tags we create so we don't interfere with other ones.
-      tag.setAttribute('data-vue-router-controlled', '');
-
-      return tag;
-    })
-    // Add the meta tags to the document head.
-    .forEach(tag => document.head.appendChild(tag));
-  }
-  next()
-});
-
 router.beforeEach(async (to, from, next) => {
   let token = localStorage.getItem('token');
 	let requireAuth = to.matched.some(record => record.meta.requiresAuth);
@@ -236,6 +200,26 @@ async function hasGame() {
 	}
 }
 
+router.beforeEach(async (to, from, next) => {
+  if(to.path == "/choice") {
+    if (await(hasGame())) {
+      next("/word/:5/:6")
+    } else  {
+      next()
+    }
+    return
+  }
+  if(to.path == "/word") {
+    if (await(hasGame())) {
+      next("/word/:5/:6")
+    } else  {
+      next("/choice")
+    }
+    return
+  }
+  next()
+});
+
 async function hasGamecarriere() {
 	const pathCG = `${process.env.VUE_APP_BACKEND_URL}/currentGamecarriere`
 	try {
@@ -246,22 +230,58 @@ async function hasGamecarriere() {
 	}
 }
 
-router.beforeEach((to, from, next) => {
-  if(to.path == "/choice") {
-    if (hasGame()) {
-      next("/word/:5/:6")
+router.beforeEach(async (to, from, next) => {
+  if(to.path == "/choicecarriere") {
+    if (await(hasGamecarriere())) {
+      next("/carriere/:0")
     } else  {
       next()
     }
     return
   }
-  if(to.path == "/word") {
-    if (hasGame()) {
-      next("/word/:5/:6")
+  if(to.path == "/carriere") {
+    if (await(hasGamecarriere())) {
+      next("/carriere/:0")
     } else  {
-      next("/choice")
+      next("/choicecarriere")
     }
     return
+  }
+  next()
+});
+
+router.beforeEach((to, from, next) => {
+  const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
+  const nearestWithMeta = to.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
+  const previousNearestWithMeta = from.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
+
+  // If a route with a title was found, set the document (page) title to that value.
+  if(nearestWithTitle) {
+    document.title = nearestWithTitle.meta.title;
+  } else if(previousNearestWithMeta) {
+    document.title = previousNearestWithMeta.meta.title;
+  }
+
+  // Remove any stale meta tags from the document using the key attribute we set below.
+  Array.from(document.querySelectorAll('[data-vue-router-controlled]')).map(el => el.parentNode.removeChild(el));
+
+  // Skip rendering meta tags if there are none.
+  if(nearestWithMeta) {
+    // Turn the meta tag definitions into actual elements in the head.
+    nearestWithMeta.meta.metaTags.map(tagDef => {
+      const tag = document.createElement('meta');
+
+      Object.keys(tagDef).forEach(key => {
+        tag.setAttribute(key, tagDef[key]);
+      });
+
+      // We use this to track which meta tags we create so we don't interfere with other ones.
+      tag.setAttribute('data-vue-router-controlled', '');
+
+      return tag;
+    })
+    // Add the meta tags to the document head.
+    .forEach(tag => document.head.appendChild(tag));
   }
   next()
 });
