@@ -71,6 +71,13 @@ def carriere(ranked):
         data["difficulty"] = round(current_game.difficulty,2)
         data["elo_player"] = round(current_game.elo_player,2)
         data["ranked"] = current_game.ranked
+
+        if data["ranked"] :
+            mult = 1
+        else :
+            mult = 0
+
+
         data["elop"] = round(newElo(data["elo_player"],data["difficulty"],True),2) * mult
         data["elom"] = round(newElo(data["elo_player"],data["difficulty"],False),2) * mult
         data["n_elom"] = max(0,round(data["elo_player"] +  data["elom"],2))
