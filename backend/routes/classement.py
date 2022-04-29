@@ -13,7 +13,6 @@ def classement():
     users2 = {"users":[e.toDict(0,1,0,1,1) for e in reqUser2]}
     for i in range(len(users["users"])):
         users["users"][i]["classement"]=i+1
-    for i in range(len(users2["users"])):
         users2["users"][i]["classement"]=i+1
     return jsonify({"users":users,"users2":users2})
 
