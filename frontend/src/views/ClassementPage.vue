@@ -39,7 +39,7 @@
                     <h3>Pseudo</h3>
                 </th>
                 <th class="text-center" style="padding-top:10px">
-                    <h3>Elo</h3>
+                    <h3>&nbsp;&nbsp;Elo&nbsp;&nbsp;&nbsp;</h3>
                 </th>
             </tr>
         </thead>
