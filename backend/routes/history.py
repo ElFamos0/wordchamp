@@ -16,7 +16,7 @@ def history():
     identity = get_jwt_identity()
     userId = identity
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_carriere.Game_carriere])
-    reqGames = db.session.query(all_games_poly).order_by(Game.date.desc()).all()
+    reqGames = db.session.query(all_games_poly).filter(all_games_poly.Game_normal.state == True).order_by(Game.date.desc()).all()
     games = [e.toDict(1,1,1,1,1,1,1) if e.game_type=="game_normal" else e.toDict(1,1,0,1,1,1,1,0,0,0,1) for e in reqGames]
     gamesUser = []
     for e in games:
@@ -29,9 +29,8 @@ def history():
         guesses = [{"id":e["try_number"],"word":e["word"]} for e in tries]
         entry["guesses"] = guesses
         entry["result"] = "Victoire" if estGagnee(entry) else "Défaite"
-        entry["colors"] = []
-        for guess in guesses:
-            entry["colors"].append(check_word(guess["word"], entry["solution"]))
+        
+        #entry["colors"] = []
         #entry["date"] = datetime.datetime.fromtimestamp(1651133760108 / 1000.0, tz=datetime.timezone.utc)
     entries = {"entries":entries}
     return jsonify(entries)
