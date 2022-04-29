@@ -115,28 +115,23 @@ const router = createRouter({
   routes,
 });
 
-function refresh_token() {
+async function refresh_token() {
   const path = `${process.env.VUE_APP_BACKEND_URL}/refresh`;
-  axiosRefresh.post(path).then(response => {
+  try {
+    let response = await axiosRefresh.post(path)
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('refresh_token', response.data.refresh_token);
     localStorage.setItem('id', response.data.id);
     localStorage.setItem('username', response.data.username);
     return true
-  }).catch(() => {
+  } catch(e) {
     return false
-  });
+  }
 }
 
 router.beforeEach((to, from, next) => {
-  // This goes through the matched routes from last to first, finding the closest route with a title.
-  // e.g., if we have `/some/deep/nested/route` and `/some`, `/deep`, and `/nested` have titles,
-  // `/nested`'s will be chosen.
   const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
-
-  // Find the nearest route element with meta tags.
   const nearestWithMeta = to.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
-
   const previousNearestWithMeta = from.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
 
   // If a route with a title was found, set the document (page) title to that value.
@@ -167,7 +162,10 @@ router.beforeEach((to, from, next) => {
     // Add the meta tags to the document head.
     .forEach(tag => document.head.appendChild(tag));
   }
+  next()
+});
 
+router.beforeEach(async (to, from, next) => {
   let token = localStorage.getItem('token');
 	let requireAuth = to.matched.some(record => record.meta.requiresAuth);
 
@@ -183,48 +181,79 @@ router.beforeEach((to, from, next) => {
 
 	if (to.path === '/login') {
 		if (token) {
-			axiosAuth.post('/verify-token').then(() => {
-				next('/word');
-        return;
-			}).catch(() => {
+      try {
+        await axiosAuth.post('/verify-token')
+        next('/');
+      } catch (e) {
         if (refresh_token()) {
-          next('/word');
-          return;
+          next('/');
+          return
         }
 				next();
-        return;
-			});
-		}
-		else {
+      } 
+      return
+		} else {
 			next();
       return;
 		}
 	}
 
 	if (requireAuth && token) {
-		axiosAuth.post('/verify-token').then(() => {
-			next();
-      return;
-		}).catch(() => {
+    try {
+      await axiosAuth.post('/verify-token')
+      next();
+    } catch (e) {
       if (refresh_token()) {
         next();
-        return;
+        return
       }
       next('/login');
-      return;
-		})
+    }
+    return
 	}
   if (token) {
-    axiosAuth.post('/verify-token').then(() => {
-			next();
-      return;
-		}).catch(() => {
+    try {
+      await axiosAuth.post('/verify-token')
+      next();
+    } catch (e) {
       if (refresh_token()) {
         next();
-        return;
+        return
       }
-		})
+      next();
+    }
+    return
   }
+});
+
+async function hasGame() {
+	const pathCG = `${process.env.VUE_APP_BACKEND_URL}/currentGame`
+	try {
+		let res = await axiosAuth.get(pathCG);
+		return res.data	
+	} catch (e) {
+		return false
+	}
+}
+
+router.beforeEach((to, from, next) => {
+  if(to.path == "/choice") {
+    if (hasGame()) {
+      next("/word/:5/:6")
+    } else  {
+      next()
+    }
+    return
+  }
+  if(to.path == "/word") {
+    if (hasGame()) {
+      next("/word/:5/:6")
+    } else  {
+      next("/choice")
+    }
+    return
+  }
+  next()
 });
 
 export default router;

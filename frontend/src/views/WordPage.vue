@@ -73,11 +73,11 @@ export default {
           }
           console.log("guessedletters:", this.game.guessedletters)
           this.game.currentTry++;
-            axiosAuth.post(this.sendtry,{"data":wordguess})
-              .then((res) => {
-                this.showError = false;
-                console.log("sendtry envoie à la DB :", wordguess, res)
-              });
+          axiosAuth.post(this.sendtry,{"data":wordguess})
+            .then((res) => {
+              this.showError = false;
+              console.log("sendtry envoie à la DB :", wordguess, res)
+            });
           } else {
             this.showError = false;
             window.setTimeout(() => { this.showError = true }, 0);
