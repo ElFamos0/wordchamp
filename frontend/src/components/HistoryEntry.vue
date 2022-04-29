@@ -1,5 +1,5 @@
 <template>
-    <div @dblclick="$emit('show-details', entryId )" class="entryContainer" :style="colorClass">
+    <div @click="$emit('show-details', entryId )" class="entryContainer" :style="colorClass">
       <!-- <div>(Id de la partie : {{entryId}})</div> -->
       <v-row>
         <v-col cols="3">
