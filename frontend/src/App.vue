@@ -116,6 +116,24 @@
             </v-tab>
           </v-list-item>
 
+          <v-list-item v-if="isAuth">
+            <v-tab to="/redirect">
+              <font-awesome-icon icon="play" class="mr-3" /> Jouer
+            </v-tab>
+          </v-list-item>
+
+          <v-list-item v-if="isAuth">
+            <v-tab to="/choicecarriere">
+              <v-icon class="mr-3" >mdi-trending-up</v-icon> Carrière
+            </v-tab>
+          </v-list-item>
+
+          <v-list-item>
+            <v-tab to="/classement">
+              Classement
+            </v-tab>
+          </v-list-item>
+
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
