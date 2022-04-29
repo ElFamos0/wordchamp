@@ -162,7 +162,7 @@ export default {
 <template>
   <div class="random">
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
-    <v-chip v-model="showError" class="text-center animatedChip mb-3" color="primary" dark height="200px" style="margin-top:1%">
+    <v-chip v-model="showError" class="text-center animatedChip mb-5" color="primary" dark height="200px" style="margin-top:1%">
       Ce mot n'est pas dans notre dictionnaire.
     </v-chip>
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">

@@ -177,7 +177,7 @@ export default {
     <h1 style="margin-bottom:1%">Mode carrière</h1>
     <h3 style="margin-bottom:1%">Difficulté : {{game.difficulty}} </h3>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
-    <v-chip v-model="showError" class="text-center animatedChip mb-3" color="primary" dark height="200px">
+    <v-chip v-model="showError" class="text-center animatedChip mb-5" color="primary" dark height="200px">
       Ce mot n'est pas dans notre dictionnaire.
     </v-chip>
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">

@@ -1,6 +1,6 @@
 <template>
 <!-- Utilisation du v-bind afin de pouvoir choisir le background en fonction de l'état de la case -->
-    <b-col ref="lettre" class="border letter" :class="{'letter-animate':letterprop.animate, 'letter-very-small':letterprop.size >= 8, 'letter-small':letterprop.size >= 6, 'letter-big':letterprop.size < 6}" v-bind:style="{background:letterprop.color}">
+    <b-col ref="lettre" class="border letter" :class="{'letter-animate':animate, 'letter-content-animate':animate & animateContent, 'letter-very-small':letterprop.size >= 8, 'letter-small':letterprop.size > 6 && letterprop.size < 8, 'letter-big':letterprop.size <= 6}" v-bind:style="{background:letterprop.color}">
         <div class="letter-content">
             {{letterprop.letter}}
         </div>
@@ -9,10 +9,12 @@
 
 
 <script setup>
-import {defineProps, ref, watch} from "vue"
+import {defineProps, onBeforeMount, ref, watch} from "vue"
 
 //var dictcolor = {"grey":"#1e1e1e","red":"#cc0808","yellow":"#bd8517"}
 let lettre = ref(null)
+let animate = ref(false)
+let animateContent = ref(true)
 
 // définit des propriétés pour le composant
 const letterprop = defineProps({
@@ -34,14 +36,20 @@ const letterprop = defineProps({
     }
 })
 
+onBeforeMount(() => {
+    animate.value = letterprop.animate
+})
+
 // watch( () => letterprop.color, function (newVal) {
 watch( () => letterprop.color, function () {
     if (lettre.value == null) { return }
     if (!letterprop.animate) { return }
-    
+    animateContent.value = false;
+
     lettre.value.$el.style.animation = 'none';
     lettre.value.$el.offsetHeight; /* trigger reflow */
     lettre.value.$el.style.animation = null; 
+
     // if (newVal=="#cc0808") {
         // console.log("masterclass");
         // var masterclass = new Audio("audio/masterclass.mp3") 
@@ -51,6 +59,19 @@ watch( () => letterprop.color, function () {
     // }
 })
 
+watch( () => letterprop.letter, function () {
+    if (lettre.value == null) { return }
+    if (!letterprop.animate || !animateContent.value) { return }
+
+    animate.value = false
+    
+    lettre.value.$el.style.animation = 'none';
+    lettre.value.$el.offsetHeight; /* trigger reflow */
+    lettre.value.$el.style.animation = null; 
+
+    animate.value = true
+    
+})
 
 
 </script>
@@ -65,7 +86,8 @@ watch( () => letterprop.color, function () {
     height:500px;
     position: relative;
     flex-basis: calc(10%);
-    border-color: #1b1b1b !important;
+    border-radius: 1px !important;
+    border-color: #2e2e2e !important;
     border-style: inset;
     box-sizing: border-box;
 
@@ -73,15 +95,15 @@ watch( () => letterprop.color, function () {
     color:#ffffff;
 }
 .letter-very-small {
-    max-width: min(4vw, 4vh);
-    max-height: min(4vw, 4vh);
-    font-size:min(3vh,3vw);
+    max-width: min(5vw, 5vh);
+    max-height: min(5vw, 5vh);
+    font-size:min(4vh,4vw);
 }
 
 .letter-small {
     max-width: min(7w, 7vh);
     max-height: min(7vw, 7vh);
-    font-size:min(6vh,6vw);
+    font-size:min(5vh,5vw);
 }
 
 .letter-big {
@@ -97,6 +119,12 @@ watch( () => letterprop.color, function () {
 
     transition-property: background-color;
     transition-duration: .5s;
+}
+
+.letter-content-animate {
+    animation: zoom .5s linear;
+    animation-timing-function:ease-in-out;
+    animation-fill-mode:forwards;
 }
 
 .letter:before{
@@ -129,6 +157,19 @@ watch( () => letterprop.color, function () {
   }
   100% {
       transform:rotateX(0deg);
+  }
+}
+
+
+@keyframes zoom {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+    transform: scale(1, 1);
   }
 }
 </style>

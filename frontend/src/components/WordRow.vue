@@ -83,4 +83,10 @@ if(rowprop.submitted) {
 
 
 <style scoped>
+.ligne {
+    /* margin-bottom:12px; */
+}
+.bg {
+    background-color: #1e1e1e;
+}
 </style>
