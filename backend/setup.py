@@ -63,7 +63,7 @@ from models import *
 
 usertest = user.User.query.all() 
 if len(usertest) == 0 :
-    newUserPseudo = user.User("pseudo","mdp",False)
+    newUserPseudo = user.User("pseudo","mdp",False,2)
     db.session.add(newUserPseudo)
     db.session.commit()
     newUser = user.User("PGM","mdp",False,100)
@@ -91,23 +91,34 @@ all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal])
 all_games = db.session.query(all_games_poly)
 if len(all_games.all()) == 0 :
 
-    user = user.User.query.first()       # Juste pour récupérer un user, sinon remplacer par ce qu'il vous faut
+    user_id = newUserPseudo.id       # Juste pour récupérer un user, sinon remplacer par ce qu'il vous faut
 
-    # newGameNormal = game_normal.Game_normal(user.id,"DENTIFRICE",2,10)       
-    # db.session.add(newGameNormal)
-    # newGameId = newGameNormal.id
-    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    # db.session.add(tries.Tries(newGameId, "BBBBBBBBBB",2))
+    newGameNormal = game_normal.Game_normal(user_id,"TENDRESSE",7,9)       
+    db.session.add(newGameNormal)
+    newGameId = newGameNormal.id
+    newGameNormal.state = True
+    db.session.add(tries.Tries(newGameId,"COMBATIVE",1))
+    db.session.add(tries.Tries(newGameId,"JUGEMENTS",2))
+    db.session.add(tries.Tries(newGameId, "TENDRESSE",3))
+
+    newGameNormal = game_normal.Game_normal(user_id,"AMOUR",6,5)       
+    db.session.add(newGameNormal)
+    newGameId = newGameNormal.id
+    newGameNormal.state = True
+    db.session.add(tries.Tries(newGameId,"AMOUR",1))
+    
     
 
-    # newGameNormal = game_normal.Game_normal(user.id,"TEST",6,4)
-    # db.session.add(newGameNormal)
-    # newGameId = newGameNormal.id
-    # db.session.add(tries.Tries(newGameId,"A"*newGameNormal.length,int(1)))
-    # db.session.add(tries.Tries(newGameId,"B"*newGameNormal.length,int(2)))
-    # db.session.add(tries.Tries(newGameId,"C"*newGameNormal.length,int(3)))
-    # db.session.add(tries.Tries(newGameId,"D"*newGameNormal.length,int(4)))
-    # db.session.add(tries.Tries(newGameId,"TEST",int(5)))
+    newGameNormal = game_normal.Game_normal(user_id,"CHOCOLAT",4,8)       
+    db.session.add(newGameNormal)
+    newGameId = newGameNormal.id
+    newGameNormal.state = True
+    db.session.add(tries.Tries(newGameId,"AMAIGRIE",1))
+    db.session.add(tries.Tries(newGameId, "CHIENNES",2))
+    db.session.add(tries.Tries(newGameId, "CHAUFFER",3))
+    db.session.add(tries.Tries(newGameId, "CHOISIES",4))
+
+    db.session.commit()
 
     # newGameNormal = game_normal.Game_normal(user.id,"TESTER",3,6)
     # db.session.add(newGameNormal)
