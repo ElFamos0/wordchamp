@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-tabs class="justify-content-center" style="margin: auto; max-width: 240px">
+    <v-tabs class="justify-content-center" style="padding-top:1%; margin: auto; max-width: 240px">
         <v-tab @click="normal=true; carriere=false"> Classique </v-tab>
         <v-tab @click="normal=false; carriere=true"> Carrière </v-tab>
     </v-tabs>
