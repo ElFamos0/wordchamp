@@ -192,7 +192,7 @@ export default {
     
     <div v-if="this.gameShown" style="margin-top:2%">
       <div v-for="(tryy,i) in this.game.tried" :key="i" >
-        <word-row class="justify-center" :word="tryy" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
+        <word-row class="justify-center" :word="tryy" :size="this.game.tried.length" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
       </div>
     </div>
     <b-container>

@@ -1,6 +1,6 @@
 <template>
 <!-- Utilisation du v-bind afin de pouvoir choisir le background en fonction de l'état de la case -->
-    <b-col ref="lettre" class="border letter" :class="{'letter-animate':letterprop.animate}" v-bind:style="{background:letterprop.color}">
+    <b-col ref="lettre" class="border letter" :class="{'letter-animate':letterprop.animate, 'letter-very-small':letterprop.size >= 8, 'letter-small':letterprop.size >= 6, 'letter-big':letterprop.size < 6}" v-bind:style="{background:letterprop.color}">
         <div class="letter-content">
             {{letterprop.letter}}
         </div>
@@ -19,6 +19,10 @@ const letterprop = defineProps({
     letter: {
         type: String,
         default: "",
+    },
+    size: {
+        type: Number,
+        default: 5,
     },
     color:{
         type: String,
@@ -55,8 +59,8 @@ watch( () => letterprop.color, function () {
 .letter {
     display:flex;
     flex-wrap: wrap;
-    max-width: min(10vw, 10vh);
-    max-height: min(10vw, 10vh);
+    max-width: min(8vw, 8vh);
+    max-height: min(8vw, 8vh);
     width:500px;
     height:500px;
     position: relative;
@@ -65,8 +69,25 @@ watch( () => letterprop.color, function () {
     border-style: inset;
     box-sizing: border-box;
 
-    font-size:min(7vh,7vw);
+    font-size:min(6vh,6vw);
     color:#ffffff;
+}
+.letter-very-small {
+    max-width: min(4vw, 4vh);
+    max-height: min(4vw, 4vh);
+    font-size:min(3vh,3vw);
+}
+
+.letter-small {
+    max-width: min(7w, 7vh);
+    max-height: min(7vw, 7vh);
+    font-size:min(6vh,6vw);
+}
+
+.letter-big {
+    max-width: min(9vw, 9vh);
+    max-height: min(9vw, 9vh);
+    font-size:min(7vh,7vw);
 }
 
 .letter-animate {
