@@ -3,38 +3,35 @@ from math import *
 
 def newElo(elo,difficulty,won) :
     
-
-    tab =  [9.5,9.4,9.2,8.8,8.2,7.5,6.8,6.1,5.6,5.2,5,4.8,4.4,3.9,3.2,2.5,1.8,1.2,0.8,0.6,0.5]
-
     if won :
-
-        diff = int((elo - difficulty) //5 +10)
+        mult = 1
+    
     else :
 
-         diff = int(-(elo - difficulty) //5 +10)
+        mult = -1
 
-    if diff < 0 :
-        val = 10
-    
-    elif diff > 28 : 
+
+    tab = [0,0.2,0.6,1.1,1.8,2.5,3.2,3.8,4.2,4.4,4.5]
+    baseValue = 5 * mult
+
+    diff = (difficulty - elo) //5
+    signe =  (diff / abs(diff))
+    diff = abs(diff)
+
+    if diff >= 2*len(tab) : 
 
         val = 0
-    
-    elif diff >= len(tab) :
 
+    elif diff >= len(tab) :
         val = 0.5
+
     else :
 
-        val = tab[diff]
-    
+        val = tab[int(diff)]
 
-    if won :
+    return baseValue + signe*val
 
-        return val
-    
-    else : 
 
-        return -val
 
 
 
