@@ -5,7 +5,9 @@
       <Profile />
     </v-modal> -->
     <v-toolbar dark dense>
-      <v-tabs align-with-title>
+      <v-app-bar-nav-icon @click="drawer = true" class="d-flex d-sm-none" ></v-app-bar-nav-icon>
+
+      <v-tabs align-with-title class="d-none d-sm-flex">
 
         <v-dialog transition="dialog-top-transition">
           <template v-slot:activator="{ props }">
@@ -83,6 +85,40 @@
         </v-tab>
       </v-tabs>
     </v-toolbar>
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list nav>
+        <v-list-item-group>
+
+          <v-list-item>
+            <v-dialog transition="dialog-top-transition">
+              <template v-slot:activator="{ props }">
+                <v-tab v-bind="props" v-if="isAuth">
+                  <b-avatar variant="primary" v-bind:src="url + '/avatar/' + userid" size="25px" class="mr-3"/> Profil
+                </v-tab>
+              </template>
+              <template v-slot:default="{ isActive }">
+                <v-card>
+                  <v-card-text>
+                    <v-toolbar class="mb-5">Profil de {{ username }}</v-toolbar>
+                    <Profile />
+                  </v-card-text>
+                  <v-card-actions class="justify-end">
+                    <v-btn text @click="isActive.value = false" >Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </template>
+            </v-dialog>
+          </v-list-item>
+
+          <v-list-item>
+            <v-tab to="/">
+              <font-awesome-icon icon="house" class="mr-3" /> Maison
+            </v-tab>
+          </v-list-item>
+
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
     <router-view/>
 
   <particles-bg ref="shownBg" id="shown" type="cobweb" color="#7b1fa2" :canvas="{ backgroundColor: '#4a148c'}" :bg="true"/>
@@ -138,6 +174,7 @@ export default {
       return {
         url:process.env.VUE_APP_BACKEND_URL,
         currentGame: false,
+        drawer:false,
       }
   },
   computed: {
