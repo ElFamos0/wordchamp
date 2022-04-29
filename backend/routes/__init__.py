@@ -12,6 +12,7 @@ __all__ = [
     "send_try",
     "classement",
     "currentGame",
+    "currentGamecarriere",
     "motValideDebug",
     "motValide",
     "carriere",

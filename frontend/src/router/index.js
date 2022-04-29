@@ -236,6 +236,16 @@ async function hasGame() {
 	}
 }
 
+async function hasGamecarriere() {
+	const pathCG = `${process.env.VUE_APP_BACKEND_URL}/currentGamecarriere`
+	try {
+		let res = await axiosAuth.get(pathCG);
+		return res.data	
+	} catch (e) {
+		return false
+	}
+}
+
 router.beforeEach((to, from, next) => {
   if(to.path == "/choice") {
     if (hasGame()) {
