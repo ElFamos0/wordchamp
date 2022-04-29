@@ -81,7 +81,7 @@ export default {
           // console.log("guessedletters:", this.game.guessedletters)
           this.game.currentTry++;
           axiosAuth.post(this.sendtry,{"data":wordguess})
-            .then((res) => {
+            .then(() => {
               this.showError = false;
               // console.log("sendtry envoie à la DB :", wordguess, res)
             });
