@@ -2,7 +2,7 @@
   <div class="">
     <div class="trucdegauche" style="width=:49%">
       <v-container>
-        <v-card style="height:400px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
+        <v-card style="min-height:400px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
           <h1 style="font-family: 'Roboto', sans-serif; padding: 2%">MODE CLASSIQUE</h1> <!-- msg est une variable de template -->
           <ul style="padding:2%">
             <h5 style="font-family: 'Roboto', sans-serif">
@@ -24,7 +24,7 @@
     </div>
     <div class="trucdedroite" style="width=:49%">
       <v-container>
-        <v-card style="height:400px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
+        <v-card style="min-height:400px; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
           <h1 style="font-family: 'Roboto', sans-serif; padding: 2%">MODE CARRIÈRE</h1> <!-- msg est une variable de template -->
           <ul style="padding:5%">
             <h5 style="font-family: 'Roboto', sans-serif">
