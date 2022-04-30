@@ -14,7 +14,13 @@ def newElo(elo,difficulty,won) :
     tab = [0,0.2,0.6,1.1,1.8,2.5,3.2,3.8,4.2,4.4,4.5]
     baseValue = 5 * mult
 
-    diff = (difficulty - elo) //5
+    if int(elo*0.125) <= 50 :
+        diff = (difficulty - elo) //5
+    else :
+        diff = (difficulty - elo) //(int(elo*0.0125))
+
+
+    
 
     if diff != 0 :
         signe =  (diff / abs(diff))
@@ -26,10 +32,10 @@ def newElo(elo,difficulty,won) :
 
     if diff >= 2*len(tab) : 
 
-        val = 0
+        val = 5
 
     elif diff >= len(tab) :
-        val = 0.5
+        val = 4.5
 
     else :
 
@@ -44,7 +50,10 @@ def newElo(elo,difficulty,won) :
 def generateGame(elo,wordlist,defaultword) :
     
     target_difficulty = elo
-    spread= 25
+    if int(elo*0.0625) >= 26 :
+        spread = int(elo*0.0625)
+    else :
+        spread= 25
 
     def selectwords(target_difficulty,wordlist,spread) :
 
@@ -76,10 +85,16 @@ def generateGame(elo,wordlist,defaultword) :
 
 
     mots_valides = selectwords(target_difficulty,wordlist,spread)
-    while len(mots_valides) == 0 and spread <=100 :
+    if spread <= 25 :
+        while len(mots_valides) == 0 and spread <=50 :
 
-        spread += 25
-        mots_valides = selectwords(target_difficulty,wordlist,spread)
+            spread += 25
+            mots_valides = selectwords(target_difficulty,wordlist,spread)
+    else :
+        while len(mots_valides) == 0 and spread <=int(elo*0.0625)*2 :
+
+            spread += int(elo*0.0625)
+            mots_valides = selectwords(target_difficulty,wordlist,spread)
 
 
 
