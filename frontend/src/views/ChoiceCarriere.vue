@@ -61,19 +61,19 @@ export default {
         
 
         <v-container style="display: flex; justify-content: center">
-        <div class="my-2">
-            <v-btn @click="onClickRanked()" x-small color="primary" style="margin-right: 5%" >
-                Mode classé
-            </v-btn>
-        </div>
-        <div class="my-2">
-            <v-btn @click="onClickChill()" x-small color="primary" style="margin-left: 5%">
-                Entraînement (non classé)
-            </v-btn>
-        </div>
-        
-        
-    </v-container>
+            <v-row>
+                <v-col sm="12" class="my-2">
+                    <v-btn @click="onClickRanked()" x-small color="primary" >
+                        Mode classé
+                    </v-btn>
+                </v-col>
+                <v-col sm="12" class="my-2">
+                    <v-btn @click="onClickChill()" x-small color="primary" >
+                        Entraînement (non classé)
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </v-container>
     <br>
     <h3 style="font-family: 'Roboto', sans-serif">Elo actuel : {{elo}}</h3>
     
