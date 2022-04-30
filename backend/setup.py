@@ -67,15 +67,18 @@ if len(usertest) == 0 :
     db.session.add(newUserPseudo)
     db.session.commit()
     newUser = user.User("PGM","mdp",False,100)
+    newUser.elo = 2000
     db.session.add(newUser)
     db.session.commit()
     newUser = user.User("SemiPro","mdp",False,75)
+    newUser.elo = 1000
     db.session.add(newUser)
     db.session.commit()
     newUser = user.User("LeTiroir","mdp",False,30)
     db.session.add(newUser)
     db.session.commit()
     newUser = user.User("MecPasOuf","mdp",False,10)
+    newUser.elo = 500
     db.session.add(newUser)
     db.session.commit()
     
