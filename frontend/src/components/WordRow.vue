@@ -6,6 +6,7 @@ import {defineProps, ref, watch} from "vue"
 const rowprop = defineProps({
     solution: String,
     word: String,
+    colors: Array,
     submitted: Boolean,
     size:Number,
     animate: {
@@ -32,32 +33,10 @@ const yellow = "#bd8517";
 
 async function Update(newVal)  {
         if (newVal) {
-            let guess = rowprop.word;
-            let solution = rowprop.solution;
-            let colors = [];
-            let counts = {};
+            let colors = [grey,yellow,red]
+            for (let i = 0; i < rowprop.colors.length; i++) {
+                colortab.value[i] = colors[rowprop.colors[i]];
 
-            for (let i = 0; i < solution.length; i++) {
-                counts[solution[i]] = (counts[solution[i]] || 0) + 1;
-                if (guess[i] == solution[i]) {
-                    colors[i] = red;
-                    counts[solution[i]]--
-                } else {
-                    colors[i] = grey;
-                }
-            }
-
-            for (let i = 0; i < solution.length; i++) {
-                if (colors[i] == grey) {
-                    if (counts[guess[i]] > 0) {
-                        colors[i] = yellow;
-                        counts[guess[i]]--;
-                    }
-                }
-            }
-
-            for (let i = 0; i < solution.length; i++) {
-                colortab.value[i] = colors[i];
                 if (rowprop.animate) {
                     await new Promise(resolve => setTimeout(resolve, 400));
                 }
@@ -68,7 +47,7 @@ async function Update(newVal)  {
 watch( () => rowprop.submitted, Update);
 
 if(rowprop.submitted) {
-    Update(true)
+    Update(rowprop.submitted)
 }
 
 </script>

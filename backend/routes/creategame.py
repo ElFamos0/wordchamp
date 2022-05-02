@@ -12,6 +12,7 @@ from models.word import Word
 from utils.getword import getrandomword, getrandomwordbysize
 from sqlalchemy.orm import with_polymorphic
 from utils.classLeters import classLeters
+from utils.wordcheck import check_word
 
 
 @app.route('/creategame/<taille>/<maxtry>', methods=['GET'])
@@ -27,14 +28,15 @@ def creategame(taille, maxtry):
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_carriere.Game_carriere])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_normal.id_user == current_user.id,all_games_poly.Game_normal.state == False).all()
 
-    data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0, "motsValides" : [],"miss" : [],"found" : [],"misplace" : []}
+    data = {"solution" : "", "guess" : [], "colors": [], "currenttry":0, "maxtry":0, "motsValides" : [],"miss" : [],"found" : [],"misplace" : []}
     if len(all_games) == 0:
         word = getrandomwordbysize(taille)
-        data["solution"] = word
+        data["solution"] = "#"*len(word)
         data["maxtry"] = int(maxtry)
         newGameNormal = game_normal.Game_normal(current_user.id,word,int(maxtry),len(word))       #(last attribut = date en timestamp)
         for i in range(int(maxtry)):
             data["guess"].append("")
+            data["colors"].append([])   
         db.session.add(newGameNormal)
         db.session.commit()
         # #print(data)
@@ -42,13 +44,17 @@ def creategame(taille, maxtry):
         current_game = all_games[0]
         data["maxtry"] = current_game.maxtry 
         #print(current_game)
-        data["solution"] = current_game.solution
+        data["solution"] = "#"*len(current_game.solution)
+        print(current_game.solution)
         guess = db.session.query(tries.Tries).filter_by(id_game = current_game.id).order_by(tries.Tries.try_number).all()
 
         for elm in guess:
             data["guess"].append(elm.word)
+            data["colors"].append(check_word(elm.word, current_game.solution))
+
         for i in range(current_game.maxtry - len(guess)):
             data["guess"].append("")   
+            data["colors"].append([])   
         data["currenttry"] = len(guess)
         # #print(data)
 

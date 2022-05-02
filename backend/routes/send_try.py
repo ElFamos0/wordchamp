@@ -8,6 +8,7 @@ from models import *
 from sqlalchemy.orm import with_polymorphic
 from flask import request
 from sqlalchemy import desc
+from utils.wordcheck import check_word
 
 
 
@@ -22,7 +23,7 @@ def send_try():
     data = request.json["data"]
 
     if not(motValide(data)):
-        return jsonify({"success": "word not in DB"}),200
+        return jsonify({"error": "word not in DB"}),400
 
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_normal.id_user == current_user.id,all_games_poly.Game_normal.state == False).order_by(desc(all_games_poly.Game_normal.date)).all()
@@ -49,6 +50,9 @@ def send_try():
 
         data += 'A' * (len(solution) - len(data))
 
+
+    colors = check_word(data,solution)
+
     if data == solution :
 
         newTry = tries.Tries(id_game,data,len(all_tries) + 1)
@@ -60,7 +64,7 @@ def send_try():
         db.session.commit()
 
 
-        return jsonify({"success": "game ended by victory"}),200
+        return jsonify({"success": True, "ended": True, "victory": True, "colors":colors}),200
 
     elif len(all_tries) + 1 >= maxtry :
 
@@ -71,7 +75,7 @@ def send_try():
 
         db.session.commit()
 
-        return jsonify({"success": "game ended by defeat"}),200
+        return jsonify({"success": True, "ended": True, "victory": False, "colors":colors, "solution":solution}),200
     
     else :
 
@@ -79,6 +83,5 @@ def send_try():
         db.session.add(newTry)
 
         db.session.commit()
-
-        return jsonify({"success": "game is still going on"}),200
+        return jsonify({"success": True, "ended": False, "victory": False, "colors":colors}),200
 

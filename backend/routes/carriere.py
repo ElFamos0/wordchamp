@@ -11,6 +11,7 @@ from models.tries import Tries
 from sqlalchemy.orm import with_polymorphic
 from utils.classLeters import classLeters
 from utils.eloFunctions import newElo
+from utils.wordcheck import check_word
 
 
 @app.route('/carriere/<ranked>', methods=['GET'])
@@ -29,7 +30,7 @@ def carriere(ranked):
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_carriere.Game_carriere])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_carriere.id_user == current_user.id,all_games_poly.Game_carriere.state == False).all()
     
-    data = {"solution" : "", "guess" : [], "currenttry":0, "maxtry":0,"motsValides" : [],"miss" : [],"found" : [],"misplace" : [],
+    data = {"solution" : "", "guess" : [], "colors": [], "currenttry":0, "maxtry":0,"motsValides" : [],"miss" : [],"found" : [],"misplace" : [],
             "length" : 0, "elo_p" : 0, "difficulty" : 0,"ranked" : False,"elop" : 0,"elom" : 0,'n_elop':0,'n_elom':0}
 
 
@@ -39,7 +40,7 @@ def carriere(ranked):
             newGameCarriere = game_carriere.Game_carriere(current_user.id,True)
         else :
             newGameCarriere = game_carriere.Game_carriere(current_user.id,False)
-        data["solution"] = newGameCarriere.solution
+        #data["solution"] = newGameCarriere.solution
         data["maxtry"] = newGameCarriere.maxtry
         data["length"] = newGameCarriere.length
         data["difficulty"] = round(newGameCarriere.difficulty,2)
@@ -54,6 +55,7 @@ def carriere(ranked):
         
         for i in range(int(maxtry)):
             data["guess"].append("")
+            data["colors"].append([])   
 
         db.session.add(newGameCarriere)
         db.session.commit()
@@ -65,7 +67,7 @@ def carriere(ranked):
         current_game = all_games[0]
         #print(current_game.toDict(1,1,1,1,1,1,1,1,1,1))
 
-        data["solution"] = current_game.solution
+        #data["solution"] = current_game.solution
         data["maxtry"] = current_game.maxtry
         data["length"] = current_game.length
         data["difficulty"] = round(current_game.difficulty,2)
@@ -85,9 +87,11 @@ def carriere(ranked):
         guess = db.session.query(tries.Tries).filter_by(id_game = current_game.id).order_by(tries.Tries.try_number).all()
         for elm in guess:
             data["guess"].append(elm.word)
+            data["colors"].append(check_word(elm.word, current_game.solution))
 
         for i in range(current_game.maxtry - len(guess)):
             data["guess"].append("")   
+            data["colors"].append([])   
 
         data["currenttry"] = len(guess)
         

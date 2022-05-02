@@ -6,12 +6,14 @@ import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import axiosAuth from '@/api/axios-auth';
 import {useRoute} from 'vue-router'; 
+import LoadingSlider from '../components/LoadingSlider.vue';
 
 export default {
     name: 'word-page',
     components : {
         Keyboard,
         WordRow,
+        LoadingSlider,
     },
     data() {
         return {
@@ -26,6 +28,7 @@ export default {
             maxtry: 1,
             solution: "default",
             tried: ["","","","","",""],
+            colors: [[],[],[],[],[],[]],
             currentTry: 0,
             solutionlength: 8,
             iswin: false,
@@ -72,10 +75,22 @@ export default {
           
           }
           // console.log("guessedletters:", this.game.guessedletters)
-          this.game.currentTry++;
           axiosAuth.post(this.sendtry,{"data":wordguess})
-            .then(() => {
+            .then((resp) => {
               this.showError = false;
+              this.game.colors[this.game.currentTry] = resp.data.colors
+              this.game.currentTry++;
+
+              if(resp.data.ended) {
+                if (resp.data.victory) {
+                  this.game.currentTry = 11;
+                  this.game.iswin = true;
+                } else {
+                  this.game.solution = resp.data.solution
+                  this.game.iswin = false;
+                }
+                this.handleKeys(keypressed)
+              }
               // console.log("sendtry envoie à la DB :", wordguess, res)
             });
           } else {
@@ -103,10 +118,6 @@ export default {
         return (keypressed.match(/[a-zA-Z]/) && keypressed.length == 1);
       },
       wincase: function() {
-        if (this.game.tried[this.game.currentTry - 1] === this.game.solution){
-          this.game.currentTry = 11;
-          this.game.iswin = true;
-        }
         return this.game.iswin
       },
       loosecase: function() {return (!this.wincase() && this.game.currentTry == this.game.maxtry)},
@@ -146,6 +157,7 @@ export default {
             this.game.solutionlength = res.data.solution.length
             this.game.currentTry = res.data.currenttry
             this.game.tried = res.data.guess
+            this.game.colors = res.data.colors
             this.game.maxtry = res.data.maxtry
             this.game.motsValides = res.data.motsValides
             this.gameShown = true
@@ -194,9 +206,10 @@ export default {
       </v-card>
     </v-dialog>
     
+    <loading-slider class="m-5" v-if="!this.gameShown"/>
     <div v-if="this.gameShown" style="margin-top:2%">
       <div v-for="(tryy,i) in this.game.tried" :key="i" >
-        <word-row class="justify-center" :word="tryy" :size="this.game.tried.length" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
+        <word-row class="justify-center" :word="tryy" :size="this.game.tried.length" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]" :solution="this.game.solution"></word-row>
       </div>
     </div>
     <b-container>

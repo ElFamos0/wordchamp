@@ -6,6 +6,7 @@ import Keyboard from '@/components/KeyBoard.vue';
 import WordRow from '@/components/WordRow.vue';
 import axiosAuth from '@/api/axios-auth';
 import {useRoute} from 'vue-router';
+import LoadingSlider from '../components/LoadingSlider.vue';
 
 
 export default {
@@ -13,6 +14,7 @@ export default {
     components : {
         Keyboard,
         WordRow,
+        LoadingSlider,
     },
     data() {
         return {
@@ -27,6 +29,7 @@ export default {
             maxtry: 1,
             solution: "default",
             tried: ["","","","","",""],
+            colors: [[],[],[],[],[],[]],
             currentTry: 0,
             solutionlength: 8,
             iswin: false,
@@ -79,10 +82,22 @@ export default {
           
           }
           // console.log("guessedletters:", this.game.guessedletters)
-          this.game.currentTry++;
           axiosAuth.post(this.sendtry,{"data":wordguess})
-            .then(() => {
+            .then((resp) => {
               this.showError = false;
+              this.game.colors[this.game.currentTry] = resp.data.colors
+              this.game.currentTry++;
+
+              if(resp.data.ended) {
+                if (resp.data.victory) {
+                  this.game.currentTry = 11;
+                  this.game.iswin = true;
+                } else {
+                  this.game.solution = resp.data.solution
+                  this.game.iswin = false;
+                }
+                this.handleKeys(keypressed)
+              }
               // console.log("sendtry envoie à la DB :", wordguess, res)
             });
           } else {
@@ -155,7 +170,6 @@ export default {
             this.game.tried = res.data.guess
             this.game.maxtry = res.data.maxtry
             this.game.motsValides = res.data.motsValides
-            this.gameShown = true
             this.game.difficulty = res.data.difficulty
             this.game.guessedletters.misplace = res.data.misplace
             this.game.guessedletters.miss = res.data.miss
@@ -165,6 +179,8 @@ export default {
             this.game.elom = res.data.elom
             this.game.n_elop = res.data.n_elop
             this.game.n_elom = res.data.n_elom
+            this.game.colors = res.data.colors
+            this.gameShown = true
           });
       
     },
@@ -211,9 +227,10 @@ export default {
       </v-card>
     </v-dialog>
     
+    <loading-slider class="m-5" v-if="!this.gameShown"/>
     <div v-if="this.gameShown">
       <div v-for="(tryy,i) in this.game.tried" :key="i" >
-        <word-row class="justify-center" :word="tryy" :size="this.game.solution.length" :submitted="i < this.game.currentTry" :solution="this.game.solution"></word-row>
+        <word-row class="justify-center" :word="tryy" :size="this.game.solution.length" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]" :solution="this.game.solution"></word-row>
       </div>
     </div>
 
