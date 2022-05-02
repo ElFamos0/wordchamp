@@ -41,6 +41,7 @@ def carriere(ranked):
         else :
             newGameCarriere = game_carriere.Game_carriere(current_user.id,False)
         #data["solution"] = newGameCarriere.solution
+        data["solution"] = "#"*len(newGameCarriere.solution)
         data["maxtry"] = newGameCarriere.maxtry
         data["length"] = newGameCarriere.length
         data["difficulty"] = round(newGameCarriere.difficulty,2)
@@ -67,7 +68,7 @@ def carriere(ranked):
         current_game = all_games[0]
         #print(current_game.toDict(1,1,1,1,1,1,1,1,1,1))
 
-        #data["solution"] = current_game.solution
+        data["solution"] = "#"*len(current_game.solution)
         data["maxtry"] = current_game.maxtry
         data["length"] = current_game.length
         data["difficulty"] = round(current_game.difficulty,2)
