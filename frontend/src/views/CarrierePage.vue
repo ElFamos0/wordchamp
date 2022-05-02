@@ -66,21 +66,6 @@ export default {
             // ici le mot est validé 
             this.motValide=false
             //// console.log("j'ai remis à faux motValide :", this.motValide)
-          for (var i = 0; i < wordguess.length; i++) {
-            let c = wordguess.charAt(i);
-            if (c == this.game.solution.charAt(i) && this.game.guessedletters.found.indexOf(c) == -1) {
-              this.game.guessedletters.found.push(c);
-            }
-            else if (this.game.solution.indexOf(c) != -1 && this.game.guessedletters.misplace.indexOf(c) == -1) {
-              this.game.guessedletters.misplace.push(c);
-            } 
-            else {
-              if(this.game.guessedletters.miss.indexOf(c) == -1) {
-                this.game.guessedletters.miss.push(c);
-              }
-            }
-          
-          }
           // console.log("guessedletters:", this.game.guessedletters)
           axiosAuth.post(this.sendtry,{"data":wordguess})
             .then((resp) => {
@@ -125,10 +110,6 @@ export default {
         return (keypressed.match(/[a-zA-Z]/) && keypressed.length == 1);
       },
       wincase: function() {
-        if (this.game.tried[this.game.currentTry - 1] === this.game.solution){
-          this.game.currentTry = this.game.maxtry+1;
-          this.game.iswin = true;
-        }
         return this.game.iswin
       },
       loosecase: function() {return (!this.wincase() && this.game.currentTry == this.game.maxtry)},
@@ -230,7 +211,7 @@ export default {
     <loading-slider class="m-5" v-if="!this.gameShown"/>
     <div v-if="this.gameShown">
       <div v-for="(tryy,i) in this.game.tried" :key="i" >
-        <word-row class="justify-center" :word="tryy" :size="this.game.solution.length" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]" :solution="this.game.solution"></word-row>
+        <word-row class="justify-center" :word="tryy" :size="this.game.tried.length" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]" :solution="this.game.solution"></word-row>
       </div>
     </div>
 

@@ -91,7 +91,7 @@ export default {
                 }
                 this.handleKeys(keypressed)
               }
-              // console.log("sendtry envoie à la DB :", wordguess, res)
+              console.log(this.game.solution)
             });
           } else {
             this.showError = false;
@@ -160,10 +160,10 @@ export default {
             this.game.colors = res.data.colors
             this.game.maxtry = res.data.maxtry
             this.game.motsValides = res.data.motsValides
-            this.gameShown = true
             this.game.guessedletters.misplace = res.data.misplace
             this.game.guessedletters.miss = res.data.miss
             this.game.guessedletters.found = res.data.found
+            this.gameShown = true
           });
       
     },
@@ -207,7 +207,7 @@ export default {
     </v-dialog>
     
     <loading-slider class="m-5" v-if="!this.gameShown"/>
-    <div v-if="this.gameShown" style="margin-top:2%">
+    <div v-if="this.gameShown">
       <div v-for="(tryy,i) in this.game.tried" :key="i" >
         <word-row class="justify-center" :word="tryy" :size="this.game.tried.length" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]" :solution="this.game.solution"></word-row>
       </div>
