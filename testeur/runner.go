@@ -5,21 +5,19 @@ import (
 	"fmt"
 	"io"
 	"os/exec"
-	"strings"
 	"syscall"
 
-	"log"
+	"github.com/fatih/color"
 )
 
 // Juste pour simplifier
-func startExecutable() (io.WriteCloser, *bufio.Scanner) {
-	c := exec.Command("./" + *executable)
+func startExecutable(executable string) (io.WriteCloser, *bufio.Scanner) {
+	c := exec.Command("./" + executable)
 
 	si, err := c.StdinPipe()
 	if err != nil {
 		panic(err)
 	}
-	log.Println("Got STDIN pipe")
 	c.SysProcAttr = &syscall.SysProcAttr{
 		Pdeathsig: syscall.SIGKILL,
 	}
@@ -37,65 +35,31 @@ func startExecutable() (io.WriteCloser, *bufio.Scanner) {
 }
 
 // n is the amount of games to play
-func runGame(n int) {
+func runGame(executable string, n int) {
+	counter := &Counters{}
+	statCounters[executable] = counter
+
 	for i := 0; i < n; i++ {
-		stdin, stdout := startExecutable()
+		stdin, stdout := startExecutable(executable)
 		game, err := CreateWordle()
 		if err != nil {
 			panic(err)
 		}
-		log.Printf("Starting game %d\n", i)
+		fmt.Printf("		Starting game %d (%s) : ", i+1, game.Word)
 
-		game.GameLoop(stdin, stdout)
-	}
-}
-
-func RunCommandCh(stdoutCh chan<- string, cutset string, command string, flags ...string) error {
-	cmd := exec.Command(command, flags...)
-
-	output, err := cmd.StdoutPipe()
-	if err != nil {
-		return fmt.Errorf("RunCommand: cmd.StdoutPipe(): %v", err)
-	}
-
-	if err := cmd.Start(); err != nil {
-		return fmt.Errorf("RunCommand: cmd.Start(): %v", err)
-	}
-
-	scanner := bufio.NewScanner(output)
-	go func() {
-		defer close(stdoutCh)
-		for scanner.Scan() {
-			text := scanner.Text()
-			for {
-				// Take the index of any of the given cutset
-				n := strings.IndexAny(text, cutset)
-				if n == -1 {
-					// If not found, but still have data, send it
-					if len(text) > 0 {
-						stdoutCh <- text
-					}
-					break
-				}
-				// Send data up to the found cutset
-				stdoutCh <- text[:n]
-				// If cutset is last element, stop there.
-				if n == len(text) {
-					break
-				}
-				// Shift the text and start again.
-				text = text[n+1:]
-			}
+		win, err := game.GameLoop(stdin, stdout)
+		if err != nil {
+			fmt.Print(color.RedString("Erreur [%s]\n", err))
+		} else if win {
+			fmt.Print(color.GreenString("Victoire\n"))
+			counter.WinCount++
+			counter.Total++
+		} else {
+			fmt.Print(color.RedString("Défaite\n"))
+			counter.Total++
 		}
-	}()
-
-	if err := scanner.Err(); err != nil {
-		log.Printf("RunCommand: scan process output error: %s", err)
+		counter.UpdateAverage(len(game.Tries))
 	}
-
-	if err := cmd.Wait(); err != nil {
-		return fmt.Errorf("RunCommand: cmd.Wait(): %v", err)
-	}
-
-	return nil
+	fmt.Println()
+	fmt.Printf("	%dW / %dL (%f)\n", counter.WinCount, counter.Total-counter.WinCount, counter.AverageTry)
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"io"
 	"math/rand"
@@ -55,7 +54,7 @@ func CreateWordle() (*Wordle, error) {
 func (w *Wordle) InputWord(guess string) (result string, err error) {
 	// On vérifie que le guess est bien de la bonne taille
 	if len(guess) != len(w.Word) {
-		return "", errors.New("wrong guess size")
+		return "", fmt.Errorf("wrong guess size (%s)", guess)
 	}
 
 	// On met le guess en majuscule pour éviter les erreurs
@@ -96,35 +95,34 @@ func (w *Wordle) InputWord(guess string) (result string, err error) {
 
 func (w *Wordle) IsFinished() (finished bool, win bool) {
 	if len(w.Tries) > 0 {
-		if len(w.Tries) >= w.MaxTry {
-			return true, false
-		} else if w.Tries[len(w.Tries)-1] == w.Word {
+		if w.Tries[len(w.Tries)-1] == w.Word {
 			return true, true
+		} else if len(w.Tries) >= w.MaxTry {
+			return true, false
 		}
 	}
 	return false, false
 }
 
-func (w *Wordle) GameLoop(stdin io.WriteCloser, stdout *bufio.Scanner) (win bool) {
+func (w *Wordle) GameLoop(stdin io.WriteCloser, stdout *bufio.Scanner) (win bool, err error) {
 	for finished, _ := w.IsFinished(); !finished; {
 		stdout.Scan() // On attend une réponse
 		input := stdout.Text()
 		input = strings.ToUpper(input)
 		result, err := w.InputWord(input)
 		if err != nil {
-			panic(err)
+			return false, err
 		}
 		w.Tries = append(w.Tries, input)
 		stdin.Write([]byte(result + "\n"))
 
-		finished, win = w.IsFinished()
+		finished, _ = w.IsFinished()
 		if finished {
 			break
 		}
 	}
 	_, win = w.IsFinished()
-	w.PrintGame()
-	return win
+	return win, nil
 }
 
 func (w *Wordle) PrintGame() {

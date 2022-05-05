@@ -10,6 +10,8 @@ func main() {
 	fmt.Scanf("%s", &temp)
 	fmt.Println("ihcdd")
 	fmt.Scanf("%s", &temp)
-	fmt.Println("chien")
+	fmt.Println("ihcdd")
+	fmt.Scanf("%s", &temp)
+	fmt.Println("punch")
 	fmt.Scanf("%s", &temp)
 }

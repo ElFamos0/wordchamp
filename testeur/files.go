@@ -2,7 +2,6 @@ package main
 
 import (
 	"io/ioutil"
-	"strconv"
 	"strings"
 )
 
@@ -23,12 +22,4 @@ func openDict() error {
 		}
 	}
 	return nil
-}
-
-func readSize() (int, error) {
-	data, err := ioutil.ReadFile("wsolf.txt")
-	if err != nil {
-		return 0, nil
-	}
-	return strconv.Atoi(string(data))
 }
