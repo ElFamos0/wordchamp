@@ -135,5 +135,12 @@ func (w *Wordle) PrintGame() {
 		r, _ := w.InputWord(try)
 		fmt.Printf("   < %s\n", r)
 	}
+	fmt.Print("Etat : ")
+	_, win := w.IsFinished()
+	if win {
+		fmt.Print("Victoire\n")
+	} else {
+		fmt.Print("Défaite\n")
+	}
 	fmt.Println("---------------------")
 }
