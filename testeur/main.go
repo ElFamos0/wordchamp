@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"log"
 	"os"
 )
 
@@ -12,11 +13,14 @@ var (
 	// Valeur qui stockera le nom du dictionnaire à ouvrir
 	dictionary = flag.String("dictionary", "dict.txt", "path to the dictionary to use")
 
+	// Valeur de la solution (DEBUG)
+	word = flag.String("word", "default", "[debug] word to put as a solution")
+
 	// Valeur qui stockera le nombre de lettre dans le mot
 	size = flag.Int("size", 5, "size of the word to find")
 
 	// Valeur qui stockera le nombre de lettre dans le mot
-	games = flag.Int("games", 5, "how many games to play")
+	games = flag.Int("games", 1, "how many games to play")
 )
 
 func main() {
@@ -30,6 +34,7 @@ func main() {
 		// Il existe pas là donc on panique
 		panic(err)
 	}
+	log.Println("Executable found")
 
 	// On vérifie que le fichier du dictionnaire existe bien
 	_, err = os.Stat(*dictionary)
@@ -37,6 +42,7 @@ func main() {
 		// Il existe pas là donc on panique
 		panic(err)
 	}
+	log.Println("Dictionary found")
 
 	sz, err := readSize()
 	if err != nil {
@@ -44,6 +50,7 @@ func main() {
 		panic(err)
 	}
 	size = &sz
+	log.Println("Size found")
 
 	runGame(*games)
 }
