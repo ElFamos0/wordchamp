@@ -1,6 +1,9 @@
 package main
 
+import "sort"
+
 type Counters struct {
+	Name       string
 	WinCount   int
 	Total      int
 	AverageTry float64
@@ -18,4 +21,15 @@ func (c *Counters) UpdateAverage(tries int) {
 	} else {
 		c.AverageTry = c.AverageTry*float64(c.Total-1)/float64(c.Total) + float64(tries)/float64(c.Total)
 	}
+}
+
+func OrderCountersByAverage() []*Counters {
+	var ordered []*Counters
+	for _, counter := range statCounters {
+		ordered = append(ordered, counter)
+	}
+	sort.Slice(ordered, func(i, j int) bool {
+		return ordered[i].WinCount > ordered[j].WinCount
+	})
+	return ordered
 }

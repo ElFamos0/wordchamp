@@ -36,7 +36,9 @@ func startExecutable(executable string) (io.WriteCloser, *bufio.Scanner) {
 
 // n is the amount of games to play
 func runGame(executable string, n int) {
-	counter := &Counters{}
+	counter := &Counters{
+		Name: executable,
+	}
 	statCounters[executable] = counter
 
 	for i := 0; i < n; i++ {
@@ -60,6 +62,6 @@ func runGame(executable string, n int) {
 		}
 		counter.UpdateAverage(len(game.Tries))
 	}
-	fmt.Println()
 	fmt.Printf("	%dW / %dL (%f)\n", counter.WinCount, counter.Total-counter.WinCount, counter.AverageTry)
+	fmt.Println()
 }

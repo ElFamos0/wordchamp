@@ -74,4 +74,10 @@ func main() {
 
 		runGame(exec, *games)
 	}
+
+	fmt.Println(color.GreenString("	[TOP]"))
+
+	for _, c := range OrderCountersByAverage() {
+		fmt.Printf("		%s : %dW / %dL (%f)\n", c.Name, c.WinCount, c.Total-c.WinCount, c.AverageTry)
+	}
 }
