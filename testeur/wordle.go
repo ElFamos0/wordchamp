@@ -6,12 +6,14 @@ import (
 	"io"
 	"math/rand"
 	"strings"
+	"time"
 )
 
 // On crée la partie pour simplifier les appels de fonctions etc (c'est un peu de la POO)
 type Wordle struct {
-	Word  string
-	Tries []string
+	Word    string
+	Tries   []string
+	Counter *Counters
 
 	// Nombre maximum d'essais (on va prendre len(Word) mais ca peut changer)
 	MaxTry int
@@ -23,38 +25,44 @@ const (
 	green  = '2'
 )
 
-func CreateWordle() (*Wordle, error) {
+func CreateWordle(c *Counters) (*Wordle, error) {
 	if len(wordleDictionary) == 0 {
 		err := openDict()
 		if err != nil {
 			return nil, err
 		}
 	}
+	w := &Wordle{
+		Tries:   []string{},
+		Counter: c,
+	}
+
+	for len(w.Word) != *size {
+		w.ChooseWord()
+	}
+
+	return w, nil
+}
+
+func (w *Wordle) ChooseWord() {
 
 	if *word != "default" {
 		*word = strings.ToUpper(*word)
-		return &Wordle{
-			Word:  *word,
-			Tries: []string{},
-
-			MaxTry: len(*word),
-		}, nil
+		w.Word = *word
+		w.MaxTry = len(w.Word)
+		return
 	}
 
 	word := wordleDictionary[rand.Intn(len(wordleDictionary))]
 	word = strings.ToUpper(word)
-	return &Wordle{
-		Word:  word,
-		Tries: []string{},
-
-		MaxTry: len(word),
-	}, nil
+	w.Word = word
+	w.MaxTry = len(w.Word)
 }
 
 func (w *Wordle) InputWord(guess string) (result string, err error) {
 	// On vérifie que le guess est bien de la bonne taille
 	if len(guess) != len(w.Word) {
-		return "", fmt.Errorf("wrong guess size (%s)", guess)
+		return "", fmt.Errorf("wrong guess size (%s) for solution (%s)", guess, w.Word)
 	}
 
 	// On met le guess en majuscule pour éviter les erreurs
@@ -106,8 +114,15 @@ func (w *Wordle) IsFinished() (finished bool, win bool) {
 
 func (w *Wordle) GameLoop(stdin io.WriteCloser, stdout *bufio.Scanner) (win bool, err error) {
 	for finished, _ := w.IsFinished(); !finished; {
+		start := time.Now()
+
 		stdout.Scan() // On attend une réponse
 		input := stdout.Text()
+
+		// On calcul le temps écoulé
+		end := time.Now()
+		w.Counter.UpdateAverageTime(end.Sub(start))
+
 		input = strings.ToUpper(input)
 		result, err := w.InputWord(input)
 		if err != nil {
