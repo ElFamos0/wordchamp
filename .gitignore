@@ -8,3 +8,4 @@ executables
 dict.txt
 *.o
 opentest
+solveur/open_dict_test

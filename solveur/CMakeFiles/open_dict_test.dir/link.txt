@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic -g3 -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls CMakeFiles/open_dict_test.dir/open_dict_test.o CMakeFiles/open_dict_test.dir/src/open_dict.o -o open_dict_test 

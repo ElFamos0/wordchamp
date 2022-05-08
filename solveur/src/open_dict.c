@@ -4,7 +4,7 @@
 #include "open_dict.h"
  
 
-char ** opendict(char * filename)
+char ** opendict(char * filename, int * n)
 {
     FILE* ptr;
     char ch;
@@ -44,6 +44,7 @@ char ** opendict(char * filename)
         }  
     }
 
+    *n = taille;
 
     fclose(ptr);
     return arr;
