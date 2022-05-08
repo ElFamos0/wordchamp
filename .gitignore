@@ -6,3 +6,5 @@ frontend/package-lock.json
 backend/static/avatar/*
 executables
 dict.txt
+*.o
+opentest
