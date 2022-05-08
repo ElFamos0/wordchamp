@@ -30,7 +30,7 @@ def carriere(ranked):
     all_games_poly = with_polymorphic(game.Game, [game_normal.Game_normal, game_carriere.Game_carriere])
     all_games = db.session.query(all_games_poly).filter(all_games_poly.Game_carriere.id_user == current_user.id,all_games_poly.Game_carriere.state == False).all()
     
-    data = {"solution" : "", "guess" : [], "colors": [], "currenttry":0, "maxtry":0,"motsValides" : [],"miss" : [],"found" : [],"misplace" : [],
+    data = {"solution" : "", "guess" : [], "colors": [], "currentTry":0, "maxtry":0,"motsValides" : [],"miss" : [],"found" : [],"misplace" : [],
             "length" : 0, "elo_p" : 0, "difficulty" : 0,"ranked" : False,"elop" : 0,"elom" : 0,'n_elop':0,'n_elom':0}
 
 
@@ -41,16 +41,16 @@ def carriere(ranked):
         else :
             newGameCarriere = game_carriere.Game_carriere(current_user.id,False)
         #data["solution"] = newGameCarriere.solution
-        data["solution"] = "#"*len(newGameCarriere.solution)
+        data["solution"] = len(newGameCarriere.solution)
         data["maxtry"] = newGameCarriere.maxtry
         data["length"] = newGameCarriere.length
         data["difficulty"] = round(newGameCarriere.difficulty,2)
-        data["elo_player"] = round(newGameCarriere.elo_player,2)
+        data["elo"] = round(newGameCarriere.elo_player,2)
         data["ranked"] = newGameCarriere.ranked
-        data["elop"] = round(newElo(data["elo_player"],data["difficulty"],True),2) * mult
-        data["elom"] = round(newElo(data["elo_player"],data["difficulty"],False),2) * mult
-        data["n_elom"] = max(0,round(data["elo_player"] +  data["elom"],2))
-        data["n_elop"] = max(0,round(data["elo_player"] +  data["elop"],2))
+        data["elop"] = round(newElo(data["elo"],data["difficulty"],True),2) * mult
+        data["elom"] = round(newElo(data["elo"],data["difficulty"],False),2) * mult
+        data["n_elom"] = max(0,round(data["elo"] +  data["elom"],2))
+        data["n_elop"] = max(0,round(data["elo"] +  data["elop"],2))
            
         maxtry = data["maxtry"]
         
@@ -68,11 +68,11 @@ def carriere(ranked):
         current_game = all_games[0]
         #print(current_game.toDict(1,1,1,1,1,1,1,1,1,1))
 
-        data["solution"] = "#"*len(current_game.solution)
+        data["solution"] = len(current_game.solution)
         data["maxtry"] = current_game.maxtry
         data["length"] = current_game.length
         data["difficulty"] = round(current_game.difficulty,2)
-        data["elo_player"] = round(current_game.elo_player,2)
+        data["elo"] = round(current_game.elo_player,2)
         data["ranked"] = current_game.ranked
 
         if data["ranked"] :
@@ -80,10 +80,10 @@ def carriere(ranked):
         else :
             mult = 0
             
-        data["elop"] = round(newElo(data["elo_player"],data["difficulty"],True),2) * mult
-        data["elom"] = round(newElo(data["elo_player"],data["difficulty"],False),2) * mult
-        data["n_elom"] = max(0,round(data["elo_player"] +  data["elom"],2))
-        data["n_elop"] = max(0,round(data["elo_player"] +  data["elop"],2))
+        data["elop"] = round(newElo(data["elo"],data["difficulty"],True),2) * mult
+        data["elom"] = round(newElo(data["elo"],data["difficulty"],False),2) * mult
+        data["n_elom"] = max(0,round(data["elo"] +  data["elom"],2))
+        data["n_elop"] = max(0,round(data["elo"] +  data["elop"],2))
 
         guess = db.session.query(tries.Tries).filter_by(id_game = current_game.id).order_by(tries.Tries.try_number).all()
         for elm in guess:
@@ -94,13 +94,12 @@ def carriere(ranked):
             data["guess"].append("")   
             data["colors"].append([])   
 
-        data["currenttry"] = len(guess)
+        data["currentTry"] = len(guess)
         
-        
-        
-        data["miss"],data['found'],data['misplace'] = classLeters(data["guess"],data['solution'])
+        data["guessedletters"] = {}
+        data["guessedletters"]["miss"],data["guessedletters"]['found'],data["guessedletters"]['misplace'] = classLeters(data["guess"], current_game.solution)
 
-    data["motsValides"]=[e.word for e in db.session.query(dictionnaire.Dictionnaire).filter_by(size = len(data["solution"]))]
+    data["motsValides"]=[e.word for e in db.session.query(dictionnaire.Dictionnaire).filter_by(size = data["solution"])]
 
     #print("Data",data["solution"],data['ranked'])
 

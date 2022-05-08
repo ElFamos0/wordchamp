@@ -27,11 +27,10 @@ export default {
           showError : false,
           game: {
             maxtry: 1,
-            solution: "default",
+            solutionLength: 5,
             tried: ["","","","","",""],
             colors: [[],[],[],[],[],[]],
             currentTry: 0,
-            solutionlength: 8,
             iswin: false,
             difficulty:0,
             elo : 0,
@@ -54,12 +53,12 @@ export default {
           return;
         }
         //// console.log("try avant ajout:", this.game.tried[this.game.currentTry])
-        if (this.isaLetter(keypressed) && this.game.tried[this.game.currentTry].length < this.game.solutionlength) {
-            this.game.tried[this.game.currentTry] += keypressed;
+        if (this.isaLetter(keypressed) && this.game.guess[this.game.currentTry].length < this.game.solution) {
+            this.game.guess[this.game.currentTry] += keypressed;
         }
-        if (keypressed == "{enter}" && (this.game.tried[this.game.currentTry].length == this.game.solutionlength))
+        if (keypressed == "{enter}" && (this.game.guess[this.game.currentTry].length == this.game.solution))
         { 
-          const wordguess = this.game.tried[this.game.currentTry];
+          const wordguess = this.game.guess[this.game.currentTry];
           this.motValide = this.verifTry(wordguess)
           //// console.log("valeur de mot valide après la verifTry :", this.motValide)
           if (this.motValide) {
@@ -72,13 +71,14 @@ export default {
               this.showError = false;
               this.game.colors[this.game.currentTry] = resp.data.colors
               this.game.currentTry++;
+              this.game.guessedletters = resp.data.guessedletters
 
               if(resp.data.ended) {
                 if (resp.data.victory) {
                   this.game.currentTry = 11;
                   this.game.iswin = true;
                 } else {
-                  this.game.solution = resp.data.solution
+                  this.game.answer = resp.data.solution
                   this.game.iswin = false;
                 }
                 this.handleKeys(keypressed)
@@ -93,7 +93,7 @@ export default {
           // handle de la coloration des touches du clavier
         }
         if (keypressed == "{bksp}") {
-          this.game.tried[this.game.currentTry] = this.game.tried[this.game.currentTry].slice(0, -1);
+          this.game.guess[this.game.currentTry] = this.game.guess[this.game.currentTry].slice(0, -1);
         }
       },
       verifTry: function(wordguess) {
@@ -145,22 +145,9 @@ export default {
           .then((res) => {
             // console.log(res.data)
             this.game.solution = res.data.solution
-            console.log("Voici la solution : ", this.game.solution)
-            this.game.solutionlength = res.data.solution.length
-            this.game.currentTry = res.data.currenttry
-            this.game.tried = res.data.guess
-            this.game.maxtry = res.data.maxtry
-            this.game.motsValides = res.data.motsValides
-            this.game.difficulty = res.data.difficulty
-            this.game.guessedletters.misplace = res.data.misplace
-            this.game.guessedletters.miss = res.data.miss
-            this.game.guessedletters.found = res.data.found
-            this.game.elo = res.data.elo_player
-            this.game.elop = res.data.elop
-            this.game.elom = res.data.elom
-            this.game.n_elop = res.data.n_elop
-            this.game.n_elom = res.data.n_elom
-            this.game.colors = res.data.colors
+            for (const property in res.data) {
+              this.game[property] = res.data[property]
+            }
             this.gameShown = true
           });
       
@@ -178,7 +165,7 @@ export default {
     <h1 style="margin-bottom:1%">Mode carrière</h1>
     <h3 style="margin-bottom:1%">Difficulté : {{game.difficulty}} </h3>
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
-    <v-chip v-model="showError" class="text-center animatedChip mb-5" color="primary" dark height="200px">
+    <v-chip v-model="showError" class="text-center animatedChip mt-5" color="primary" dark height="200px">
       Ce mot n'est pas dans notre dictionnaire.
     </v-chip>
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">
@@ -191,7 +178,7 @@ export default {
             </p>
             <p> Nouvel elo : {{this.game.n_elom}}</p>
             <p>
-              La solution était {{this.game.solution}}
+              La solution était {{this.game.answer}}
             </p>
           </div>
           <div v-if="this.wincase()">
@@ -209,9 +196,9 @@ export default {
     </v-dialog>
     
     <loading-slider class="m-5" v-if="!this.gameShown"/>
-    <div v-if="this.gameShown">
-      <div v-for="(tryy,i) in this.game.tried" :key="i" >
-        <word-row class="justify-center" :word="tryy" :size="this.game.tried.length" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]" :solution="this.game.solution"></word-row>
+    <div v-if="this.gameShown" class="mt-5">
+      <div v-for="(tryy,i) in this.game.guess" :key="i" >
+        <word-row class="justify-center" :word="tryy" :size="this.game.solution" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]"></word-row>
       </div>
     </div>
 

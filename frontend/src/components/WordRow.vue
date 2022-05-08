@@ -4,7 +4,6 @@ import {defineProps, ref, watch} from "vue"
 
 // la méthode de construire en fonction de la taille de la solution me semble vraiment pas opti cela induit une sorte de ralentissement chiant
 const rowprop = defineProps({
-    solution: String,
     word: String,
     colors: Array,
     submitted: Boolean,
@@ -17,7 +16,7 @@ const rowprop = defineProps({
 
 // storage de la couleur de chacune des lignes
 
-let b = new Array(rowprop.solution.length);
+let b = new Array(rowprop.size);
 const colortab = ref(b);
 
 /*

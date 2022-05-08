@@ -9,7 +9,7 @@ from sqlalchemy.orm import with_polymorphic
 from flask import request
 from sqlalchemy import desc
 from utils.wordcheck import check_word
-
+from utils.classLeters import classLeters
 
 
 
@@ -53,6 +53,14 @@ def send_try():
 
     colors = check_word(data,solution)
 
+    # We calculate the colors of the keyboard
+    guesses = []
+    for elm in db.session.query(tries.Tries).filter_by(id_game = gam.id).order_by(tries.Tries.try_number).all():
+        guesses.append(elm.word)
+    guesses.append(data)
+    guessedLetters = {}
+    guessedLetters["miss"],guessedLetters['found'],guessedLetters['misplace'] = classLeters(guesses, gam.solution)
+
     if data == solution :
 
         newTry = tries.Tries(id_game,data,len(all_tries) + 1)
@@ -64,7 +72,7 @@ def send_try():
         db.session.commit()
 
 
-        return jsonify({"success": True, "ended": True, "victory": True, "colors":colors}),200
+        return jsonify({"success": True, "ended": True, "victory": True, "colors":colors, "guessedletters":guessedLetters}),200
 
     elif len(all_tries) + 1 >= maxtry :
 
@@ -75,7 +83,7 @@ def send_try():
 
         db.session.commit()
 
-        return jsonify({"success": True, "ended": True, "victory": False, "colors":colors, "solution":solution}),200
+        return jsonify({"success": True, "ended": True, "victory": False, "colors":colors, "solution":solution, "guessedletters":guessedLetters}),200
     
     else :
 
@@ -83,5 +91,5 @@ def send_try():
         db.session.add(newTry)
 
         db.session.commit()
-        return jsonify({"success": True, "ended": False, "victory": False, "colors":colors}),200
+        return jsonify({"success": True, "ended": False, "victory": False, "colors":colors, "guessedletters":guessedLetters}),200
 

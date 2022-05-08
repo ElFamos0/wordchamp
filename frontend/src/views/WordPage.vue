@@ -26,11 +26,10 @@ export default {
           showError : false,
           game: {
             maxtry: 1,
-            solution: "default",
+            solutionLength: 5,
             tried: ["","","","","",""],
             colors: [[],[],[],[],[],[]],
             currentTry: 0,
-            solutionlength: 8,
             iswin: false,
             motsValides: [],
             guessedletters: {
@@ -47,50 +46,38 @@ export default {
           return;
         }
         //// console.log("try avant ajout:", this.game.tried[this.game.currentTry])
-        if (this.isaLetter(keypressed) && this.game.tried[this.game.currentTry].length < this.game.solutionlength) {
-            this.game.tried[this.game.currentTry] += keypressed;
+        if (this.isaLetter(keypressed) && this.game.guess[this.game.currentTry].length < this.game.solution) {
+            this.game.guess[this.game.currentTry] += keypressed;
         }
-        if (keypressed == "{enter}" && (this.game.tried[this.game.currentTry].length == this.game.solutionlength))
+        if (keypressed == "{enter}" && (this.game.guess[this.game.currentTry].length == this.game.solution))
         { 
-          const wordguess = this.game.tried[this.game.currentTry];
+          const wordguess = this.game.guess[this.game.currentTry];
           this.motValide = this.verifTry(wordguess)
           //// console.log("valeur de mot valide après la verifTry :", this.motValide)
           if (this.motValide) {
             // ici le mot est validé 
             this.motValide=false
             //// console.log("j'ai remis à faux motValide :", this.motValide)
-          for (var i = 0; i < wordguess.length; i++) {
-            let c = wordguess.charAt(i);
-            if (c == this.game.solution.charAt(i) && this.game.guessedletters.found.indexOf(c) == -1) {
-              this.game.guessedletters.found.push(c);
-            }
-            else if (this.game.solution.indexOf(c) != -1 && this.game.guessedletters.misplace.indexOf(c) == -1) {
-              this.game.guessedletters.misplace.push(c);
-            } 
-            else {
-              if(this.game.guessedletters.miss.indexOf(c) == -1) {
-                this.game.guessedletters.miss.push(c);
-              }
-            }
           
-          }
           // console.log("guessedletters:", this.game.guessedletters)
           axiosAuth.post(this.sendtry,{"data":wordguess})
             .then((resp) => {
               this.showError = false;
               this.game.colors[this.game.currentTry] = resp.data.colors
               this.game.currentTry++;
+              this.game.guessedletters = resp.data.guessedletters
 
               if(resp.data.ended) {
                 if (resp.data.victory) {
                   this.game.currentTry = 11;
                   this.game.iswin = true;
                 } else {
-                  this.game.solution = resp.data.solution
+                  this.game.answer = resp.data.solution
                   this.game.iswin = false;
                 }
                 this.handleKeys(keypressed)
               }
+
               console.log(this.game.solution)
             });
           } else {
@@ -101,7 +88,7 @@ export default {
           // handle de la coloration des touches du clavier
         }
         if (keypressed == "{bksp}") {
-          this.game.tried[this.game.currentTry] = this.game.tried[this.game.currentTry].slice(0, -1);
+          this.game.guess[this.game.currentTry] = this.game.guess[this.game.currentTry].slice(0, -1);
         }
       },
       verifTry: function(wordguess) {
@@ -151,18 +138,9 @@ export default {
       const id4 = id3.slice(1,3)
       axiosAuth.get(this.creategame+"/"+id2+"/"+id4)
           .then((res) => {
-            // console.log(res.data)
-            this.game.solution = res.data.solution
-            console.log("Voici la solution : ", this.game.solution)
-            this.game.solutionlength = res.data.solution.length
-            this.game.currentTry = res.data.currenttry
-            this.game.tried = res.data.guess
-            this.game.colors = res.data.colors
-            this.game.maxtry = res.data.maxtry
-            this.game.motsValides = res.data.motsValides
-            this.game.guessedletters.misplace = res.data.misplace
-            this.game.guessedletters.miss = res.data.miss
-            this.game.guessedletters.found = res.data.found
+            for (const property in res.data) {
+              this.game[property] = res.data[property]
+            }
             this.gameShown = true
           });
       
@@ -178,7 +156,8 @@ export default {
 <template>
   <div class="random">
     <!-- On utilise le composant wordrow avec toutes les props en arguments -->
-    <v-chip v-model="showError" class="text-center animatedChip mb-5" color="primary" dark height="200px" style="margin-top:1%;font-family: 'Roboto', sans-serif">
+    <h1 class="mt-3">Mode classique</h1>
+    <v-chip v-model="showError" class="text-center animatedChip mt-5" color="primary" dark height="200px" style="margin-top:1%;font-family: 'Roboto', sans-serif">
       Ce mot n'est pas dans notre dictionnaire.
     </v-chip>
     <v-dialog v-model="this.dialog" persistent transition="dialog-top-transition">
@@ -190,7 +169,7 @@ export default {
               Vous avez perdu !
             </p>
             <p style="font-family: 'Roboto', sans-serif">
-              La solution était {{this.game.solution}}
+              La solution était {{this.game.answer}}
             </p>
           </div>
           <div v-if="this.wincase()">
@@ -207,9 +186,9 @@ export default {
     </v-dialog>
     
     <loading-slider class="m-5" v-if="!this.gameShown"/>
-    <div v-if="this.gameShown">
-      <div v-for="(tryy,i) in this.game.tried" :key="i" >
-        <word-row class="justify-center" :word="tryy" :size="this.game.tried.length" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]" :solution="this.game.solution"></word-row>
+    <div v-if="this.gameShown" class="mt-5">
+      <div v-for="(tryy,i) in this.game.guess" :key="i" >
+        <word-row class="justify-center" :word="tryy" :size="this.game.solution" :submitted="i < this.game.currentTry" :colors="this.game.colors[i]"></word-row>
       </div>
     </div>
     <b-container>

@@ -3,7 +3,7 @@ export default {
     data () {
       return {
         nbLettres: 5,
-        nbTentatives: 4,
+        nbTentatives: 5,
       }
     },
     name: 'choice-page',
