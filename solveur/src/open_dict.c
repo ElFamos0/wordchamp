@@ -49,3 +49,27 @@ char ** opendict(char * filename, int * n)
     fclose(ptr);
     return arr;
 }
+
+int openwsolf(){
+
+    FILE* ptr;
+    char ch;
+    ptr = fopen("wsolf.txt", "r");
+ 
+    if (NULL == ptr) {
+        printf("file can't be opened \n");
+    }
+ 
+    char c[50] = "";
+ 
+
+    while (!feof(ptr) && ch != '\n') {
+        ch = fgetc(ptr);
+        strncat(c, &ch, 1);
+    }
+
+    int taille = atoi(c);
+
+    return taille;
+
+}

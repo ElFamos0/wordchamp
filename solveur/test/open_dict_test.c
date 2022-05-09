@@ -20,4 +20,8 @@ int main() {
 
     free(arr);
 
+    int taille = openwsolf();
+
+    printf("Taille : %d \n", taille);
+
 }
