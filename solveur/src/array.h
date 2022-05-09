@@ -10,9 +10,16 @@ typedef struct array_t {
 } array_t;
 
 array_t * create_array(size_t element_size);
-int add_element(array_t *array, size_t index, void *element);
-int array_resize(array_t *array);
-void * get_array_element(array_t *array, size_t index);
 void free_array(array_t *array);
+int array_resize(array_t *array);
+
+int add_element(array_t *array, size_t index, void *element);
+int remove_element(array_t *array, size_t index);
+int append_element(array_t *array, void *element);
+int prepend_element(array_t *array, void *element);
+void * get_array_element(array_t *array, size_t index);
+int get_array_size(array_t *array);
+
+void for_each_element(array_t *array, void (*callback)(void *element));
 
 #endif 

@@ -7,8 +7,6 @@ array_t * create_array(size_t element_size) {
     if (element_size == 0) {
         return NULL;
     }
-
-    printf("element_size : %d\n", element_size);
     
     struct array_t *array = calloc(1, sizeof(array_t));
 
@@ -27,6 +25,14 @@ array_t * create_array(size_t element_size) {
     array->element_size = element_size;
 
     return array;
+}
+
+void free_array(array_t *array) {
+    if (!array) {
+        return;
+    }
+    free(array->data);
+    free(array);
 }
 
 int array_resize(array_t *array) {
@@ -49,14 +55,36 @@ int array_resize(array_t *array) {
     return 1;
 }
 
-int add_element(array_t *array, size_t index, void *element) {
+int prepend_element(array_t *array, void *element) {
+    if (!array) {
+        return 0;
+    }
+    if (!element) {
+        return 0;
+    }
+
+    return add_element(array, 0, element);
+}
+
+int append_element(array_t *array, void *element) {
+    if (!array) {
+        return 0;
+    }
+    if (!element) {
+        return 0;
+    }
+
+    return add_element(array, array->size, element);
+}
+
+int add_element(array_t *array, size_t index, void * element) {
     if (!array) {
         return 0;
     }
     if (index > array->size) {
         return 0;
     }
-    if (index < array->size) {
+    if (index < 0) {
         return 0;
     }
 
@@ -64,6 +92,7 @@ int add_element(array_t *array, size_t index, void *element) {
         return 0;
     }
 
+    // On calcule les offsets pour l'element a ajouter (là où il doit être et là ou le prochain sera bouger)
     char * const elementDest = array->data + index * array->element_size;
     char * const moveDest = elementDest + array->element_size;
 
@@ -71,6 +100,28 @@ int add_element(array_t *array, size_t index, void *element) {
     memcpy(elementDest, element, array->element_size);
 
     array->size++;
+    return 1;
+}
+
+
+int remove_element(array_t *array, size_t index) {
+    if (!array) {
+        return 0;
+    }
+    if (index > array->size) {
+        return 0;
+    }
+    if (index < 0) {
+        return 0;
+    }
+
+    // On calcule les offsets pour l'element a ajouter (là où il doit être et là ou le prochain sera bouger)
+    char * const currentPos = array->data + index * array->element_size;
+    char * const nextPos = currentPos + array->element_size;
+
+    memmove(currentPos, nextPos, array->element_size * (array->size - (index + 1)));
+
+    array->size--;
     return 1;
 }
 
@@ -85,10 +136,21 @@ void * get_array_element(array_t *array, size_t index) {
     return array->data + (index * array->element_size);
 }
 
-void free_array(array_t *array) {
+int get_array_size(array_t *array) {
+    if (!array) {
+        return 0;
+    }
+    return array->size;
+}
+
+void for_each_element(array_t *array, void (*callback)(void *element)) {
     if (!array) {
         return;
     }
-    free(array->data);
-    free(array);
+    if (!callback) {
+        return;
+    }
+    for (size_t i = 0; i < array->size; i++) {
+        callback(array->data + (i * array->element_size));
+    }
 }
