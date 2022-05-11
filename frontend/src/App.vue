@@ -87,7 +87,7 @@
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav>
-        <v-list-item-group>
+        <v-list-group>
 
           <v-list-item>
             <v-dialog transition="dialog-top-transition">
@@ -134,7 +134,7 @@
             </v-tab>
           </v-list-item>
 
-        </v-list-item-group>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
     <router-view/>

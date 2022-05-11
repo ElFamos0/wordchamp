@@ -2,7 +2,7 @@
   <div class="hello">
     <v-container>
         <v-form>
-            <v-alert v-model="errorMessage" type="danger" dismissible>
+            <v-alert v-model="errorShown" dismissible>
                 {{ errorMessage }}
             </v-alert>
             <h4 style="font-family: 'Roboto', sans-serif;"> Modification du profil </h4>
@@ -20,7 +20,7 @@
             <div class="large-12 medium-12 small-12 cell mt-4">
                 <v-row class="my-1">
                     <v-col align="center" justify="center" sm="8">
-                      <v-text-field v-model="new_username" :rules="nameRules" :counter="25" label="Username" required></v-text-field>
+                      <v-text-field v-model="new_username" :counter="25" label="Username" required></v-text-field>
                     </v-col>
                     <v-col align="center" justify="center" sm="4">
                         <v-btn color="primary" v-if="new_username" v-on:click="envoiUsername()" style="font-family: 'Roboto', sans-serif;">Envoyer</v-btn>
@@ -43,6 +43,7 @@ export default {
       return {
         file: null,
         new_username: null,
+        errorShown: false,
         errorMessage: null,
         $router: useRoute(),
         $store: useStore(),
@@ -60,6 +61,7 @@ export default {
           that.$store.dispatch('auth/changeUsername', response.data.new_username)
         }).catch(function(err) {
           that.errorMessage = err.response.data.error;
+          that.errorShown = true;
           // console.log(that.errorMessage)
         });
       },
@@ -75,6 +77,7 @@ export default {
           }
         ).catch(function(err) {
           that.errorMessage = err.response.data.error;
+          that.errorShown = true;
         }).then(function(){
           that.$router.go();
         })

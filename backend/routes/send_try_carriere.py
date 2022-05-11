@@ -1,3 +1,4 @@
+from tabnanny import check
 from routes.motValide import motValide
 from flask_login import current_user
 from numpy import identity
@@ -50,6 +51,7 @@ def send_try_carriere():
 
         data += 'A' * (len(solution) - len(data))
 
+    colors = check_word(data, solution)
     guesses = []
     for elm in db.session.query(tries.Tries).filter_by(id_game = gam.id).order_by(tries.Tries.try_number).all():
         guesses.append(elm.word)

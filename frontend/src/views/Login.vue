@@ -9,10 +9,10 @@
                     {{alertMessage}}
                     </v-alert>
                     <v-container>
-                        <v-form v-on:submit.prevent="onSubmit" @reset="onReset">
-                            <v-text-field class="mx-auto" style="max-width:200px" id="username" v-model="this.form.username" :rules="nameRules" :counter="25" label="Username" required></v-text-field>
+                        <v-form v-on:submit.prevent="">
+                            <v-text-field class="mx-auto" style="max-width:200px" id="username" v-model="this.form.username" :counter="25" label="Username" required></v-text-field>
 
-                            <v-text-field class="mx-auto" style="max-width:200px" id="password" type="password" v-model="this.form.password" :rules="nameRules" :counter="25" label="Password" required></v-text-field>
+                            <v-text-field class="mx-auto" style="max-width:200px" id="password" type="password" v-model="this.form.password" :counter="25" label="Password" required></v-text-field>
 
                             <v-btn type="submit" @click="submit()" color="primary">Login</v-btn>                    
                         </v-form>
