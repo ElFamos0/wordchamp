@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "open_dict.h"
- 
 
 char ** opendict(char * filename, int * n)
 {

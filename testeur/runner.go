@@ -13,8 +13,8 @@ import (
 )
 
 // Juste pour simplifier
-func startExecutable(executable string) (*exec.Cmd, io.WriteCloser, *bufio.Scanner) {
-	c := exec.Command("./" + executable)
+func startExecutable(executable string, size int) (*exec.Cmd, io.WriteCloser, *bufio.Scanner) {
+	c := exec.Command(fmt.Sprintf("./%s", executable), fmt.Sprintf("-s %d", size))
 
 	si, err := c.StdinPipe()
 	if err != nil {
@@ -51,11 +51,11 @@ func runGame(executable string, n int) {
 		}
 		wg.Add(1)
 		go func(i int) {
-			cmd, stdin, stdout := startExecutable(executable)
 			game, err := CreateWordle(counter)
 			if err != nil {
 				panic(err)
 			}
+			cmd, stdin, stdout := startExecutable(executable, len(game.Word))
 			//fmt.Printf("		Starting game %d (%s) : ", i+1, game.Word)
 			win, err := game.GameLoop(stdin, stdout)
 			if err != nil {

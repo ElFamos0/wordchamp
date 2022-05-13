@@ -15,3 +15,9 @@ CMakeCache.txt
 Makefile
 array_test
 .vscode/
+
+solveur/null.d
+
+solveur/wsolf.txt
+
+testeur/wordsolv_testeur
