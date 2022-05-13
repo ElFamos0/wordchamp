@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/schollz/progressbar/v3"
 )
 
 // Juste pour simplifier
@@ -45,7 +46,9 @@ func runGame(executable string, n int) {
 
 	var wg sync.WaitGroup
 
+	bar := progressbar.New(n)
 	for i := 0; i < n; i++ {
+		bar.Add(1)
 		if i%1000 == 0 {
 			wg.Wait()
 		}
@@ -72,8 +75,9 @@ func runGame(executable string, n int) {
 			wg.Done()
 			cmd.Wait()
 		}(i)
+		time.Sleep(time.Millisecond * 100)
 	}
-	fmt.Println("		All games are running")
+	fmt.Println("\n		All games are running")
 	wg.Wait()
 	fmt.Printf("	%dW / %dL (%fT | %v/guess)\n", counter.WinCount, counter.Total-counter.WinCount, counter.AverageTry, time.Duration(counter.AverageTime))
 	fmt.Println()
