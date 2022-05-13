@@ -22,11 +22,11 @@ def history():
     for e in games:
         if e["id_user"] == userId:
             gamesUser.append(e)
-    entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "result":"", "maxtry":str(e["maxtry"]), "date":e["date"], "type":e["game_type"]} for e in gamesUser]
+    entries = [{"id":e["id"], "guesses":[], "solution":e["solution"], "solutionColors":check_word(e["solution"], e["solution"]), "result":"", "maxtry":str(e["maxtry"]), "date":e["date"], "type":e["game_type"]} for e in gamesUser]
     for entry in entries:
         reqTries = Tries.query.filter_by(id_game=entry["id"]).all()
         tries = [e.toDict(1,1,1,1) for e in reqTries]
-        guesses = [{"id":e["try_number"],"word":e["word"]} for e in tries]
+        guesses = [{"id":e["try_number"],"word":e["word"],"colors":check_word(e["word"], entry["solution"])} for e in tries]
         entry["guesses"] = guesses
         entry["result"] = "Victoire" if estGagnee(entry) else "Défaite"
         
