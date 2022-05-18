@@ -6,8 +6,9 @@
 
 linked_list_t* generateList() {
     linked_list_t* liste = list_create();
-    char ** dico = opendict("../dico.txt", int * n);
-    for (int i = 0; i < tailledico; i++) {
+    int n;
+    char ** dico = opendict("../dico.txt", &n);
+    for (int i = 0; i < n; i++) {
         list_append(liste, dico[i]);
     }
     return liste;
