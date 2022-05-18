@@ -10,4 +10,5 @@ add_link_options(-fno-optimize-sibling-calls)
 
 add_executable (open_dict_test open_dict_test.c ../src/open_dict.c)
 add_executable (array_test array_test.c ../src/array.c)
+add_executable (array_test_int array_test_int.c ../src/array.c)
 add_executable(wordle ../src/wordle.c ../src/open_dict.c)
