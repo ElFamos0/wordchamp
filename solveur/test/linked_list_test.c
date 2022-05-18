@@ -1,23 +1,23 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdbool.h"
-#include "linked_list.h"
+#include "../src/linked_list.h"
 
 int main() {
-    linked_list_int_t* myList = list_create();
+    linked_list_t* myList = list_create();
     printf("List vide ? : %d\n", list_is_empty(myList) ? 1 : 0);
     list_print(myList);
-    list_append(myList, 1);
+    list_append(myList, "un");
     printf("List vide ? : %d\n", list_is_empty(myList) ? 1 : 0);
     list_print(myList);
-    list_prepend(myList, 0);
+    list_prepend(myList, "zero");
     list_print(myList);
-    list_insert(myList, 2, 1);
+    list_insert(myList, "deux", 1);
     list_print(myList);
-    printf("Premier : %d\n", list_first(myList));
-    printf("Dernier : %d\n", list_last(myList));
-    printf("Element 1 : %d\n", list_get(myList, 1));
-    printf("Indice de 2 : %d\n", list_index_of(myList, 2));
+    printf("Premier : %s\n", list_first(myList));
+    printf("Dernier : %s\n", list_last(myList));
+    printf("Element 1 : %s\n", list_get(myList, 1));
+    printf("Indice de deux : %d\n", list_index_of(myList, "deux"));
 
     list_destroy(myList);
     return 69;

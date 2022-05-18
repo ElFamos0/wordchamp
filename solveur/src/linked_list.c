@@ -3,35 +3,35 @@
 #include "stdbool.h"
 #include "linked_list.h"
 
-linked_list_int_t* list_create() {
-    linked_list_int_t* list = malloc(sizeof(linked_list_int_t));
+linked_list_t* list_create() {
+    linked_list_t* list = malloc(sizeof(linked_list_t));
     list->next = NULL;
     return list;
 }
 
-bool list_is_empty(linked_list_int_t* one_list) {
+bool list_is_empty(linked_list_t* one_list) {
     return one_list->next==NULL;
 }
 
-void list_prepend(linked_list_int_t* one_list, int one_value) {
-    linked_list_int_t_element* premier = malloc(sizeof(linked_list_int_t_element));
+void list_prepend(linked_list_t* one_list, char* one_value) {
+    linked_list_t_element* premier = malloc(sizeof(linked_list_t_element));
     premier->next = one_list->next;
     premier->value = one_value; 
     one_list->next=premier;
 }
 
-int list_first(linked_list_int_t* one_list) {
+char* list_first(linked_list_t* one_list) {
     return one_list->next->value;
 }
 
-void list_append(linked_list_int_t* one_list, int one_value) {
-    linked_list_int_t_element* new_element = malloc(sizeof(linked_list_int_t_element));
+void list_append(linked_list_t* one_list, char* one_value) {
+    linked_list_t_element* new_element = malloc(sizeof(linked_list_t_element));
     new_element->value = one_value;
     new_element->next = NULL;
     if (list_is_empty(one_list)) {
         one_list->next = new_element;
     } else {
-        linked_list_int_t_element* last = one_list->next;
+        linked_list_t_element* last = one_list->next;
         while (last->next != NULL) {
             last = last->next;
         }
@@ -39,12 +39,11 @@ void list_append(linked_list_int_t* one_list, int one_value) {
     }
 }
 
-int list_last(linked_list_int_t* one_list) {
+char* list_last(linked_list_t* one_list) {
     if (list_is_empty(one_list)) {
-        printf("La liste est vide : pas de dernier élément !");
-        return -1;
+        return "La liste est vide : pas de dernier élément !";
     } else {
-        linked_list_int_t_element* curr = one_list->next;
+        linked_list_t_element* curr = one_list->next;
         while (curr->next!=NULL) {
             curr = curr->next;
         }
@@ -52,35 +51,35 @@ int list_last(linked_list_int_t* one_list) {
     }
 }
 
-void list_print(linked_list_int_t* one_list) {
+void list_print(linked_list_t* one_list) {
     if (list_is_empty(one_list)) {
         printf("La liste est vide");
     } else {
-        linked_list_int_t_element* curr = one_list->next;
+        linked_list_t_element* curr = one_list->next;
         while (curr != NULL) {
-            printf("[%d]", curr->value);
+            printf("[%s]", curr->value);
             curr = curr->next;
         }
     }
     printf("\n");
 }
 
-void list_destroy(linked_list_int_t* one_list) {
-    linked_list_int_t_element* curr = one_list->next;
+void list_destroy(linked_list_t* one_list) {
+    linked_list_t_element* curr = one_list->next;
     free(one_list);
     while (curr!=NULL) {
-        linked_list_int_t_element* next = curr->next;
+        linked_list_t_element* next = curr->next;
         free(curr);
         curr = next;
     }
 }
 
-void list_insert(linked_list_int_t* one_list, int one_value, unsigned int one_pos) {
+void list_insert(linked_list_t* one_list, char* one_value, unsigned int one_pos) {
     unsigned int curr_pos = 0;
-    linked_list_int_t_element* new_element = malloc(sizeof(linked_list_int_t_element));
+    linked_list_t_element* new_element = malloc(sizeof(linked_list_t_element));
     new_element->value = one_value;
     new_element->next = NULL;
-    linked_list_int_t_element* curr = one_list->next;
+    linked_list_t_element* curr = one_list->next;
     while (curr_pos != one_pos-1) {
         curr = curr->next;
         curr_pos++;
@@ -89,9 +88,9 @@ void list_insert(linked_list_int_t* one_list, int one_value, unsigned int one_po
     curr->next = new_element;
 }
 
-int list_get(linked_list_int_t* one_list, unsigned int one_pos) {    
+char* list_get(linked_list_t* one_list, unsigned int one_pos) {    
     unsigned int curr_pos = 0;
-    linked_list_int_t_element* curr = one_list->next;
+    linked_list_t_element* curr = one_list->next;
     while (curr_pos != one_pos) {
         curr = curr->next;
         curr_pos++;
@@ -99,9 +98,9 @@ int list_get(linked_list_int_t* one_list, unsigned int one_pos) {
     return curr->value;
 }
 
-unsigned int list_index_of(linked_list_int_t* one_list, int one_value) {
+unsigned int list_index_of(linked_list_t* one_list, char* one_value) {
     unsigned int curr_pos = 0;
-    linked_list_int_t_element* curr = one_list->next;
+    linked_list_t_element* curr = one_list->next;
     while (curr != NULL) {
         if (curr->value == one_value) {
             return curr_pos;
