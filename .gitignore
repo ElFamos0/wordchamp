@@ -23,3 +23,6 @@ solveur/wsolf.txt
 testeur/wordsolv_testeur
 solveur/test/open_dict_test
 solveur/test/wordle
+solveur/wordle
+
+solveur/array_test_int
