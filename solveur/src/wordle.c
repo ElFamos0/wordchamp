@@ -5,18 +5,20 @@
 #include <math.h>
 #include <time.h>
 #include "open_dict.h"
+#include <unistd.h>
 
 int main(int argc, char *argv[]){
     // interactive wordle game
     // read the dictionary file
     int n;
-    char ** array = opendict("../dico.txt", &n);
+    char ** array = opendict_size("../dico.txt", 5,&n);
 
     // select a random word and print int
     printf("\e[1;1H\e[2J");
     srand(time(NULL));
     int random = rand() % n;
     printf("%s\n", array[random]);
+    strcpy(array[random], "AIGLE");
     int length = strlen(array[random]);
     int win = 0;
 
@@ -85,10 +87,16 @@ int main(int argc, char *argv[]){
                     for (int j = 0; j<length; j++){
                         if (strchr(solution,copie[j]) != NULL){ // if the character is in the solution
                             guess_array[i][j] = '1';
+                            for (int k = 0; k<length; k++){
+                                if (copie[j] == solution[k]){
+                                    solution[k] = '#';
+                                    break;
+                                }
+                            }
                             copie[j] = '_';
-                            solution[j] = '#';
                         }
                         }
+
                     strcpy(guess_made[i], guess);
                     *guess = '\0';
                     message = ALLCLEAR;
