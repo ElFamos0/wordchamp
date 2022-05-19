@@ -18,7 +18,12 @@ int main(int argc, char *argv[]){
     srand(time(NULL));
     int random = rand() % n;
     printf("%s\n", array[random]);
-    strcpy(array[random], "AIGLE");
+    
+    // si vous souhaitez faire un test forcé : 
+    //strcpy(array[random], "AIGLE");
+
+
+    
     int length = strlen(array[random]);
     int win = 0;
 
