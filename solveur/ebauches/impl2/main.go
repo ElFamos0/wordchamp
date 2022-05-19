@@ -24,9 +24,11 @@ func openDict() error {
 
 func main() {
 	openDict()
-	play()
-	fmt.Println(weights)
-	file, _ := json.MarshalIndent(weights, "", " ")
+	node := btInit(5)
+	node.btNextInit()
+
+	fmt.Println(node)
+	file, _ := json.MarshalIndent(node, "", " ")
 
 	_ = ioutil.WriteFile("test.json", file, 0644)
 }
