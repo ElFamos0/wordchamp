@@ -60,16 +60,13 @@ func btInit(length int) *node {
 		Wordlist: words,
 	}
 	bar := progressBar.New(len(words))
-	for i, solution := range words {
+	for _, solution := range words {
 		wg.Add(1)
 		go func(s string) {
 			node.pass(s, weight)
 			bar.Add(1)
 			wg.Done()
 		}(solution)
-		if i == 1000 {
-			break
-		}
 	}
 	wg.Wait()
 	bar.Clear()
@@ -91,14 +88,11 @@ func btInit(length int) *node {
 func (n *node) btNextInit() {
 	words := n.Wordlist
 	bar := progressBar.New(len(words))
-	for i, solution := range words {
+	for _, solution := range words {
 		result := getWordResult(n.Word, solution)
 		next := n.initNext(result)
 		next.passBt()
 		bar.Add(1)
-		if i == 2 {
-			break
-		}
 	}
 	bar.Clear()
 }
@@ -106,16 +100,20 @@ func (n *node) btNextInit() {
 func (n *node) passBt() {
 	weight := newWeights()
 	wg := sync.WaitGroup{}
-	node := &node{
-		Next:     make(map[string]*node),
-		Wordlist: n.Wordlist,
-	}
-	for _, solution := range n.Wordlist {
-		wg.Add(1)
-		go func(s string) {
-			node.pass(s, weight)
-			wg.Done()
-		}(solution)
+	node := n
+	if len(n.Wordlist) > 1 {
+		for i, solution := range n.Wordlist {
+			wg.Add(1)
+			go func(s string) {
+				node.pass(s, weight)
+				wg.Done()
+			}(solution)
+			if i%100 == 0 {
+				wg.Wait()
+			}
+		}
+	} else if len(n.Wordlist) == 1 {
+		weight.modifyWeight(n.Wordlist[0])
 	}
 	wg.Wait()
 	// Find word with max weight
@@ -147,11 +145,10 @@ func (n *node) pass(solution string, weight *weights, attempts ...string) {
 			minNextPossibilities = amt
 			minWord = word
 		}
-		if minNextPossibilities == 1 {
+		if minNextPossibilities < 2 {
 			break
 		}
 	}
 
 	weight.modifyWeight(minWord)
-	return
 }

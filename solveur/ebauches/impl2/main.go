@@ -26,9 +26,19 @@ func main() {
 	openDict()
 	node := btInit(5)
 	node.btNextInit()
+	fmt.Println("finished")
 
-	fmt.Println(node)
 	file, _ := json.MarshalIndent(node, "", " ")
 
 	_ = ioutil.WriteFile("test.json", file, 0644)
+	// only words of length 5
+	// var t []string
+	// for _, word := range allWords {
+	// 	if len(word) != 5 {
+	// 		continue
+	// 	}
+	// 	t = append(t, word)
+	// }
+
+	// fmt.Println(nextWordList([]string{"ABLES"}, [][]int{{2, 2, 1, 1, 0}}, t))
 }
