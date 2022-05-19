@@ -1,22 +1,36 @@
 package main
 
-import (
-	"sync"
-)
+import "fmt"
 
 func play() {
-	var wg sync.WaitGroup
-	for i, solution := range allWords {
-		if i%100 == 0 {
-			wg.Wait()
+	// var wg sync.WaitGroup
+	var words []string
+	for _, word := range allWords {
+		if len(word) != 5 {
+			continue
 		}
-		wg.Add(1)
-		go func(s string) {
-			first_pass_solution(s)
-			wg.Done()
-		}(solution)
+		words = append(words, word)
 	}
-	wg.Wait()
+
+	for _, solution := range words {
+		if len(solution) != 5 {
+			continue
+		}
+		first_pass_solution(solution)
+	}
+
+	// We search for the max in the weights
+	max := 0
+	maxS := ""
+	for _, w := range weights {
+		for s, v := range w {
+			if v > max {
+				max = v
+				maxS = s
+			}
+		}
+	}
+	fmt.Println(maxS)
 }
 
 func first_pass_solution(solution string) {
@@ -42,10 +56,13 @@ func first_pass_solution(solution string) {
 		}
 		temp := attempts
 		temp = append(temp, word)
-		words = next_possible_words(temp, solution, words)
+		words = next_possible_words(temp, solution, words, minNextPossibilities)
 		if len(words) < minNextPossibilities {
 			minNextPossibilities = len(words)
 			minWord = word
+		}
+		if minNextPossibilities == 1 {
+			break
 		}
 	}
 
@@ -83,7 +100,7 @@ func play_with_solution(solution string) {
 			}
 			temp := attempts
 			temp = append(temp, word)
-			words = next_possible_words(temp, solution, words)
+			words = next_possible_words(temp, solution, words, minNextPossibilities)
 			if len(words) < minNextPossibilities {
 				minNextPossibilities = len(words)
 				minWord = word
@@ -156,13 +173,19 @@ func remove_words(attempt, solution string, temp []string) []string {
 	return out
 }
 
-func next_possible_words(attempts []string, solution string, wordlist []string) []string {
+func next_possible_words(attempts []string, solution string, wordlist []string, currentMin int) []string {
+	var amt int
 	var temp []string
 	for _, word := range wordlist {
 		if len(solution) != len(word) {
 			continue
 		}
 		temp = append(temp, word)
+		amt++
+
+		if amt > currentMin {
+			return temp
+		}
 	}
 	for _, attempt := range attempts {
 		temp = remove_words(attempt, solution, temp)
