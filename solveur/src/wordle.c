@@ -10,9 +10,17 @@
 int main(int argc, char *argv[]){
     // interactive wordle game
     // read the dictionary file
-    int n;
-    char ** array = opendict_size("../dico.txt", 5,&n);
+    if (argc != 3) {
+        printf("Usage: ./wordle <dictionary file> <number of letter>\n");
+        return 1;
+    }
 
+    int n;
+    char ** array = opendict_size(argv[1], atoi(argv[2]),&n);
+    if (n==0){
+        printf("Error: no word in the dictionary file\n");
+        return 1;
+    }
     // select a random word and print int
     printf("\e[1;1H\e[2J");
     srand(time(NULL));
@@ -23,7 +31,7 @@ int main(int argc, char *argv[]){
     //strcpy(array[random], "AIGLE");
 
 
-    
+
     int length = strlen(array[random]);
     int win = 0;
 
@@ -72,6 +80,7 @@ int main(int argc, char *argv[]){
             if (strcmp(guess, array[random]) == 0){
                 for (int j = 0; j<length; j++){
                 guess_array[i][j] = '2';}
+                strcpy(guess_made[i], guess);
                 message = WIN;
                 win = 1;
                 free(guess);
