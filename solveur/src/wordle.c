@@ -126,13 +126,6 @@ int main(int argc, char *argv[]){
         free(guess_array[i]);
         free(guess_made[i]);
     } 
-    
-    // if the user guess the word, print "you win"
-
-    // display the result
-    // repeat until the user wins
-    // display the number of words found
-
 }
 
 
