@@ -25,4 +25,5 @@ solveur/test/open_dict_test
 solveur/test/wordle
 solveur/wordle
 
-solveur/array_test_int
+solveur/test/array_test_int
+

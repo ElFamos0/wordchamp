@@ -6,7 +6,7 @@
 int main() {
 
     char ** arr;
-    char filename[] = "dico.txt";
+    char filename[] = "../dico.txt";
 
     int n;
     arr = (char**) opendict(filename, &n);
@@ -20,8 +20,20 @@ int main() {
 
     free(arr);
 
-    int taille = openwsolf();
+    char ** arr2;
+    arr2 = (char**) opendict_size(filename, 5, &n);
 
-    printf("Taille : %d \n", taille);
+    for (int i = 0; i<n;i++) {
+        printf("%s\n", arr2[i]);
+        free(arr2[i]);
+
+    }
+
+    free(arr2);
+
+
+    //int taille = openwsolf();
+
+    //printf("Taille : %d \n", taille);
 
 }
