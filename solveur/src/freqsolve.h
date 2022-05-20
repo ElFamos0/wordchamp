@@ -6,8 +6,9 @@
 #include "open_dict.h"
 
 int findalphabetposition(char c);
-float ** letterfreq(int taillemot, char ** arr, int nombremot);
-void printfreq(float ** freq, int taillemot);
-float wordscore(char * word, float ** freq, int taillemot);
-float * getmaxfreq(float ** freq, int taillemot);
+double ** letterfreq(int taillemot, char ** arr, int nombremot);
+void printfreq(double ** freq, int taillemot);
+double * getmaxfreq(double ** freq, int taillemot);
+double* wordscore(double ** freq, char ** possibleword, int taillemot, int nombremot);
+char * bestword(char ** possibleword, int taillemot, int nombremot, double* scores);
 

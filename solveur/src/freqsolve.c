@@ -2,13 +2,13 @@
 
 #define ALPHABET "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-float ** letterfreq(int taillemot, char ** arr, int nombremot){
+double ** letterfreq(int taillemot, char ** arr, int nombremot){
     // calcul des fréquences de chaque lettre pour les mots disponibles
     
     // initialisation de notre array de fréquence en fonction de la taille de mot 
-    float ** freq = malloc(sizeof(float *) * 26);
+    double ** freq = malloc(sizeof(double *) * 26);
     for(int i = 0; i < 26; i++){
-        freq[i] = malloc(sizeof(float) * taillemot);
+        freq[i] = malloc(sizeof(double) * taillemot);
     }
     // on initialise les fréquences à 0
     for(int i = 0; i < 26; i++){
@@ -31,7 +31,7 @@ float ** letterfreq(int taillemot, char ** arr, int nombremot){
     return freq;
 }
 
-void printfreq(float ** freq, int taillemot){
+void printfreq(double ** freq, int taillemot){
     // affichage des fréquences de chaque lettre pour les mots disponibles
     for(int i = 0; i < 26; i++){
         printf("%c : ", ALPHABET[i]);
@@ -52,18 +52,39 @@ int findalphabetposition(char c){
 }
 
 
-float wordscore(char * word, float ** freq, int taillemot){
+double* wordscore(double ** freq, char ** possibleword, int taillemot, int nombremot){
     // renvoie le score du mot en fonction de la fréquence de chaque lettre
-    float score = 0;
-    for(int i = 0; i < taillemot; i++){
-        score += freq[findalphabetposition(word[i])][i];
+    double* scores = malloc(sizeof(double) * nombremot);
+    double* maxfreq = getmaxfreq(freq, taillemot);
+    for(int i = 0; i < nombremot; i++){
+        scores[i] = 1;
+        char * mot = possibleword[i];
+        for(int j = 0; j < taillemot; j++){
+            char c = mot[j];
+            scores[i] *= (1 + pow(freq[findalphabetposition(c)][j]-maxfreq[j],2));
+        }
     }
-    return score;
+    free(maxfreq);
+    return scores;
 }
 
-float * getmaxfreq(float ** freq, int taillemot){
+
+char * bestword(char ** possibleword, int taillemot, int nombremot, double* scores){
+    // renvoie le meilleur mot en fonction de son score
+    char * bestword = malloc(sizeof(char) * (taillemot+1));
+    int max = 0;
+    for(int i = 1; i < nombremot; i++){
+        if(scores[i] > scores[max]){
+            max = i;
+        }
+    }
+    strcpy(bestword, possibleword[max]);
+    return bestword;
+}
+
+double * getmaxfreq(double ** freq, int taillemot){
     // renvoie le tableau des fréquences maximales pour chaque lettre
-    float * maxfreq = malloc(sizeof(float) * taillemot);
+    double * maxfreq = malloc(sizeof(double) * taillemot);
     for(int i = 0; i < taillemot; i++){
         maxfreq[i] = freq[0][i];
         for(int j = 1; j < 26; j++){
@@ -79,6 +100,7 @@ float * getmaxfreq(float ** freq, int taillemot){
     //printf("\n");
     return maxfreq;
 }
+
 
 
 
@@ -98,15 +120,21 @@ int main(int argc, char *argv[]) {
     printf("Bienvenue sur le solveur de wordre par fréquence.\n");
     printf("Calcul du meilleur mot en cours ... \n");
 
-    float** freq = letterfreq(taillemot, possibleword, nombremot); //tableau de fréquence des lettres
-    float* maxfreq = getmaxfreq(freq, taillemot); //tableau des fréquences maximales pour chaque lettre
+    double** freq = letterfreq(taillemot, possibleword, nombremot); //tableau de fréquence des lettres
+    double* scores = wordscore(freq, possibleword, taillemot, nombremot); //tableau des scores des mots
+    char * bestmot = bestword(possibleword, taillemot, nombremot, scores); //meilleur mot
 
+    for(int i = 0; i < nombremot; i++){
+        printf("%s : %f\n", possibleword[i], scores[i]);
+    }
+    printf("Le meilleur mot est %s\n", bestmot);
+    //printf("Le meilleur mot est %s\n", bestmot);
     // on détermine le meilleur mot pour commencer
 
 
 
     // NETTOYAGE DU PROGRAMME
-
+    //free(bestmot);
 
     //free possible word
     for(int i = 0; i < nombremot; i++){
@@ -120,6 +148,10 @@ int main(int argc, char *argv[]) {
     }
     free(freq);
 
-    // free maxfreq
-    free(maxfreq);
+    // free scores
+    free(scores);
+    //free(bestmot);
+    free(bestmot);
+
+    return 0;
 }
