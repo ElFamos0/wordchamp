@@ -42,6 +42,8 @@ void printfreq(double ** freq, int taillemot){
     }
 }
 
+
+
 int findalphabetposition(char c){
     // renvoie la position de la lettre dans l'alphabet
     int i = 0;
@@ -116,28 +118,40 @@ int main(int argc, char *argv[]) {
         printf("Vous avez choisi un mot de taille impossible\n");
         return 1;
     }
+    char *reponse= malloc(sizeof(char) * (26));
     char **possibleword = opendict_size(argv[1],taillemot, &nombremot);
     printf("Bienvenue sur le solveur de wordre par fréquence.\n");
-    
-    
     printf("Calcul du meilleur mot en cours ... \n");
-
-
     double** freq = letterfreq(taillemot, possibleword, nombremot); //tableau de fréquence des lettres
     double* scores = wordscore(freq, possibleword, taillemot, nombremot); //tableau des scores des mots
     char * bestmot = bestword(possibleword, taillemot, nombremot, scores); //meilleur mot
-
-    for(int i = 0; i < nombremot; i++){
-        printf("%s : %f\n", possibleword[i], scores[i]);
+    printf("Le meilleur mot pour commencer est %s\n", bestmot);
+    
+    char * reponseattendu= "22222";
+    while(strcmp(reponse,reponseattendu)!=0 && strcmp(reponse,"-1")!=0){
+        scanf("%s", reponse); // je sais que c'est vulnérable je sais pas comment faire mieux pour le moment
+        }
+    if(strcmp(reponse,reponseattendu)==0){
+        printf("Bravo vous avez gagné !\n");
     }
-    printf("Le meilleur mot est %s\n", bestmot);
-    //printf("Le meilleur mot est %s\n", bestmot);
-    // on détermine le meilleur mot pour commencer
+    else{
+        printf("Bye Bye\n");
+    }
+
+
 
 
 
     // NETTOYAGE DU PROGRAMME
-    //free(bestmot);
+
+
+
+
+
+
+
+
+
 
     //free possible word
     for(int i = 0; i < nombremot; i++){
@@ -155,6 +169,6 @@ int main(int argc, char *argv[]) {
     free(scores);
     //free(bestmot);
     free(bestmot);
-
+    free(reponse);
     return 0;
 }
