@@ -74,7 +74,7 @@ char * bestword(char ** possibleword, int taillemot, int nombremot, double* scor
     char * bestword = malloc(sizeof(char) * (taillemot+1));
     int max = 0;
     for(int i = 1; i < nombremot; i++){
-        if(scores[i] > scores[max]){
+        if(scores[i] < scores[max]){
             max = i;
         }
     }
@@ -118,7 +118,10 @@ int main(int argc, char *argv[]) {
     }
     char **possibleword = opendict_size(argv[1],taillemot, &nombremot);
     printf("Bienvenue sur le solveur de wordre par fréquence.\n");
+    
+    
     printf("Calcul du meilleur mot en cours ... \n");
+
 
     double** freq = letterfreq(taillemot, possibleword, nombremot); //tableau de fréquence des lettres
     double* scores = wordscore(freq, possibleword, taillemot, nombremot); //tableau des scores des mots
