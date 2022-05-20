@@ -7,4 +7,7 @@
 
 int findalphabetposition(char c);
 float ** letterfreq(int taillemot, char ** arr, int nombremot);
+void printfreq(float ** freq, int taillemot);
+float wordscore(char * word, float ** freq, int taillemot);
+float * getmaxfreq(float ** freq, int taillemot);
 

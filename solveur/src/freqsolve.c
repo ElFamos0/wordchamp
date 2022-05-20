@@ -24,7 +24,15 @@ float ** letterfreq(int taillemot, char ** arr, int nombremot){
             freq[findalphabetposition(arr[i][j])][j] += 1;
         }
     }
-    // print freq
+
+    // si vous voulez voir la fréquence décommenter cette ligne
+
+    //printfreq(freq, taillemot);
+    return freq;
+}
+
+void printfreq(float ** freq, int taillemot){
+    // affichage des fréquences de chaque lettre pour les mots disponibles
     for(int i = 0; i < 26; i++){
         printf("%c : ", ALPHABET[i]);
         for(int j = 0; j < taillemot; j++){
@@ -32,7 +40,6 @@ float ** letterfreq(int taillemot, char ** arr, int nombremot){
         }
         printf("\n");
     }
-    return freq;
 }
 
 int findalphabetposition(char c){
@@ -43,6 +50,36 @@ int findalphabetposition(char c){
     }
     return i;
 }
+
+
+float wordscore(char * word, float ** freq, int taillemot){
+    // renvoie le score du mot en fonction de la fréquence de chaque lettre
+    float score = 0;
+    for(int i = 0; i < taillemot; i++){
+        score += freq[findalphabetposition(word[i])][i];
+    }
+    return score;
+}
+
+float * getmaxfreq(float ** freq, int taillemot){
+    // renvoie le tableau des fréquences maximales pour chaque lettre
+    float * maxfreq = malloc(sizeof(float) * taillemot);
+    for(int i = 0; i < taillemot; i++){
+        maxfreq[i] = freq[0][i];
+        for(int j = 1; j < 26; j++){
+            if(freq[j][i] > maxfreq[i]){
+                maxfreq[i] = freq[j][i];
+            }
+        }
+    }
+    // display de max freq    
+    //for(int i = 0; i < taillemot; i++){
+    //    printf("%f ", maxfreq[i]);
+    //}
+    //printf("\n");
+    return maxfreq;
+}
+
 
 
 int main(int argc, char *argv[]) {
@@ -60,7 +97,12 @@ int main(int argc, char *argv[]) {
     char **possibleword = opendict_size(argv[1],taillemot, &nombremot);
     printf("Bienvenue sur le solveur de wordre par fréquence.\n");
     printf("Calcul du meilleur mot en cours ... \n");
-    float** freq = letterfreq(taillemot, possibleword, nombremot);
+
+    float** freq = letterfreq(taillemot, possibleword, nombremot); //tableau de fréquence des lettres
+    float* maxfreq = getmaxfreq(freq, taillemot); //tableau des fréquences maximales pour chaque lettre
+
+    // on détermine le meilleur mot pour commencer
+
 
 
     // NETTOYAGE DU PROGRAMME
@@ -77,4 +119,7 @@ int main(int argc, char *argv[]) {
         free(freq[i]);
     }
     free(freq);
+
+    // free maxfreq
+    free(maxfreq);
 }
