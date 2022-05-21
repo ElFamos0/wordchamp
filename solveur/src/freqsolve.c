@@ -101,6 +101,10 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
     char * badletterlist = badletter(bestmot, reponse, taillemot);
     char * misplaceletterlist = misplaceletter(bestmot, reponse, taillemot);
     char * goodletterlist = goodletter(bestmot,reponse , taillemot);
+    char * existantletterlist = malloc(sizeof(char) * (taillemot+1)*2);
+    strcpy(existantletterlist, goodletterlist);
+    strcat(existantletterlist, misplaceletterlist);
+
     int * misplacepositionlist = misplacearray(bestmot, reponse, taillemot);
     int * goodpositionlist = goodarray(bestmot, reponse, taillemot);
     char ** newpossibleword = malloc(sizeof(char *) * (nombremot));
@@ -108,6 +112,7 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
     printf("%s - %d\n", badletterlist, strlen(badletterlist));
     printf("%s - %d\n", misplaceletterlist, strlen(misplaceletterlist));
     printf("%s - %d\n", goodletterlist, strlen(goodletterlist));
+    printf("%s - %d\n", existantletterlist, strlen(existantletterlist));
     /*
     for(int i =0;i<strlen(misplaceletterlist);i++){
         printf("%d\n", misplacepositionlist[i]);
@@ -161,6 +166,7 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
         printf("%s\n",newpossibleword2[i]);
     }    
 
+    // troisième filtre
     char ** newpossibleword3 = malloc(sizeof(char *) * (compteur2));
     int compteur3 = 0;
     for(int i = 0; i<compteur2;i++){
@@ -181,7 +187,27 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
         printf("%s\n",newpossibleword3[i]);
     }
 
-    
+    char ** newpossibleword4 = malloc(sizeof(char *) * (compteur3));
+    int compteur4 = 0;
+    for(int i = 0; i<compteur3;i++){
+        check = 0;
+        for(int j=0; j<strlen(existantletterlist);j++){
+            if(strchr(newpossibleword3[i],existantletterlist[j]) == NULL){
+                check = 1;
+            }
+        }
+        if(check == 0){
+            newpossibleword4[compteur4] = newpossibleword3[i];
+            compteur4++;
+        }
+    }
+
+
+
+    printf("COMPTEUR MOT RESTANT filtre 4 %d\n",compteur4);
+    for(int i=0;i<compteur4;i++){
+        printf("%s\n",newpossibleword4[i]);
+    }
     
     return possibleword;
 }
