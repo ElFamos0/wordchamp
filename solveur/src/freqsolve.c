@@ -31,6 +31,40 @@ double ** letterfreq(int taillemot, char ** arr, int nombremot){
     return freq;
 }
 
+char * badletter(char * guess, char * reponse, int taillemot){
+    char * badletterlist = malloc(sizeof(char) * taillemot);
+    for (int i = 0; i < taillemot; i++){
+        if (reponse[i] == '0'){
+            badletterlist[i] = guess[i];
+        }
+    }
+    return badletterlist;
+}
+
+char* misplaceletter(char* guess, char* reponse, int taillemot){
+    char* misplaceletterlist = malloc(sizeof(char) * taillemot);
+    for (int i = 0; i < taillemot; i++){
+        if (reponse[i] == '1'){
+            misplaceletterlist[i] = guess[i];
+        }
+    }
+    return misplaceletterlist;
+}
+char* goodletter(char* guess, char* reponse, int taillemot){
+    char* goodletterlist = malloc(sizeof(char) * taillemot);
+    for (int i = 0; i < taillemot; i++){
+        if (reponse[i] == '2'){
+            goodletterlist[i] = guess[i];
+        }
+    }
+    return goodletterlist;
+}
+
+char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemot,int nombremot){
+    return possibleword;
+}
+
+
 void printfreq(double ** freq, int taillemot){
     // affichage des fréquences de chaque lettre pour les mots disponibles
     for(int i = 0; i < 26; i++){
@@ -131,6 +165,7 @@ int main(int argc, char *argv[]) {
     while(strcmp(reponse,reponseattendu)!=0 && strcmp(reponse,"-1")!=0){
         scanf("%s", reponse); // je sais que c'est vulnérable je sais pas comment faire mieux pour le moment
         i++;
+        char **newpossibleword = wordremover(possibleword, reponse, bestmot, taillemot, nombremot);
         }
     if(strcmp(reponse,reponseattendu)==0){
         printf("Bravo vous avez gagné en %d essais!\n", i);

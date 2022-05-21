@@ -11,4 +11,8 @@ void printfreq(double ** freq, int taillemot);
 double * getmaxfreq(double ** freq, int taillemot);
 double* wordscore(double ** freq, char ** possibleword, int taillemot, int nombremot);
 char * bestword(char ** possibleword, int taillemot, int nombremot, double* scores);
+char * badletter(char * guess, char * reponse, int taillemot);
+char* misplaceletter(char* guess, char* reponse, int taillemot);
+char* goodletter(char* guess, char* reponse, int taillemot);
+char ** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemot,int nombremot);
 
