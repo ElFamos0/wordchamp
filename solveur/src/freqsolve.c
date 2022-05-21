@@ -159,14 +159,27 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
 
     for(int i=0;i<compteur2;i++){
         printf("%s\n",newpossibleword2[i]);
-    }
-    
-    for(int i = 0; i<compteur;i++){
-        free(newpossibleword[i]);
-    }
-    free(newpossibleword);
+    }    
 
-    newpossibleword = malloc(sizeof(char *) * (compteur2));
+    char ** newpossibleword3 = malloc(sizeof(char *) * (compteur2));
+    int compteur3 = 0;
+    for(int i = 0; i<compteur2;i++){
+        check = 0;
+        for(int j=0; j<strlen(misplaceletterlist);j++){
+            if(newpossibleword2[i][misplacepositionlist[j]] == misplaceletterlist[j]){
+                check = 1;
+            }
+        }
+        if(check == 0){
+            newpossibleword3[compteur3] = newpossibleword2[i];
+            compteur3++;
+        }
+    }
+    printf("COMPTEUR MOT RESTANT filtre 3 %d\n",compteur3);
+
+    for(int i=0;i<compteur3;i++){
+        printf("%s\n",newpossibleword3[i]);
+    }
 
     
     
