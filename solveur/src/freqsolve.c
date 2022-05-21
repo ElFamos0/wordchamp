@@ -126,13 +126,14 @@ int main(int argc, char *argv[]) {
     double* scores = wordscore(freq, possibleword, taillemot, nombremot); //tableau des scores des mots
     char * bestmot = bestword(possibleword, taillemot, nombremot, scores); //meilleur mot
     printf("Le meilleur mot pour commencer est %s\n", bestmot);
-    
+    int i = 0;
     char * reponseattendu= "22222";
     while(strcmp(reponse,reponseattendu)!=0 && strcmp(reponse,"-1")!=0){
         scanf("%s", reponse); // je sais que c'est vulnérable je sais pas comment faire mieux pour le moment
+        i++;
         }
     if(strcmp(reponse,reponseattendu)==0){
-        printf("Bravo vous avez gagné !\n");
+        printf("Bravo vous avez gagné en %d essais!\n", i);
     }
     else{
         printf("Bye Bye\n");
