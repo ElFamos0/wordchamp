@@ -32,31 +32,43 @@ double ** letterfreq(int taillemot, char ** arr, int nombremot){
 }
 
 char * badletter(char * guess, char * reponse, int taillemot){
-    char * badletterlist = malloc(sizeof(char) * taillemot);
-    for (int i = 0; i < taillemot; i++){
-        if (reponse[i] == '0'){
+    char * badletterlist = malloc(sizeof(char) * (taillemot+1));
+    for(int i = 0; i < taillemot; i++){
+        if(reponse[i] == '0'){
             badletterlist[i] = guess[i];
+    }
+        else{
+            badletterlist[i] = '_';
         }
     }
+    badletterlist[taillemot] = '\0';
     return badletterlist;
 }
 
 char* misplaceletter(char* guess, char* reponse, int taillemot){
-    char* misplaceletterlist = malloc(sizeof(char) * taillemot);
-    for (int i = 0; i < taillemot; i++){
-        if (reponse[i] == '1'){
+    char* misplaceletterlist = malloc(sizeof(char) * (taillemot+1));
+    for(int i = 0; i < taillemot; i++){
+        if(reponse[i] == '1'){
             misplaceletterlist[i] = guess[i];
         }
+        else{
+            misplaceletterlist[i] = '_';
+        }
     }
+    misplaceletterlist[taillemot] = '\0';
     return misplaceletterlist;
 }
 char* goodletter(char* guess, char* reponse, int taillemot){
-    char* goodletterlist = malloc(sizeof(char) * taillemot);
-    for (int i = 0; i < taillemot; i++){
-        if (reponse[i] == '2'){
+    char* goodletterlist = malloc(sizeof(char) * (taillemot+1));
+    for(int i = 0; i < taillemot; i++){
+        if(reponse[i] == '2'){
             goodletterlist[i] = guess[i];
         }
+        else{
+            goodletterlist[i] = '_';
+        }
     }
+    goodletterlist[taillemot] = '\0';
     return goodletterlist;
 }
 
@@ -138,8 +150,6 @@ double * getmaxfreq(double ** freq, int taillemot){
 }
 
 
-
-
 int main(int argc, char *argv[]) {
     int nombremot;
     if(argc != 3){
@@ -162,30 +172,39 @@ int main(int argc, char *argv[]) {
     printf("Le meilleur mot pour commencer est %s\n", bestmot);
     int i = 0;
     char * reponseattendu= "22222";
-    while(strcmp(reponse,reponseattendu)!=0 && strcmp(reponse,"-1")!=0){
+    while(1){
         scanf("%s", reponse); // je sais que c'est vulnérable je sais pas comment faire mieux pour le moment
-        i++;
-        char **newpossibleword = wordremover(possibleword, reponse, bestmot, taillemot, nombremot);
+        if (strcmp(reponse, "-1") == 0){
+            printf("Vous avez choisi de quitter le solveur\n");
+            break;
         }
-    if(strcmp(reponse,reponseattendu)==0){
-        printf("Bravo vous avez gagné en %d essais!\n", i);
-    }
-    else{
-        printf("Bye Bye\n");
-    }
+        if(strcmp(reponse, reponseattendu) == 0){
+            printf("Bravo vous avez trouvé le mot %s\n", bestmot);
+            break;
+        }
+        if (strlen(reponse) != taillemot){
+            printf("Vous avez saisi un mot de taille incorrecte\n");
+            continue;
+        }
+        printf("Vous avez saisi %s\n", reponse);
+
+        char * badletterlist = badletter(bestmot, reponse, taillemot);
+        char * misplaceletterlist = misplaceletter(bestmot, reponse, taillemot);
+        char * goodletterlist = goodletter(bestmot,reponse , taillemot);
+        i++;
+        printf("bad %s\n", badletterlist);
+        printf("misplace %s\n", misplaceletterlist);
+        printf("good %s\n", goodletterlist);
+        free(badletterlist);
+        free(misplaceletterlist);
+        free(goodletterlist);
+        }
 
 
 
 
 
     // NETTOYAGE DU PROGRAMME
-
-
-
-
-
-
-
 
 
 
@@ -206,5 +225,7 @@ int main(int argc, char *argv[]) {
     //free(bestmot);
     free(bestmot);
     free(reponse);
+
+
     return 0;
 }

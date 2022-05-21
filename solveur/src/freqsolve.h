@@ -4,6 +4,7 @@
 #include <math.h>
 #include <time.h>
 #include "open_dict.h"
+#include "linked_list.h"
 
 int findalphabetposition(char c);
 double ** letterfreq(int taillemot, char ** arr, int nombremot);
