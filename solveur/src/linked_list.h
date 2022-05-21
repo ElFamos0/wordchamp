@@ -24,3 +24,4 @@ void list_destroy(linked_list_t*);
 void list_insert(linked_list_t*, char*, unsigned int);
 char* list_get(linked_list_t*, unsigned int);
 unsigned int list_index_of(linked_list_t*, char*);
+void list_remove(linked_list_t* one_list,  char* one_value )
