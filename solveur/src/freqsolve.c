@@ -33,49 +33,145 @@ double ** letterfreq(int taillemot, char ** arr, int nombremot){
 
 char * badletter(char * guess, char * reponse, int taillemot){
     char * badletterlist = malloc(sizeof(char) * (taillemot+1));
+    int place = 0;
     for(int i = 0; i < taillemot; i++){
         if(reponse[i] == '0'){
-            badletterlist[i] = guess[i];
+            badletterlist[place] = guess[i];
+            place++;
     }
-        else{
-            badletterlist[i] = '_';
-        }
     }
-    badletterlist[taillemot] = '\0';
+    badletterlist[place] = '\0';
     return badletterlist;
 }
 
 char* misplaceletter(char* guess, char* reponse, int taillemot){
     char* misplaceletterlist = malloc(sizeof(char) * (taillemot+1));
+    int place = 0;
     for(int i = 0; i < taillemot; i++){
         if(reponse[i] == '1'){
-            misplaceletterlist[i] = guess[i];
+            misplaceletterlist[place] = guess[i];
+            place++;
         }
-        else{
-            misplaceletterlist[i] = '_';
-        }
+
     }
-    misplaceletterlist[taillemot] = '\0';
+    misplaceletterlist[place] = '\0';
     return misplaceletterlist;
+}
+
+int* misplacearray(char* guess, char* reponse, int taillemot){
+    int* misplacepositionlist = malloc(sizeof(int) * (taillemot+1));
+    int place = 0;
+    for(int i = 0; i < taillemot; i++){
+        if(reponse[i] == '1'){
+            misplacepositionlist[place] = i;
+            place++;
+        }
+
+    }
+    return misplacepositionlist;
 }
 char* goodletter(char* guess, char* reponse, int taillemot){
     char* goodletterlist = malloc(sizeof(char) * (taillemot+1));
+    int place = 0;
     for(int i = 0; i < taillemot; i++){
         if(reponse[i] == '2'){
-            goodletterlist[i] = guess[i];
-        }
-        else{
-            goodletterlist[i] = '_';
+            goodletterlist[place] = guess[i];
+            place++;
         }
     }
-    goodletterlist[taillemot] = '\0';
+    goodletterlist[place] = '\0';
     return goodletterlist;
 }
 
-char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemot,int nombremot){
-    return possibleword;
+int* goodarray(char* guess, char* reponse, int taillemot){
+    int* goodpositionlist = malloc(sizeof(int) * (taillemot+1));
+    int place = 0;
+    for(int i = 0; i < taillemot; i++){
+        if(reponse[i] == '2'){
+            goodpositionlist[place] = i;
+            place++;
+        }
+
+    }
+    return goodpositionlist;
 }
 
+char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemot,int nombremot){
+    // on parcourt tous les mots disponibles et on met a NULL les mots qui ne correspondent pas à la réponse
+    char * badletterlist = badletter(bestmot, reponse, taillemot);
+    char * misplaceletterlist = misplaceletter(bestmot, reponse, taillemot);
+    char * goodletterlist = goodletter(bestmot,reponse , taillemot);
+    int * misplacepositionlist = misplacearray(bestmot, reponse, taillemot);
+    int * goodpositionlist = goodarray(bestmot, reponse, taillemot);
+    char ** newpossibleword = malloc(sizeof(char *) * (nombremot));
+    
+    printf("%s - %d\n", badletterlist, strlen(badletterlist));
+    printf("%s - %d\n", misplaceletterlist, strlen(misplaceletterlist));
+    printf("%s - %d\n", goodletterlist, strlen(goodletterlist));
+    /*
+    for(int i =0;i<strlen(misplaceletterlist);i++){
+        printf("%d\n", misplacepositionlist[i]);
+    }
+    for(int i =0;i<strlen(goodletterlist);i++){
+        printf("%d\n", goodpositionlist[i]);
+    }
+    */
+
+    // premier filtre DONE 
+    int compteur = 0;
+    int check = 0;
+    for(int i = 0; i < nombremot; i++){
+        check = 0;
+        for(int j=0; j<strlen(badletterlist);j++){
+            if(strchr(possibleword[i],badletterlist[j]) != NULL){
+                if((strchr(misplaceletterlist,badletterlist[j]) != NULL) || (strchr(goodletterlist,badletterlist[j]) != NULL)){
+                    check = 0;
+                }
+                else{
+                    check = 1;
+                }
+            }
+        }
+        if(check == 0){
+            newpossibleword[compteur] = possibleword[i];
+            compteur++;
+        }
+    }
+    printf("COMPTEUR MOT RESTANT filtre 1 %d\n",compteur);
+
+    // deuxième filtre 
+    char ** newpossibleword2 = malloc(sizeof(char *) * (compteur));
+
+    int compteur2 = 0;
+    for(int i = 0; i<compteur;i++){
+        check = 0;
+        for(int j=0; j<strlen(goodletterlist);j++){
+            if(newpossibleword[i][goodpositionlist[j]] != goodletterlist[j]){
+                check = 1;
+            }
+        }
+        if(check == 0){
+            newpossibleword2[compteur2] = newpossibleword[i];
+            compteur2++;
+        }
+    }
+    printf("COMPTEUR MOT RESTANT filtre 2 %d\n",compteur2);
+
+    for(int i=0;i<compteur2;i++){
+        printf("%s\n",newpossibleword2[i]);
+    }
+    
+    for(int i = 0; i<compteur;i++){
+        free(newpossibleword[i]);
+    }
+    free(newpossibleword);
+
+    newpossibleword = malloc(sizeof(char *) * (compteur2));
+
+    
+    
+    return possibleword;
+}
 
 void printfreq(double ** freq, int taillemot){
     // affichage des fréquences de chaque lettre pour les mots disponibles
@@ -187,27 +283,8 @@ int main(int argc, char *argv[]) {
             continue;
         }
         printf("Vous avez saisi %s\n", reponse);
-
-        char * badletterlist = badletter(bestmot, reponse, taillemot);
-        char * misplaceletterlist = misplaceletter(bestmot, reponse, taillemot);
-        char * goodletterlist = goodletter(bestmot,reponse , taillemot);
-        i++;
-        printf("bad %s\n", badletterlist);
-        printf("misplace %s\n", misplaceletterlist);
-        printf("good %s\n", goodletterlist);
-        free(badletterlist);
-        free(misplaceletterlist);
-        free(goodletterlist);
+        possibleword = wordremover(possibleword, reponse, bestmot, taillemot, nombremot);
         }
-
-
-
-
-
-    // NETTOYAGE DU PROGRAMME
-
-
-
     //free possible word
     for(int i = 0; i < nombremot; i++){
         free(possibleword[i]);
