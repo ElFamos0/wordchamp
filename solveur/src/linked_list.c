@@ -110,20 +110,3 @@ unsigned int list_index_of(linked_list_t* one_list, char* one_value) {
     }
     return -1;
 }
-
-void list_remove(linked_list_t* one_list,  char* one_value ) {
-    unsigned int curr_pos = 0;
-    linked_list_t_element* curr = one_list->next;
-    while (curr != NULL) {
-        if (curr->value == one_value) {
-            linked_list_t_element* next = curr->next;
-            free(curr);
-            curr = next;
-            one_list->next = curr;
-            return;
-        }
-        curr = curr->next;
-        curr_pos++;
-    }
-
-}
