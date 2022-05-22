@@ -245,7 +245,7 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
         check = 0;
         for(int j=0; j<strlen(badletterlist);j++){
             if(strchr(newpossibleword4[i],badletterlist[j]) != NULL && strchr(newpossibleword4[i],existantletterlist[j]) != NULL){
-                if (countchar(newpossibleword4[i],badletterlist[j]) == countchar(existantletterlist,badletterlist[j])){
+                if (countchar(newpossibleword4[i],badletterlist[j]) != countchar(existantletterlist,badletterlist[j])){
                     check = 1;
                 }
             }
@@ -388,7 +388,11 @@ int main(int argc, char *argv[]) {
     char * bestmot = bestword(possibleword, taillemot, nombremot, scores); //meilleur mot
     printf("Le meilleur mot pour commencer est %s\n", bestmot);
     int i = 0;
-    char * reponseattendu= "22222";
+    char reponseattendu[taillemot+1];
+    for (i = 0; i < taillemot; i++){
+        reponseattendu[i] = '2';
+    }
+    reponseattendu[taillemot] = '\0';
     while(1){
         scanf("%s", reponse); // je sais que c'est vulnérable je sais pas comment faire mieux pour le moment
         if (strcmp(reponse, "-1") == 0){
@@ -431,6 +435,7 @@ int main(int argc, char *argv[]) {
     }
     free(possibleword);
 
+    free(reponse);
     //free freq
     for(int i = 0; i < 26; i++){
         free(freq[i]);
