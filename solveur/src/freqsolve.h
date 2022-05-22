@@ -15,5 +15,8 @@ char * bestword(char ** possibleword, int taillemot, int nombremot, double* scor
 char * badletter(char * guess, char * reponse, int taillemot);
 char* misplaceletter(char* guess, char* reponse, int taillemot);
 char* goodletter(char* guess, char* reponse, int taillemot);
-char ** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemot,int nombremot);
+char ** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemot,int nombremot, int* nombremot2);
+int* goodarray(char* guess, char* reponse, int taillemot);
+int* misplacearray(char* guess, char* reponse, int taillemot);
+int countchar(char * word, char letter);
 

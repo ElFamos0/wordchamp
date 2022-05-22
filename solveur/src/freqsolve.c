@@ -96,7 +96,7 @@ int* goodarray(char* guess, char* reponse, int taillemot){
     return goodpositionlist;
 }
 
-char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemot,int nombremot){
+char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemot,int nombremot, int * nombremot2){
     // on parcourt tous les mots disponibles et on met a NULL les mots qui ne correspondent pas à la réponse
     char * badletterlist = badletter(bestmot, reponse, taillemot);
     char * misplaceletterlist = misplaceletter(bestmot, reponse, taillemot);
@@ -144,6 +144,13 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
     }
     printf("COMPTEUR MOT RESTANT filtre 1 %d\n",compteur);
 
+    /*
+    for(int i = 0; i < nombremot; i++){
+        free(possibleword[i]);
+    }
+    free(possibleword);
+    */
+
     // deuxième filtre 
     char ** newpossibleword2 = malloc(sizeof(char *) * (compteur));
 
@@ -161,10 +168,16 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
         }
     }
     printf("COMPTEUR MOT RESTANT filtre 2 %d\n",compteur2);
-
+    /*
     for(int i=0;i<compteur2;i++){
         printf("%s\n",newpossibleword2[i]);
-    }    
+    } 
+    
+    for(int i = 0; i < compteur; i++){
+        free(newpossibleword[i]);
+    }
+    free(newpossibleword);
+    */
 
     // troisième filtre
     char ** newpossibleword3 = malloc(sizeof(char *) * (compteur2));
@@ -182,10 +195,16 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
         }
     }
     printf("COMPTEUR MOT RESTANT filtre 3 %d\n",compteur3);
-
+    /*
     for(int i=0;i<compteur3;i++){
         printf("%s\n",newpossibleword3[i]);
     }
+    
+    for(int i = 0; i < compteur2; i++){
+        free(newpossibleword2[i]);
+    }
+    free(newpossibleword2);
+    */
 
     char ** newpossibleword4 = malloc(sizeof(char *) * (compteur3));
     int compteur4 = 0;
@@ -204,12 +223,70 @@ char** wordremover(char ** possibleword,char* reponse,char* bestmot,int taillemo
 
 
 
+
     printf("COMPTEUR MOT RESTANT filtre 4 %d\n",compteur4);
+    /*
     for(int i=0;i<compteur4;i++){
         printf("%s\n",newpossibleword4[i]);
     }
+    for(int i = 0; i < compteur3; i++){
+        free(newpossibleword3[i]);
+    }
+    free(newpossibleword3);
+    */
     
-    return possibleword;
+    char** newpossibleword5 = malloc(sizeof(char *) * (compteur4));
+    int compteur5 = 0;
+    for(int i = 0; i<compteur4;i++){
+        check = 0;
+        for(int j=0; j<strlen(badletterlist);j++){
+            if(strchr(newpossibleword4[i],badletterlist[j]) != NULL && strchr(newpossibleword4[i],existantletterlist[j]) != NULL){
+                if (countchar(newpossibleword4[i],badletterlist[j]) == countchar(existantletterlist,badletterlist[j])){
+                    check = 1;
+                }
+            }
+
+        }
+        if(check == 0){
+            newpossibleword5[compteur5] = newpossibleword4[i];
+            compteur5++;
+        }
+    }
+
+
+
+    printf("COMPTEUR MOT RESTANT filtre 5 %d\n",compteur5);
+    
+    /*for(int i=0;i<compteur5;i++){
+        printf("%s\n",newpossibleword5[i]);
+    }
+    for(int i = 0; i < compteur4; i++){
+        free(newpossibleword4[i]);
+    }
+    free(newpossibleword4);
+    */
+    
+    *nombremot2 = compteur5;
+
+    free(badletterlist);
+    free(goodletterlist);
+    free(misplaceletterlist);
+    free(goodpositionlist);
+    free(misplacepositionlist);
+    free(existantletterlist);
+
+
+    return newpossibleword5;
+}
+
+int countchar(char * word, char letter){
+    int count = 0;
+    for(int i=0;i<strlen(word);i++){
+        if(word[i] == letter){
+            count++;
+        }
+    }
+    return count;
 }
 
 void printfreq(double ** freq, int taillemot){
@@ -322,7 +399,23 @@ int main(int argc, char *argv[]) {
             continue;
         }
         printf("Vous avez saisi %s\n", reponse);
-        possibleword = wordremover(possibleword, reponse, bestmot, taillemot, nombremot);
+        possibleword = wordremover(possibleword, reponse, bestmot, taillemot, nombremot, &nombremot);
+        printf("Il reste %d mots possibles\n", nombremot);
+        printf("[");
+        for(int i = 0; i < nombremot; i++){
+            printf("%s,", possibleword[i]);
+        }
+        printf("]\n");
+        free(bestmot);
+        free(scores);
+        for(int i = 0; i < 26; i++){
+            free(freq[i]);
+        }
+        free(freq);
+        double** freq = letterfreq(taillemot, possibleword, nombremot); //tableau de fréquence des lettres
+        double* scores = wordscore(freq, possibleword, taillemot, nombremot); //tableau des scores des mots
+        char * bestmot = bestword(possibleword, taillemot, nombremot, scores); //meilleur mot
+        printf("Le meilleur mot pour continuer est %s\n", bestmot);
         }
     //free possible word
     for(int i = 0; i < nombremot; i++){
@@ -340,8 +433,5 @@ int main(int argc, char *argv[]) {
     free(scores);
     //free(bestmot);
     free(bestmot);
-    free(reponse);
-
-
     return 0;
 }
