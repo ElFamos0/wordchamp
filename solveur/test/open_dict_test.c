@@ -6,7 +6,7 @@
 int main() {
 
     char ** arr;
-    char filename[] = "../dico.txt";
+    char filename[] = "../dicoz.txt";
 
     int n;
     arr = (char**) opendict(filename, &n);
