@@ -15,7 +15,7 @@ import (
 
 // Juste pour simplifier
 func startExecutable(executable string, size int) (*exec.Cmd, io.WriteCloser, *bufio.Scanner) {
-	c := exec.Command(fmt.Sprintf("./%s", executable), fmt.Sprintf("-s %d", size))
+	c := exec.Command("stdbuf", "-oL", fmt.Sprintf("./%s", executable), fmt.Sprintf("%d", size))
 
 	si, err := c.StdinPipe()
 	if err != nil {
