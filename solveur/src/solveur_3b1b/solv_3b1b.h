@@ -36,11 +36,13 @@ double calculate_proba(pattern_t * pattern, table_t  * table, char *** all_words
 char *** all_words(table_t * table, int * size_ptr);
 void destroy_all_words(char *** arr, int size);
 
+void val_array_based_on_soluce(char * guess, char * soluce, int ** pattern);
+bool is_char_in_string(char c, char * string);
 // A faire avec structure appropriée
 
 
 void best_guess(table_t * table_dico, table_t * table_proposable,int taille);
-
+void best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille);
 // Puis faire une fonction main pour créer l'intéraction avec le joueur.
 // Ensuite, pistes d'optimisation à explorer.
 

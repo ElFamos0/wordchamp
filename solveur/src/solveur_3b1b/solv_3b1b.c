@@ -356,3 +356,120 @@ void best_guess(table_t * table_dico, table_t * table_proposable,int taille){
     printf("Best guess : %s, E = %f\n",best,max_E);
 
 }
+
+
+bool is_char_in_string(char c, char * string) {
+
+    int n = strlen(string) ;
+
+    for (int i = 0; i<n;i++) {
+
+        if (c == string[i]) {return true;}
+
+    }
+
+    return false;
+}
+
+
+
+
+void val_array_based_on_soluce(char * guess, char * soluce, int ** pattern) {
+
+    int count_soluce[26];
+    int count_guess[26];
+    memset(count_soluce, 0, sizeof(int) * 26);
+    memset(count_guess, 0, sizeof(int) * 26);
+    int n = strlen(guess);
+
+    for(int i = 0; i < n ; i++) {
+
+        count_soluce[soluce[i] - 65] += 1;
+
+        if (soluce[i] == guess[i]) {
+
+            (*pattern)[i] = 2;
+            count_guess[guess[i] -65] += 1;
+        }
+    }
+
+    for(int i = 0; i < n ; i++) {
+
+        if ((*pattern)[i] != 2 && is_char_in_string(guess[i],soluce) && count_guess[guess[i] -65] < count_soluce[guess[i] -65]) {
+
+            (*pattern)[i] = 1;
+            count_guess[guess[i] -65] += 1;
+        }
+    }
+
+
+}
+
+
+void best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille){
+
+
+    char best[30];
+    double max_E;
+    int size_dico;
+    char *** all_words_dico = all_words(table_dico,&size_dico);
+    int size_prop;
+    char *** all_words_prop = all_words(table_proposable,&size_prop);
+    printf("Nb de possibilités restantes : %d/%d\n",size_prop,size_dico);
+
+    for(int indice = 0; indice < size_dico; indice ++) {
+
+        char * mot_test = (*all_words_dico)[indice];
+        double E = 0;
+        double somme_p = 0;
+        int * p_array = (int *) malloc((int)pow(3,taille) * sizeof(int));
+        memset(p_array, 0, sizeof(int) * (int)pow(3,taille));
+
+        for( int j = 0; j< size_prop;j++) {
+
+            char * mot_prop = (*all_words_prop)[j];
+            int  * pattern = (int*) malloc(taille*sizeof(int));
+            memset(pattern, 0, sizeof(int) * taille);
+            val_array_based_on_soluce(mot_test,mot_prop, &pattern);
+
+            int temp = 0;
+
+            for (int i = 0; i < taille; i++) {
+
+                temp += pattern[i] * (int)pow(3,taille-1-i);
+            }
+            p_array[temp] += 1;
+            
+            free(pattern);
+
+        }
+        double p = 0;
+        double size_prop_double = (double) size_prop;
+        for( int j = 0; j< (int)pow(3,taille);j++) {
+
+            p = p_array[j] / size_prop_double ;
+            if (p != 0) { 
+                    E += p*log2(1/p);
+                    }
+            somme_p += p;          
+        }
+
+
+        
+        if (E > max_E) {
+
+            max_E = E;
+            strcpy(best,mot_test);
+
+        }
+        printf("Mot '%s' analysé, E = %f, +p = %f // %d/%d\n",mot_test,E,somme_p,indice+1,size_dico);
+        if (somme_p > 1.5 ) { printf("%s,%f\n",mot_test,somme_p);}
+        free(p_array);
+
+    }
+
+    destroy_all_words(all_words_dico,size_dico);
+    destroy_all_words(all_words_prop,size_prop);
+    printf("Best guess : %s, E = %f\n",best,max_E);
+
+}

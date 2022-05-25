@@ -5,14 +5,16 @@
 int main() {
 
     char filename[] = "../../../dicoz.txt";
-    int val[5] = {1,0,2,0,0} ;
-    pattern_t * pattern = create_pattern( val, "MAISO");
-    int n;
-    int * count;
-    bool * arr;
-    possible_pre(&count,&arr,pattern);
+    // int val[5] = {1,0,2,0,0} ;
+    // pattern_t * pattern = create_pattern( val, "MAISO");
+    // int n;
+    // int * count;
+    // bool * arr;
+    // possible_pre(&count,&arr,pattern);
 
-    table_t * table = dico_load_size(filename,5);
+    table_t * table = dico_load_size(filename,7);
+    best_guess_v2(table,table,7);
+
 
                      // Test de generate_all_pattern
 
@@ -87,9 +89,8 @@ int main() {
 
     //  }
 
-    best_guess(table,table,5);
 
-    destroy_pattern(pattern);
+    // destroy_pattern(pattern);
 
     // char * word = "SASSE";
     // int ** val_arr;
@@ -121,8 +122,8 @@ int main() {
     table_destroy(table);
     // table_destroy(table_dico);
 
-    free(count);
-    free(arr);
+    // free(count);
+    // free(arr);
 
 
 }
