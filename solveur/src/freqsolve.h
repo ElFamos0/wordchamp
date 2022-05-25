@@ -6,6 +6,9 @@
 #include "open_dict.h"
 #include "linked_list.h"
 
+#define DICT_FILE "dicoz.txt"
+#define DEFAULT_WORD_LENGTH 5
+
 int findalphabetposition(char c);
 double ** letterfreq(int taillemot, char ** arr, int nombremot);
 void printfreq(double ** freq, int taillemot);
