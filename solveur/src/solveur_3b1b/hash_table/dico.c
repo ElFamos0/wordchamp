@@ -7,7 +7,7 @@
 
 table_t* dico_load(char* filename){
 
-    table_t * table = table_create(100000);
+    table_t * table = table_create(10000);
 
     FILE* ptr;
     char ch;
@@ -73,7 +73,7 @@ table_t* dico_load_size(char * filename, int taille){
         printf("file can't be opened \n");
     }
 
-    table_t * table = table_create(100000);
+    table_t * table = table_create(2000);
 
     char a[50] = "";
 

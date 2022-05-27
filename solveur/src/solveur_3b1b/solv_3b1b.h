@@ -38,13 +38,20 @@ void destroy_all_words(char *** arr, int size);
 
 void val_array_based_on_soluce(char * guess, char * soluce, int ** pattern);
 bool is_char_in_string(char c, char * string);
+int is_pattern_seen(long ** seen_pattern, long pattern, int size);
+
+
 // A faire avec structure appropriée
 
 
 void best_guess(table_t * table_dico, table_t * table_proposable,int taille);
-void best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille);
+char * best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille,char *** all_words_dico, int size_dico,char *** all_words_prop, int size_prop);
+char * best_guess_v3(table_t * table_dico, table_t * table_proposable,int taille,char *** all_words_dico, int size_dico,char *** all_words_prop, int size_prop);
 // Puis faire une fonction main pour créer l'intéraction avec le joueur.
 // Ensuite, pistes d'optimisation à explorer.
+
+void open_firstguess(char *** array, int * size_ptr, int taille_mot, char * filename);
+
 
 
 #endif 

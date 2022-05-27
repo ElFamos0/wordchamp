@@ -1,6 +1,8 @@
 #include "solv_3b1b.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include "../open_dict.h"
 
 
 pattern_t * create_pattern(int * val, char * guess) {
@@ -267,7 +269,7 @@ double calculate_proba(pattern_t * pattern, table_t  * table,char *** all_words_
 
 void update_possible_words(table_t * table, pattern_t * pattern){
 
-    table_t * new_table = table_create(100000);
+    table_t * new_table = table_create(2000);
 
     int * count;
     bool * arr;
@@ -406,16 +408,27 @@ void val_array_based_on_soluce(char * guess, char * soluce, int ** pattern) {
 }
 
 
-void best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille){
+char * best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille, char *** all_words_dico, int size_dico,char *** all_words_prop, int size_prop){
 
 
-    char best[30];
-    double max_E;
-    int size_dico;
-    char *** all_words_dico = all_words(table_dico,&size_dico);
-    int size_prop;
-    char *** all_words_prop = all_words(table_proposable,&size_prop);
-    printf("Nb de possibilités restantes : %d/%d\n",size_prop,size_dico);
+    char  best[20][30];
+    for(int i = 0; i< 20; i++) {
+
+        strcpy(best[i],"");
+    }
+    double max_E[20];
+    memset(max_E, 0.0, sizeof(double) * 20);
+    //printf("Nb de possibilités restantes : %d/%d\n",size_prop,size_dico);
+    if (size_prop <= 2 && size_prop>0) {
+        char * retour = (char*)malloc(taille+1);
+        strcpy(retour,(*all_words_prop)[0]);
+        return retour;
+    }
+    else if (size_prop == 0) {
+        char * retour = (char*)malloc(taille+1);
+        strcpy(retour,"");
+        return retour;
+        }
 
     for(int indice = 0; indice < size_dico; indice ++) {
 
@@ -454,22 +467,211 @@ void best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille){
             somme_p += p;          
         }
 
-
-        
-        if (E > max_E) {
-
-            max_E = E;
-            strcpy(best,mot_test);
-
+        int i = 0;
+        while(i<20 && max_E[i] > E) {
+            i++;
         }
-        printf("Mot '%s' analysé, E = %f, +p = %f // %d/%d\n",mot_test,E,somme_p,indice+1,size_dico);
-        if (somme_p > 1.5 ) { printf("%s,%f\n",mot_test,somme_p);}
+        
+        //printf("Mot '%s' analysé, E = %f, +p = %f // %d/%d\n",mot_test,E,somme_p,indice+1,size_dico);
         free(p_array);
 
+        char * mot_cpy =(char*)malloc((strlen(mot_test)+1)*sizeof(char));
+        strcpy(mot_cpy,mot_test);
+
+        if (i < 20) {
+            char temp_str[30]; 
+            double temp_val;
+
+            while(i<20) {
+
+                strcpy(temp_str,best[i]);
+                double temp_val = max_E[i];
+                max_E[i] = E;
+                strcpy(best[i],mot_cpy);
+                E = temp_val;
+                strcpy(mot_cpy,temp_str);
+                i++;
+            }
+        }
+        free(mot_cpy);
     }
 
-    destroy_all_words(all_words_dico,size_dico);
-    destroy_all_words(all_words_prop,size_prop);
-    printf("Best guess : %s, E = %f\n",best,max_E);
+    // for(int i = 0; i<20; i++) {
+    //     printf("Best guess %d : %s, E = %f\n",i+1,best[i],max_E[i]);
+
+    // }
+
+    char * retour = (char*)malloc(taille+1);
+    strcpy(retour,best[0]);
+    return retour;
+}
+
+int is_pattern_seen(long ** seen_pattern, long pattern, int size) {
+
+    for(int i = 0; i< size; i++) {
+        if (pattern == (*seen_pattern)[i]) {
+            return i;}
+
+    }
+    return -1;
+
+}
+
+
+char * best_guess_v3(table_t * table_dico, table_t * table_proposable,int taille, char *** all_words_dico, int size_dico,char *** all_words_prop, int size_prop){
+
+
+    char  best[20][30];
+    for(int i = 0; i< 20; i++) {
+
+        strcpy(best[i],"");
+    }
+    double max_E[20];
+    memset(max_E, 0.0, sizeof(double) * 20);
+    //printf("Nb de possibilités restantes : %d/%d\n",size_prop,size_dico);
+
+    if (size_prop <= 2&& size_prop>0) {
+        char * retour = (char*)malloc(taille+1);
+        strcpy(retour,(*all_words_prop)[0]);
+        return retour;
+    }
+    else if (size_prop == 0) {
+        char * retour = (char*)malloc(taille+1);
+        strcpy(retour,"");
+        return retour;
+        }
+
+    for(int indice = 0; indice < size_dico; indice ++) {
+
+        char * mot_test = (*all_words_dico)[indice];
+        double E = 0;
+        double somme_p = 0;
+        int size = 0;
+        long * seen_pattern = (long*)malloc(size_prop*sizeof(long));
+        memset(seen_pattern,0,size_prop*sizeof(long));
+        double * count_pattern = (double*)malloc(size_prop*sizeof(long));
+        memset(count_pattern,0.0,size_prop*sizeof(double));
+
+        for( int j = 0; j< size_prop;j++) {
+
+            char * mot_prop = (*all_words_prop)[j];
+            int  * pattern = (int*) malloc(taille*sizeof(int));
+            memset(pattern, 0, sizeof(int) * taille);
+            val_array_based_on_soluce(mot_test,mot_prop, &pattern);
+            long temp = 0;
+            for (int i = 0; i < taille; i++) {
+
+                temp += pattern[i] * (int)pow(3,taille-1-i);
+            }
+
+    
+            int p_ind = is_pattern_seen(&seen_pattern,temp,size);
+            if (p_ind == -1) {
+                size++;
+                seen_pattern[size-1] = temp;
+                count_pattern[size-1] += 1.0;      
+            }
+            else {
+                count_pattern[p_ind] += 1.0;
+                
+            }
+            
+            free(pattern);
+        }
+
+        double p = 0;
+        double size_prop_double = (double) size_prop;
+        for( int j = 0; j< size;j++) {
+            
+            p = count_pattern[j] / size_prop_double ;
+            if (p != 0) { 
+                    E += p*log2(1/p);
+                    }
+            somme_p += p;        
+        }
+        free(count_pattern);
+        free(seen_pattern);
+        int i = 0;
+        while(i<20 && max_E[i] > E) {
+            i++;
+        }
+        
+         //printf("Mot '%s' analysé, E = %f, +p = %f // %d/%d\n",mot_test,E,somme_p,indice+1,size_dico);
+        char * mot_cpy =(char*)malloc((strlen(mot_test)+1)*sizeof(char));
+        strcpy(mot_cpy,mot_test);
+
+        if (i < 20) {
+            char temp_str[30]; 
+            double temp_val;
+
+            while(i<20) {
+
+                strcpy(temp_str,best[i]);
+                double temp_val = max_E[i];
+                max_E[i] = E;
+                strcpy(best[i],mot_test);
+                E = temp_val;
+                strcpy(mot_test,temp_str);
+                i++;
+            }
+        }
+        free(mot_cpy);
+    }
+
+    // for(int i = 0; i<20; i++) {
+    //     printf("Best guess %d : %s, E = %f\n",i+1,best[i],max_E[i]);
+
+    // }
+    char * retour = (char*)malloc(taille+1);
+    strcpy(retour,best[0]);
+    return retour;
+}
+
+void open_firstguess(char *** array, int * size_ptr, int taille_mot, char * filename){
+
+    FILE* ptr;
+    ptr = fopen(filename, "r");
+
+    if (NULL == ptr) {
+        printf("file can't be opened \n");
+    }
+
+    int c = 0;
+    char mot[40] = "";
+    int taille_l = 0;
+    char ligne[500];
+    (*array) = (char**)malloc(21*sizeof(char*));
+    int size = 0;
+
+    while (fgets(ligne, 500, ptr) != NULL) {
+        ligne[strcspn(ligne, "\r\n")] = 0;
+        strcpy(mot,"");
+        int i = 0;
+        while (isdigit(ligne[i])) {
+            strncat(mot, &(ligne[i]), 1);
+            i++;
+        }
+        taille_l = atoi(mot);
+        i++;
+        if (taille_l== taille_mot) {
+            strcpy(mot,"");
+            while(ligne[i] != '\0') {
+
+                if(ligne[i] == ' ') {
+                    (*array)[size] = (char*)malloc((taille_mot*2)*sizeof(char));
+                    strcpy((*array)[size],mot);
+                    size++;
+                    strcpy(mot,"");
+                }
+                else {
+                    strncat(mot, &(ligne[i]), 1);
+                }
+                i++;
+            }
+            break;
+        } 
+    }
+    *size_ptr = size;
+    fclose(ptr);
 
 }

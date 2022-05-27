@@ -34,8 +34,7 @@ table_t *table_create(int size){
 void table_destroy(table_t *one_table){
 
     int size = one_table->size;
-     for (int i = 0; i<size; i++) {
-
+    for (int i = 0; i<size; i++) {
         list_destroy(one_table->tab[i]);
 
     }
@@ -47,7 +46,7 @@ void table_destroy(table_t *one_table){
 int table_indexof(table_t *one_table, char *one_key){
 
     int size = one_table->size;
-    return abs(hash(one_key) % size);
+    return abs(hash(one_key) % (size-1));
 
 }
 

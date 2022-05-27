@@ -12,8 +12,47 @@ int main() {
     // bool * arr;
     // possible_pre(&count,&arr,pattern);
 
-    table_t * table = dico_load_size(filename,7);
-    best_guess_v2(table,table,7);
+
+    // double time_spent = 0.0;
+    // clock_t begin = clock();
+
+    // clock_t end = clock();
+    // time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+ 
+    // printf("The elapsed time is %f seconds\n", time_spent);
+
+    int word_length = 4;
+
+    table_t * table = dico_load_size(filename,word_length);
+    int size_dico;
+    char ** all_words_dico;
+    all_words_dico = opendict_size(filename,word_length,&size_dico);
+    char * best_mot;
+
+    if (word_length<=13) {
+        best_mot = best_guess_v2(table,table,word_length,&all_words_dico,size_dico,&all_words_dico,size_dico);
+        }
+
+    else {
+        best_mot = best_guess_v3(table,table,word_length,&all_words_dico,size_dico,&all_words_dico,size_dico);
+    }
+    
+    printf("%s\n",best_mot);
+    free(best_mot);
+    
+
+    char ** arr;
+    int size = 0;
+    char filename2[] =  "../../../dico_1stguess.txt";
+    open_firstguess(&arr,&size,word_length,filename2);
+
+    for(int i = 0; i< size; i++) {
+
+        printf("%s\n",arr[i]);
+        free(arr[i]);
+
+    }
+    free(arr);
 
 
                      // Test de generate_all_pattern
@@ -120,6 +159,14 @@ int main() {
 
 
     table_destroy(table);
+    for (int i = 0; i<size_dico;i++) {
+
+        //printf("%s\n", arr[i]);
+        free(all_words_dico[i]);
+
+    }
+
+    free(all_words_dico);
     // table_destroy(table_dico);
 
     // free(count);
