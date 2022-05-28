@@ -5,7 +5,6 @@ db.sqlite3
 frontend/package-lock.json
 backend/static/avatar/*
 executables
-dict.txt
 *.o
 opentest
 solveur/open_dict_test
@@ -38,3 +37,13 @@ testeur/dicoz.txt
 solveur2/solveur_naif/build/test
 
 solveur2/solveur_naif/build/solveur_naif
+
+solveur2/solveur_3t/build/linked_test
+
+solveur2/solveur_3t/build/open_dict_test
+
+solveur2/solveur_3t/build/solveur_3t
+
+solveur2/solveur_3b1b/build/solveur_3b1b_test
+
+solveur2/solveur_3b1b/build/solveur_3b1b
