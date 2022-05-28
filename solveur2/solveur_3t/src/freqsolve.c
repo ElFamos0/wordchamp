@@ -366,6 +366,24 @@ double * getmaxfreq(double ** freq, int taillemot){
     return maxfreq;
 }
 
+int word_size_file() {
+    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    
+    fp = fopen("wsolf.txt", "r");
+    // La taille du mot est sur la premiere ligne (normalement :v)
+    read = getline(&line, &len, fp);
+    int count = atoi(line);
+    fclose(fp);
+
+    // magie ?
+    free(line);
+
+    return count;
+}
+
 int main(int argc, char *argv[]) {
     int nombremot;
     // if(argc != 2){
@@ -373,11 +391,8 @@ int main(int argc, char *argv[]) {
     //     return 1;
     // }
 
-    int taillemot = DEFAULT_WORD_LENGTH;
-    if (argc >= 2) {
-        taillemot = atoi(argv[1]);
-    }
-
+    int taillemot = word_size_file();
+    
     if (taillemot < 1 || taillemot > 21){
         //printf("Vous avez choisi un mot de taille impossible\n");
         return 1;
