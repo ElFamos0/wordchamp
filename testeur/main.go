@@ -51,7 +51,7 @@ func main() {
 
 	fmt.Println("	Dictionnaire trouvé")
 
-	ioutil.WriteFile(fmt.Sprintf("%s/wsolf.txt", *executable), []byte(fmt.Sprintf("%d", *size)), 0644)
+	ioutil.WriteFile("wsolf.txt", []byte(fmt.Sprintf("%d", *size)), 0644)
 
 	fmt.Println("	Taille du mot :", *size)
 

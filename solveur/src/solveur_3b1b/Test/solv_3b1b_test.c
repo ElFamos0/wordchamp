@@ -4,7 +4,7 @@
 
 int main() {
 
-    char filename[] = "../../../dicoz.txt";
+    char filename[] = "dicoz.txt";
     // int val[5] = {1,0,2,0,0} ;
     // pattern_t * pattern = create_pattern( val, "MAISO");
     // int n;
@@ -43,7 +43,7 @@ int main() {
 
     char ** arr;
     int size = 0;
-    char filename2[] =  "../../../dico_1stguess.txt";
+    char filename2[] =  "dico_1stguess.txt";
     open_firstguess(&arr,&size,word_length,filename2);
 
     for(int i = 0; i< size; i++) {

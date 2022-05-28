@@ -205,7 +205,6 @@ char *** all_words(table_t * table, int * size_ptr) {
     char * mot;
     char *** arr = (char ***)calloc(1,sizeof(char **)) ;
     (*arr) = (char **) malloc(sizeof(char*));
-
     for(int indice = 0; indice < table->size; indice ++) {
 
         list_t * liste = table->tab[indice];

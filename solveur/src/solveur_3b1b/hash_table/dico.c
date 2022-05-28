@@ -29,7 +29,7 @@ table_t* dico_load(char* filename){
     int c = 0;
 
     char ligne[30];
-    while (fgets(ligne, 50, ptr) != NULL) {
+    while (fgets(ligne, 30, ptr) != NULL) {
         ligne[strcspn(ligne, "\r\n")] = 0;
         table_add(table,ligne,"default");
         c+=1;
@@ -88,7 +88,7 @@ table_t* dico_load_size(char * filename, int taille){
 
     char ligne[30];
 
-    while (fgets(ligne, 50, ptr) != NULL) {
+    while (fgets(ligne, 30, ptr) != NULL) {
         ligne[strcspn(ligne, "\r\n")] = 0;
         if (strlen(ligne) == taille) {
             table_add(table,ligne,"default");
