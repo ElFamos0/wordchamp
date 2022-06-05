@@ -19,6 +19,7 @@ testeur/wordsolv_testeur
 solv_3b1b_test
 maintest3
 solv_3b1b
+wsolf.txt
 
 testeur/dicoz.txt
 
@@ -29,3 +30,9 @@ solveur/solveur_3t/build/open_dict_test
 solveur/solveur_3t/build/solveur_3t
 solveur/solveur_3b1b/build/solveur_3b1b_test
 solveur/solveur_3b1b/build/solveur_3b1b
+
+array_test_int
+freqsolve
+linkedtest
+open_dict_test
+wordle
