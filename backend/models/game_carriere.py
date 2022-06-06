@@ -26,7 +26,9 @@ class Game_carriere(Game):
 
         current_user =  user.User.query.get(id_user)
         elo = current_user.elo
-        spread = max(100,int(elo*0.125))
+        spread = int(elo*0.326)
+        if spread < 30 :
+            spread = 30
 
         defaultword = dictionnaire.Dictionnaire.query.filter(dictionnaire.Dictionnaire.word == "TRICHEUR").first()
         

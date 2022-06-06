@@ -68,7 +68,7 @@ def set_difficulte(word,freq) :
 
         def eval_doublons(coeff) :
 
-            if coeff < 1 :
+            if coeff <= 1 :
                 return 0
             elif coeff > 2.25 :
                 return 2

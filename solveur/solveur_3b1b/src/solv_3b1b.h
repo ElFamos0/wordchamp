@@ -32,6 +32,7 @@ void gen_val_array(int *** val_arr, int size);
 void destroy_val_array(int *** val_arr, int size);
 void update_possible_words(table_t * table, pattern_t * pattern);
 double calculate_proba(pattern_t * pattern, table_t  * table, char *** all_words_arr,int arr_size);
+void best_guess(table_t * table_dico, table_t * table_proposable,int taille);
 
 char *** all_words(table_t * table, int * size_ptr);
 void destroy_all_words(char *** arr, int size);
@@ -44,7 +45,7 @@ int is_pattern_seen(long ** seen_pattern, long pattern, int size);
 // A faire avec structure appropriée
 
 
-void best_guess(table_t * table_dico, table_t * table_proposable,int taille);
+
 char * best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille,char *** all_words_dico, int size_dico,char *** all_words_prop, int size_prop);
 char * best_guess_v3(table_t * table_dico, table_t * table_proposable,int taille,char *** all_words_dico, int size_dico,char *** all_words_prop, int size_prop);
 // Puis faire une fonction main pour créer l'intéraction avec le joueur.
