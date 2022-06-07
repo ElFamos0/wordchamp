@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/home/eleve/project2-E15/build",
+  "command": "/usr/bin/gcc   -g   -g3 -lm -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -o CMakeFiles/naif_test.dir/naif_test.o   -c /home/eleve/project2-E15/solveur/solveur_naif_bis/test/naif_test.c",
+  "file": "/home/eleve/project2-E15/solveur/solveur_naif_bis/test/naif_test.c"
+},
+{
+  "directory": "/home/eleve/project2-E15/build",
+  "command": "/usr/bin/gcc   -g   -g3 -lm -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -o CMakeFiles/naif_test.dir/home/eleve/project2-E15/solveur/solveur_naif_bis/src/naif.o   -c /home/eleve/project2-E15/solveur/solveur_naif_bis/src/naif.c",
+  "file": "/home/eleve/project2-E15/solveur/solveur_naif_bis/src/naif.c"
+},
+{
+  "directory": "/home/eleve/project2-E15/build",
+  "command": "/usr/bin/gcc   -g   -g3 -lm -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -o CMakeFiles/naif_test.dir/home/eleve/project2-E15/solveur/solveur_naif_bis/src/linked_list.o   -c /home/eleve/project2-E15/solveur/solveur_naif_bis/src/linked_list.c",
+  "file": "/home/eleve/project2-E15/solveur/solveur_naif_bis/src/linked_list.c"
+},
+{
+  "directory": "/home/eleve/project2-E15/build",
+  "command": "/usr/bin/gcc   -g   -g3 -lm -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -o CMakeFiles/naif_test.dir/home/eleve/project2-E15/solveur/solveur_naif_bis/src/open_dict.o   -c /home/eleve/project2-E15/solveur/solveur_naif_bis/src/open_dict.c",
+  "file": "/home/eleve/project2-E15/solveur/solveur_naif_bis/src/open_dict.c"
+}
+]
