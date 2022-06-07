@@ -1,3 +1,4 @@
+# évalue la difficulté d'un mot
 def set_difficulte(word,freq) :
 
         diff = 1
@@ -6,6 +7,7 @@ def set_difficulte(word,freq) :
             diff = -1
             return diff
 
+        # Calcule k_freq
         def eval_freq(freq) :
 
             if freq >= 500 :
@@ -51,8 +53,9 @@ def set_difficulte(word,freq) :
         for l in word :
             moyenne_apparition += dico_apparition[l]
         
-        moyenne_apparition /= len(word)
+        moyenne_apparition /= len(word) # Correspond au calcul de score_lettre
                 
+        # Calcule k_lettre
         def eval_app(moy_app) :
 
             if moy_app < 0.012 :
@@ -64,8 +67,9 @@ def set_difficulte(word,freq) :
 
         diff += eval_app(moyenne_apparition/100)
 
-        coeff_doublons = sum([word.count(l) for l in word])/len(word)
+        coeff_doublons = sum([word.count(l) for l in word])/len(word) # Correspond au calcul de score_doublons
 
+        # calcule k_doublons
         def eval_doublons(coeff) :
 
             if coeff <= 1 :

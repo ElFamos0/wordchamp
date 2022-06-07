@@ -28,7 +28,7 @@ void destroy_pattern(pattern_t * result){
     free(result);
 }
 
-
+// Fonction qui génère count_arr et bool_arr pour la fonction possible
 void possible_pre(int ** count_arr, bool ** bool_arr, pattern_t * result) {
 
     *count_arr = (int *)calloc(26, sizeof(int));
@@ -79,7 +79,7 @@ void print_pattern(pattern_t * pattern) {
 
 
 
-
+// Fonction qui à l'aide de bool_arr et count_arr vérifie qu'un mot est présent
 bool possible(char * word, pattern_t * result, int * count_arr, bool * bool_arr){
 
     int n = strlen(result->guess);
@@ -104,7 +104,7 @@ bool possible(char * word, pattern_t * result, int * count_arr, bool * bool_arr)
     return true;
 }
 
-
+// Génère val_array, qui contient tous les tableaux de type "[0,0,2,0,1]" pour pouvoir générer plus efficacement tous les pattern d'un mot
 void gen_val_array(int *** val_arr, int size){
 
     *val_arr = (int **)malloc((int)pow(3,size)*sizeof(int *));
@@ -134,7 +134,7 @@ void destroy_val_array(int *** val_arr, int size) {
 }
 
 
-
+// Dit si un pattern donné est possible et conforme pour les règles du wordle
 bool pattern_is_possible(pattern_t * pattern) {
 
     char * mot = pattern->guess;
@@ -161,7 +161,7 @@ bool pattern_is_possible(pattern_t * pattern) {
 
 
 
-
+// Génère tous les patterns lié à un mot
 pattern_t *** generate_all_pattern(char * word,int ** val_arr) {
 
     int size = strlen(word);
@@ -199,6 +199,7 @@ void destroy_pattern_arr(pattern_t *** pattern_arr ){
     free(pattern_arr);
 }
 
+// génère un tableau contenant tous les mots d'une table de hachage
 char *** all_words(table_t * table, int * size_ptr) {
 
     int size = 0;
@@ -242,7 +243,7 @@ void destroy_all_words(char *** arr, int size) {
 }
 
 
-
+// Calcule la probabilité d'apparition d'un pattern
 double calculate_proba(pattern_t * pattern, table_t  * table,char *** all_words_arr,int arr_size){
 
     int * count;
@@ -265,7 +266,7 @@ double calculate_proba(pattern_t * pattern, table_t  * table,char *** all_words_
 
 }
 
-
+// Met à jour la liste des mots d'une table selon le pattern donné
 void update_possible_words(table_t * table, pattern_t * pattern){
 
     table_t * new_table = table_create(2000);
@@ -304,7 +305,7 @@ void update_possible_words(table_t * table, pattern_t * pattern){
 
 }
 
-
+// Première implémenttaion du solveur
 void best_guess(table_t * table_dico, table_t * table_proposable,int taille){
 
 
@@ -374,7 +375,7 @@ bool is_char_in_string(char c, char * string) {
 
 
 
-
+// Génère un array de la forme [0,0,2,1,1] qui correspond à la réponse du wordle si on lui proposait un guess, pour une solution donnée
 void val_array_based_on_soluce(char * guess, char * soluce, int ** pattern) {
 
     int count_soluce[26];
@@ -406,7 +407,7 @@ void val_array_based_on_soluce(char * guess, char * soluce, int ** pattern) {
 
 }
 
-
+// Seconde implémenttaion du solveur
 char * best_guess_v2(table_t * table_dico, table_t * table_proposable,int taille, char *** all_words_dico, int size_dico,char *** all_words_prop, int size_prop){
 
 
@@ -516,7 +517,7 @@ int is_pattern_seen(long ** seen_pattern, long pattern, int size) {
 
 }
 
-
+// Troisième implémentation du solveur
 char * best_guess_v3(table_t * table_dico, table_t * table_proposable,int taille, char *** all_words_dico, int size_dico,char *** all_words_prop, int size_prop){
 
 
@@ -626,6 +627,8 @@ char * best_guess_v3(table_t * table_dico, table_t * table_proposable,int taille
     return retour;
 }
 
+
+// Ouvre et renvoie la liste des meilleurs mots, pré-calculés, pour une taille donnée
 void open_firstguess(char *** array, int * size_ptr, int taille_mot, char * filename){
 
     FILE* ptr;

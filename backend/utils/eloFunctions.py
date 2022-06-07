@@ -1,6 +1,8 @@
 from random import *
 from math import *
 
+# Renvoie le gain ou la perte d'élo suite à une partie gagnée / perdue
+# Fonctionne par palier
 def newElo(elo,difficulty,won) :
     
     if elo == 0 :
@@ -49,7 +51,7 @@ def newElo(elo,difficulty,won) :
 
 
 
-
+# Génère une partie en choisissant un mot conforme, et de difficulté conforme.
 def generateGame(elo,wordlist,defaultword) :
     
     target_difficulty = elo

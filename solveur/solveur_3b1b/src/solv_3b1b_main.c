@@ -6,6 +6,7 @@
 
 int main(int argc, char *argv[]) {
     
+    // Phase d'initialisation
     int taille_mot = openwsolf();
 
     char * filename = "dicoz.txt";
@@ -27,6 +28,7 @@ int main(int argc, char *argv[]) {
     char * best_mot = malloc(sizeof(char) * (26));
     bool state = true;
 
+    // On cherche le meilleur first guess pour la taille de mot
     for(int i = 0; i< size; i++) {
 
         if (table_contains(table_dico,arr_first_guess[i]) && state) {strcpy(best_mot,arr_first_guess[i]); state = false;}
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
     int val[taille_mot];
     memset(val,0,taille_mot*sizeof(int));
     
-
+    // Boucle principale
     while(1) {
 
         fgets (reponse, 30, stdin);
@@ -67,14 +69,15 @@ int main(int argc, char *argv[]) {
         }
         else {
 
+            
             int i = 0;
             while(isdigit(reponse[i])) {
                 val[i] = reponse[i] - '0';
                 i++;
             }
             pattern_t * pattern = create_pattern(val,best_mot);
-            //print_pattern(pattern);
 
+            // On met à jour la liste des mots possibles
             update_possible_words(table_prop,pattern);
 
             if (number_of_guess == 1) {
@@ -95,13 +98,8 @@ int main(int argc, char *argv[]) {
                 break;
             }
             
-
-            // for(int i = 0; i< size_prop;i++) {
-
-            //     printf("%s\n",(*all_words_prop)[i]);
-            // }
-
-            if(taille_mot > 5) {
+            // On choisit quelle implémentation utilisée selon les conditions
+            if(taille_mot > 10 || (taille_mot>5 && size_prop<250)) {
                 mot_propose = best_guess_v3(table_dico,table_prop,taille_mot,&all_words_dico,size_dico,all_words_prop,size_prop);
             }
             else {

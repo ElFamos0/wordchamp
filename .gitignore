@@ -16,9 +16,9 @@ array_test
 .vscode/
 
 testeur/wordsolv_testeur
-solv_3b1b_test
-maintest3
-solv_3b1b
+build/solv_3b1b_test
+build/maintest3
+build/solv_3b1b
 wsolf.txt
 
 testeur/dicoz.txt
@@ -31,8 +31,8 @@ solveur/solveur_3t/build/solveur_3t
 solveur/solveur_3b1b/build/solveur_3b1b_test
 solveur/solveur_3b1b/build/solveur_3b1b
 
-array_test_int
-freqsolve
-linkedtest
-open_dict_test
-wordle
+build/array_test_int
+build/freqsolve
+build/linkedtest
+build/open_dict_test
+build/wordle
