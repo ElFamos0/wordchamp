@@ -13,4 +13,3 @@ add_compile_options(-fsanitize=address)
 add_link_options(-fsanitize=address)
 
 add_executable (build/open_dict_test open_dict_test.c ../src/open_dict.c)
-add_executable(build/linked_test linked_list_test.c ../src/linked_list.c)
