@@ -15,13 +15,16 @@ class Dictionnaire(db.Model):
     difficulte = db.Column(db.Float,nullable= False)
 
 
-    def __init__(self, word,freq,gram,genre = None,nombre = None,conjug = None):
+    def __init__(self, word,freq,gram,genre = None,nombre = None,conjug = None,difficulte = -1):
         self.id = uuid4().hex
         self.word = word
         self.size = len(word)
         self.freq = freq
         self.gram = gram
-        self.difficulte = set_difficulte(word,freq)
+        if difficulte != -1 :
+            self.difficulte = set_difficulte(word,freq)
+        else :
+            self.difficulte = -1
         if genre != None :
             self.genre = genre
         if nombre != None :

@@ -65,7 +65,7 @@ def generateGame(elo,wordlist,defaultword) :
 
         for mot in wordlist :
 
-            if abs(mot.difficulte - target_difficulty ) <= spread and mot.size >= 5 :
+            if abs(mot.difficulte - target_difficulty ) <= spread and mot.size >= 5 and mot.difficulte > 0 :
 
                 if (mot.gram =="ADJ" or mot.gram == "NOM") :
                     mots_valides.append(mot)

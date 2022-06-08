@@ -79,7 +79,7 @@ def do_it_bis() :
                 taille = min(20,len(liste_param[10]) - 1)
                 conjug = liste_param[10][:taille]
 
-            dic = Dictionnaire(word,freq,gram,genre,nombre,conjug)
+            dic = Dictionnaire(word,freq,gram,genre,nombre,conjug,0)
             db.session().add(dic)
 
             if count % 100 == 0 :
@@ -88,3 +88,35 @@ def do_it_bis() :
     db.session().commit()
     
     file.close()
+
+    FILE = "misc/dicoz.txt"
+    file = open(FILE, "r", encoding='utf-8')
+    count = 0
+
+    # We load the second wordlist into the database
+    for line in file.readlines():
+        ligne = line.strip()
+    
+        word,state = normalize(ligne)
+        freq = 0
+        gram = "UNK"
+
+        if len(word) > 0 and len(word) <= 10 and state:
+            
+            count +=1
+            nombre = None
+            conjug = None
+            genre = None
+
+            dic = Dictionnaire(word,freq,gram,genre,nombre,conjug,-1)
+            db.session().add(dic)
+
+            if count % 100 == 0 :
+                db.session().commit()
+
+    db.session().commit()
+    
+    file.close()
+
+
+    

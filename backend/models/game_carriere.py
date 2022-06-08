@@ -37,7 +37,7 @@ class Game_carriere(Game):
         super().__init__(id,"game_carriere")
         self.id_user = id_user
         self.elo_player = elo
-        self.solution,self.maxtry,self.difficulty = generateGame(self.elo_player,dictionnaire.Dictionnaire.query.filter(dictionnaire.Dictionnaire.size > 4,dictionnaire.Dictionnaire.difficulte > self.elo_player - spread,dictionnaire.Dictionnaire.difficulte < self.elo_player + spread).all(),defaultword)
+        self.solution,self.maxtry,self.difficulty = generateGame(self.elo_player,dictionnaire.Dictionnaire.query.filter(dictionnaire.Dictionnaire.size > 4,dictionnaire.Dictionnaire.difficulte > self.elo_player - spread,dictionnaire.Dictionnaire.difficulte < self.elo_player + spread,dictionnaire.Dictionnaire.difficulte > 0).all(),defaultword)
         self.length = len(self.solution)
         self.ranked = ranked
         
