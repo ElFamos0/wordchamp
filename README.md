@@ -1,5 +1,7 @@
 # Installation (production)
 
+Site actuellement disponible : https://wordchamp.yewolf.fr
+
 ## Pré-requis
 
  - Docker et Docker Compose
